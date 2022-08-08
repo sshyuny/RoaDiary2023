@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    group:
+      "local": "local_db,common"
+      "dev": "dev_db,common"
+      "prod": "prod_db,common"
+
+---
+
+# common setting
+spring:
+  config:
+    activate:
+      on-profile: "common"
+
+---
+
+spring:
+  profiles: local_db
+  datasource:
+    url: "jdbc:mysql://localhost:3306/bhdb"
+    username: "bhuser"
+    password: "bhpw"
