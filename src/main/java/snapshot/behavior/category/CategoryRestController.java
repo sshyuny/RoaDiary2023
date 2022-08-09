@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import snapshot.behavior.dto.CategoryDTO;
+import snapshot.behavior.category.dto.CategoryDTO;
+import snapshot.behavior.category.service.CategoryService;
 
 @RestController
 public class CategoryRestController {
@@ -18,7 +19,7 @@ public class CategoryRestController {
     }
 
     @GetMapping("/getcategory")
-    public List<CategoryDTO> getCategory() {
+    public List<CategoryDTO> getCategory() throws Exception {
 
         // userId 세션에서 가져오기
         Long userId = 1L;
@@ -28,5 +29,10 @@ public class CategoryRestController {
         
 
         return categoryDTOList;
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
     }
 }

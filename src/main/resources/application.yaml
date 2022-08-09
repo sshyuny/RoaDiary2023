@@ -12,12 +12,26 @@ spring:
   config:
     activate:
       on-profile: "common"
+mybatis:
+    mapper-locations: classpath:mybatis-mapper/*.xml
 
 ---
 
 spring:
-  profiles: local_db
+  config.activate.on-profile: local_db
   datasource:
     url: "jdbc:mysql://localhost:3306/bhdb"
     username: "bhuser"
     password: "bhpw"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+---
+
+spring:
+  config.activate.on-profile: dev_db
+  datasource:
+    url: "jdbc:mysql://localhost:3306/bhdb-test"
+    username: "bhuser"
+    password: "bhpw"
+    driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,0 +1,23 @@
+window.onload = function() { getCategory(); }
+
+function getCategory() {
+    $.ajax({
+        url: '/getcategory', 
+        data: '',
+		method: 'GET',
+		dataType: 'json',
+		success: function(data) {
+            let categoryLength = data.length;
+            let categoryListSelect = document.getElementById("categoryList");
+            for (var i = 0; i < categoryLength; i++) {
+                let categoryOne = document.createElement("option");
+                categoryOne.value = data[i].id;
+                categoryOne.text = data[i].content;
+                categoryListSelect.add(categoryOne);
+            }
+        }, 
+        error: function() {
+			alert("데이터를 가져오는 중 에러가 발생했습니다.");
+		}
+    })
+}
