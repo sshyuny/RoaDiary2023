@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import snapshot.behavior.category.dto.CategoryDTO;
+import snapshot.behavior.category.dto.CategoryResDTO;
 import snapshot.behavior.category.repository.CategoryRepository;
 
 @Service
@@ -18,12 +19,12 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
     
-    public List<CategoryDTO> getCategoryList(Long userId) {
+    public List<CategoryResDTO> getCategoryList(Long userId) {
 
         List<CategoryDTO> categoryDTOList = categoryRepository.selectCategoryDTOList(userId);
 
-        List<CategoryDTO> sortedCategoryDTOList = CategoryUnit.sortCategoryDTOListOrderByTime(categoryDTOList);
+        List<CategoryResDTO> sortedCategoryResDTOList = CategoryUnit.sortCategoryDTOListOrderByTime(categoryDTOList);
 
-        return sortedCategoryDTOList;
+        return sortedCategoryResDTOList;
     }
 }

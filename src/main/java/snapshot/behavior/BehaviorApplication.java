@@ -10,7 +10,7 @@ public class BehaviorApplication {
 		//SpringApplication.run(BehaviorApplication.class, args);
 		SpringApplication app = new SpringApplication(BehaviorApplication.class);
 		app.setAdditionalProfiles("local");
-		app.run(args);
+		app.run();
 	}
 
 }
