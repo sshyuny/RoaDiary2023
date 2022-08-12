@@ -6,16 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import snapshot.behavior.category.repository.CategoryRepository;
 import snapshot.behavior.category.service.CategoryService;
 
-@Configuration
+// @Configuration
 public class CategoryTestConfig {
-    
-    @Bean
-    CategoryRepository categoryRepository() {
-        return new CategoryRepositoryTempImpl();
-    }
 
-    @Bean
-    CategoryService categoryService() {
-        return new CategoryService(categoryRepository());
-    }
+    // @Bean
+    // CategoryUnitTest categoryUnitTest() {
+    //     return new CategoryUnitTest(categoryRepository());
+    // }
+    
+    // @Bean
+    // CategoryRepository categoryRepository() {
+    //     return new CategoryRepositoryTempImpl();
+    // }
+
+    // @Bean
+    // CategoryService categoryService() {
+    //     return new CategoryService(categoryRepository());
+    // }
 }

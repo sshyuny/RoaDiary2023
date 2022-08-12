@@ -18,13 +18,20 @@ import snapshot.behavior.category.dto.CategoryResDTO;
 import snapshot.behavior.category.repository.CategoryRepository;
 import snapshot.behavior.category.service.CategoryUnit;
 
+// @SpringBootTest
 public class CategoryUnitTest {
 
-    AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(CategoryTestConfig.class);
+    // AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(CategoryTestConfig.class);
     
-    @Autowired
+    //@Autowired
     private CategoryRepository categoryRepository = new CategoryRepositoryTempImpl();
+    // private final CategoryRepository categoryRepository;
     // Autowired 되지 않은 것으로 보임. 테스트에서 의존 주입 방법 찾아서 적용해보기
+
+    // @Autowired
+    // public CategoryUnitTest(CategoryRepository categoryRepository) {
+    //     this.categoryRepository = categoryRepository;
+    // }
     
     @Test
     @DisplayName("CategoryDTO 최신순정렬 뒤 CategoryResDTO로 반환 확인")
