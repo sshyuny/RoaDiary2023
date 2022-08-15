@@ -1,9 +1,9 @@
 spring:
   profiles:
     group:
-      "local": "local_db,common"
-      "dev": "dev_db,common"
-      "prod": "prod_db,common"
+      "local": "local_setting,common"
+      "dev": "dev_setting,common"
+      "prod": "prod_setting,common"
 
 ---
 
@@ -18,20 +18,25 @@ mybatis:
 ---
 
 spring:
-  config.activate.on-profile: local_db
+  config.activate.on-profile: local_setting
   datasource:
     url: "jdbc:mysql://localhost:3306/bhdb"
     username: "bhuser"
     password: "bhpw"
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  devtools:
+    livereload:
+      enabled: true
 
 ---
 
 spring:
-  config.activate.on-profile: dev_db
+  config.activate.on-profile: dev_setting
   datasource:
     url: "jdbc:mysql://localhost:3306/bhdb-test"
     username: "bhuser"
     password: "bhpw"
     driver-class-name: com.mysql.cj.jdbc.Driver
+  devtools:
+    livereload:
+      enabled: false

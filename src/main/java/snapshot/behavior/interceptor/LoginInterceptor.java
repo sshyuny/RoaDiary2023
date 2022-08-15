@@ -2,28 +2,27 @@ package snapshot.behavior.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import snapshot.behavior.authority.SessionAuthority;
+import snapshot.behavior.member.authority.Authority;
 
 @Component
-public class SessionInterceptor implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
 
-    private final SessionAuthority session;
+    private final Authority authority;
 
-    public SessionInterceptor(SessionAuthority session) {
-        this.session = session;
+    public LoginInterceptor(Authority session) {
+        this.authority = session;
     }
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        if (session.checkLogin(request)) {
-            response.sendRedirect("location");
+        if (!authority.isItLoginStatus(request)) {
+            response.sendRedirect("/login");
             return false;
         }
 
