@@ -10,4 +10,6 @@ public interface Authority {
 
     public void makeLoginStatus(HttpServletRequest request, MemberAuthorityDTO memberAuthorityDTO);
 
+    public void destroyLoginStatus(HttpServletRequest request);
+
 }

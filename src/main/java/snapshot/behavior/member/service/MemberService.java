@@ -17,13 +17,18 @@ public class MemberService {
     }
     
     public boolean isItExistMember() {
-        // 수정
+        // 이후 수정
         return true;
     }
 
     public void makeLoginStatus(HttpServletRequest request) {
-        // 수정
+        // 이후 수정
         MemberAuthorityDTO memberAuthorityDTO = new MemberAuthorityDTO("name");
         authority.makeLoginStatus(request, memberAuthorityDTO);
+    }
+
+    public void destroyLoginStatus(HttpServletRequest request) {
+        // 이후 수정
+        authority.destroyLoginStatus(request);
     }
 }

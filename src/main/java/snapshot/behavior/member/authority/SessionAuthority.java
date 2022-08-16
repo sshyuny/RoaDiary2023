@@ -26,4 +26,11 @@ public class SessionAuthority implements Authority {
         HttpSession session = request.getSession();
         session.setAttribute("login", memberAuthorityDTO);
     }
+
+    @Override
+    public void destroyLoginStatus(HttpServletRequest request) {
+        
+        HttpSession session = request.getSession();
+        session.removeAttribute("login");
+    }
 }

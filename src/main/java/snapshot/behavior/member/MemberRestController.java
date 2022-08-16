@@ -22,8 +22,15 @@ public class MemberRestController {
         // 로그인 성공
         memberService.makeLoginStatus(request);
 
-        // 로그인 실패
+        // 로그인 실패 추가하기
         
+    }
+
+    @GetMapping("/destroylogin")
+    public void destroylogin(HttpServletRequest request) {
+
+        // 로그아웃
+        memberService.destroyLoginStatus(request);
     }
     
 }
