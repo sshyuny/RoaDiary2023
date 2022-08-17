@@ -15,7 +15,7 @@ public class SessionAuthority implements Authority {
 
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("login") != null) return true;
+        if (session.getAttribute(SessionKeys.login) != null) return true;
 
         return false;
     }
@@ -24,13 +24,13 @@ public class SessionAuthority implements Authority {
     public void makeLoginStatus(HttpServletRequest request, MemberAuthorityDTO memberAuthorityDTO) {
 
         HttpSession session = request.getSession();
-        session.setAttribute("login", memberAuthorityDTO);
+        session.setAttribute(SessionKeys.login, memberAuthorityDTO);
     }
 
     @Override
     public void destroyLoginStatus(HttpServletRequest request) {
         
         HttpSession session = request.getSession();
-        session.removeAttribute("login");
+        session.removeAttribute(SessionKeys.login);
     }
 }

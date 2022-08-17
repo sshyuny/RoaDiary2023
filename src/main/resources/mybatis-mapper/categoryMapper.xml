@@ -5,6 +5,8 @@
 
     <select id="selectCategoryList" parameterType="snapshot.behavior.category.dto.CategoryDTO" resultType="snapshot.behavior.category.dto.CategoryDTO">
         select * from behavior_category
+            order by recently_used
+            Limit 10;
     </select>
 
     

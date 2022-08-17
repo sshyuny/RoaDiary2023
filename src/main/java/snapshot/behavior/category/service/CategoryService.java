@@ -23,7 +23,7 @@ public class CategoryService {
 
         List<CategoryDTO> categoryDTOList = categoryRepository.selectCategoryDTOList(userId);
 
-        List<CategoryResDTO> sortedCategoryResDTOList = CategoryUnit.sortCategoryDTOListOrderByTime(categoryDTOList);
+        List<CategoryResDTO> sortedCategoryResDTOList = CategoryUnit.switchCategoryDTOToResDTO(categoryDTOList);
 
         return sortedCategoryResDTOList;
     }
