@@ -7,23 +7,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import snapshot.behavior.member.authority.Authority;
 import snapshot.behavior.member.authority.SessionKeys;
 import snapshot.behavior.member.service.MemberService;
 
 @RestController
 public class MemberRestController {
 
-    private final Authority authority;
     private final MemberService memberService;
 
-    public MemberRestController(MemberService memberService, Authority authority) {
+    public MemberRestController(MemberService memberService) {
         this.memberService = memberService;
-        this.authority = authority;
     }
     
     @GetMapping("/trylogin")
-    public void directLoginResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String directLoginResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         // 로그인 성공
         memberService.makeLoginStatus(request);
@@ -32,8 +29,11 @@ public class MemberRestController {
         if (session.getAttribute(SessionKeys.afterLoginPage) != null) {
             String sesstionAfterLoginPage = session.getAttribute(SessionKeys.afterLoginPage).toString();
             session.setAttribute(SessionKeys.afterLoginPage, null);
-            response.sendRedirect(sesstionAfterLoginPage);
+            
+            return sesstionAfterLoginPage;
         }
+
+        return "";
 
         // 로그인 실패 추가하기
         

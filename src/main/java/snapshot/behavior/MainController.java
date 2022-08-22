@@ -16,9 +16,14 @@ public class MainController {
         return "login.html";
     }
     
-    @GetMapping("/save")
+    @GetMapping("/behavior")
     public String directToSave() {
         return "savebehavior.html";
+    }
+
+    @GetMapping("/category")
+    public String directToSaveCategory() {
+        return "savecategory.html";
     }
 
 }
