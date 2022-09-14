@@ -4,6 +4,7 @@ spring:
       "local": "local_setting,common"
       "dev": "dev_setting,common"
       "prod": "prod_setting,common"
+      "local-mariadb": "local-mariadb_setting, common"
 
 ---
 
@@ -33,10 +34,22 @@ spring:
 spring:
   config.activate.on-profile: dev_setting
   datasource:
-    url: "jdbc:mysql://localhost:3306/bhdb-test"
+    url: "jdbc:mysql://localhost:3306/bhdb"
     username: "bhuser"
     password: "bhpw"
     driver-class-name: com.mysql.cj.jdbc.Driver
+  devtools:
+    livereload:
+      enabled: false
+
+---
+
+spring:
+  config.activate.on-profile: local-mariadb_setting
+  datasource:
+    url: "jdbc:mariadb://localhost:3306/bhdb"
+    username: "bhuser"
+    password: "bhpw"
   devtools:
     livereload:
       enabled: false

@@ -3,6 +3,7 @@ package snapshot.behavior.category;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,14 @@ public class CategoryRestController {
     }
 
     @PostMapping("/categories")
-    public String saveCategories() {
+    public String saveCategories(@ModelAttribute("categoryContent") String categoryContent) {
+        
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        int addNum = categoryService.addCategory(userId, categoryContent);
+
+        System.out.println(addNum);
         return "test";
     }
 }

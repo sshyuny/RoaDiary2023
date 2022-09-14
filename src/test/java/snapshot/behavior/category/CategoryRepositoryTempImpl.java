@@ -1,4 +1,4 @@
-package snapshot.behavior.category;
+/*package snapshot.behavior.category;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import snapshot.behavior.category.repository.CategoryRepository;
 public class CategoryRepositoryTempImpl implements CategoryRepository {
     
     @Override
-    public List<CategoryDTO> selectCategoryDTOList(Long userId) {
+    public List<CategoryDTO> selectCategoryDTOs(Long userId) {
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
         CategoryDTO categoryDTO1 = new CategoryDTO(1L, userId, "study", LocalDateTime.parse("2022-08-05T05:00:00"));
@@ -22,4 +22,10 @@ public class CategoryRepositoryTempImpl implements CategoryRepository {
 
         return categoryDTOList;
     }
+
+    @Override
+    public int addCategory(Long userId, String categoryName) {
+        return 1;
+    }
 }
+*/

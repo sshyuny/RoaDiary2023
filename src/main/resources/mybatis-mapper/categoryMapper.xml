@@ -3,12 +3,19 @@
 
 <mapper namespace="snapshot.behavior.category.mapper.CategoryMapper">
 
-    <select id="selectCategoryList" parameterType="snapshot.behavior.category.dto.CategoryDTO" resultType="snapshot.behavior.category.dto.CategoryDTO">
-        select * from behavior_category
-            order by recently_used
-            Limit 10;
+    <select id="selectCategoryList" parameterType="_long" resultType="snapshot.behavior.category.dto.CategoryDTO">
+        SELECT * FROM behavior_category
+            WHERE user_id = #{userId} 
+            ORDER BY recently_used
+            LIMIT 10;
     </select>
 
+    <insert id="insertCategory" parameterType="snapshot.behavior.category.dto.CategoryVO"> 
+        INSERT INTO behavior_category 
+            (user_id, content, recently_used) 
+            VALUES 
+            (#{userId}, #{categoryContent}, now()) 
+    </insert>
     
 
 </mapper>

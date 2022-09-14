@@ -1,4 +1,4 @@
-package snapshot.behavior.category;
+/*package snapshot.behavior.category;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +26,7 @@ public class CategoryUnitTest {
     void switchCategoryDTOToResDTOTest() {
 
         // given
-        List<CategoryDTO> categoryDTOList = categoryRepository.selectCategoryDTOList(1L);
+        List<CategoryDTO> categoryDTOList = categoryRepository.selectCategoryDTOs(1L);
 
         // when
         List<CategoryResDTO> sortedCategoryResDTOList = CategoryUnit.switchCategoryDTOToResDTO(categoryDTOList);
@@ -54,3 +54,4 @@ public class CategoryUnitTest {
     }
     
 }
+*/

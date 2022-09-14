@@ -2,8 +2,6 @@ package snapshot.behavior.category.dto;
 
 import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class CategoryDTO {
     
     private long id;
@@ -11,7 +9,6 @@ public class CategoryDTO {
     private String content;
     private LocalDateTime recently_used;
 
-    @Autowired
     public CategoryDTO(long id, long user_id, String content, LocalDateTime recently_used) {
         this.id = id;
         this.user_id = user_id;

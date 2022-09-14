@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import snapshot.behavior.category.dto.CategoryDTO;
+import snapshot.behavior.category.dto.CategoryVO;
 import snapshot.behavior.category.mapper.CategoryMapper;
 
 @Component
@@ -19,10 +20,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     private CategoryMapper categoryMapper;
     
     @Override
-    public List<CategoryDTO> selectCategoryDTOList(Long userId) {
+    public List<CategoryDTO> selectCategoryDTOs(Long userId) {
         
-        List<CategoryDTO> categoryDTOList = categoryMapper.selectCategoryList();
-
+        List<CategoryDTO> categoryDTOList = categoryMapper.selectCategoryList(userId);
         return categoryDTOList;
+    }
+
+    @Override
+    public int insertCategory(CategoryVO categoryVO) {
+
+        int addNum = categoryMapper.insertCategory(categoryVO);
+        return addNum;
     }
 }
