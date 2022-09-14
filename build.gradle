@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 }
 
-group = 'snapshot'
-version = '0.0.1-SNAPSHOT'
+group = 'roadiary'
+version = '0.0.1-roadiary'
 sourceCompatibility = '11'
 
 configurations {

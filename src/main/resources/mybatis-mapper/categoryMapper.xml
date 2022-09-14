@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="snapshot.behavior.category.mapper.CategoryMapper">
+<mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
-    <select id="selectCategoryList" parameterType="_long" resultType="snapshot.behavior.category.dto.CategoryDTO">
+    <select id="selectCategoryList" parameterType="_long" resultType="roadiary.behavior.category.dto.CategoryDTO">
         SELECT * FROM behavior_category
             WHERE user_id = #{userId} 
             ORDER BY recently_used
             LIMIT 10;
     </select>
 
-    <insert id="insertCategory" parameterType="snapshot.behavior.category.dto.CategoryVO"> 
+    <insert id="insertCategory" parameterType="roadiary.behavior.category.dto.CategoryVO"> 
         INSERT INTO behavior_category 
             (user_id, content, recently_used) 
             VALUES 
