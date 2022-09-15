@@ -18,12 +18,7 @@ public class MainController {
     
     @GetMapping("/behavior")
     public String directToSave() {
-        return "savebehavior.html";
-    }
-
-    @GetMapping("/category")
-    public String directToSaveCategory() {
-        return "savecategory.html";
+        return "behavior.html";
     }
 
 }

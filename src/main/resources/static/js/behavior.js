@@ -1,6 +1,6 @@
-window.onload = function() { getCategory(); }
+window.onload = function() { makeCategorySelect(); }
 
-function getCategory() {
+function makeCategorySelect() {
     $.ajax({
         url: '/categories', 
         data: '',
