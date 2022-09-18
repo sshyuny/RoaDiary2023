@@ -1,4 +1,4 @@
---Do it in /Program Files/pmariadb/bin folder
+----Do it in /Program Files/mariadb/bin folder
 --mysql -u root -p
 
 ----
@@ -15,19 +15,42 @@ GRANT ALL PRIVILEGES ON bhdb.* TO 'bhuser'@'localhost';
 
 USE bhdb;
 
---temp
 CREATE TABLE behavior_category (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    content CHAR(144) NOT NULL, 
-    recently_used DATETIME
+    behavior_category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    content CHAR(144) NOT NULL
 );
 
 --temp
+CREATE TABLE user (
+    user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email CHAR(144) NOT NULL, 
+    nickname CHAR(64) NOT NULL,
+    recently_visited DATETIME, 
+    register_status CHAR(64)
+);
+
+CREATE TABLE behavior_records (
+    behavior_records_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    behavior_category_id BIGINT , 
+    user_id BIGINT, 
+    start_time DATETIME, 
+    end_time DATETIME, 
+    detail CHAR(144), 
+    FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id), 
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
+
 INSERT INTO behavior_category
-(user_id, content, recently_used)
+(content)
 VALUES
-(1, 'study', '2022-09-14 20:33:00'), 
-(1, 'hangout', '2022-09-14 21:33:00'), 
-(1, 'work', '2022-09-14 22:33:00'), 
-(1, 'rest', '2022-09-14 23:33:00');
+('일'), 
+('휴식'), 
+('공부'), 
+('잠'), 
+('식사'), 
+('취미'), 
+('운동'), 
+('뒹굴뒹굴'), 
+('친구와'), 
+('가족과'), 
+('연인과');
