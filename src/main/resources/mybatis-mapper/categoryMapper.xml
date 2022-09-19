@@ -3,18 +3,16 @@
 
 <mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
-    <select id="selectCategoryList" parameterType="_long" resultType="roadiary.behavior.category.dto.CategoryDTO">
+    <select id="selectCategoryList" resultType="roadiary.behavior.category.dto.CategoryDTO">
         SELECT * FROM behavior_category
-            WHERE user_id = #{userId} 
-            ORDER BY recently_used
-            LIMIT 10;
+            LIMIT 8;
     </select>
 
     <insert id="insertCategory" parameterType="roadiary.behavior.category.dto.CategoryVO"> 
         INSERT INTO behavior_category 
-            (user_id, content, recently_used) 
+            (user_id, content) 
             VALUES 
-            (#{userId}, #{categoryContent}, now()) 
+            (#{userId}, #{categoryContent}) 
     </insert>
     
 

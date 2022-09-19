@@ -5,18 +5,93 @@
     <title>기록 페이지</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/behavior.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/behavior.css}" rel="stylesheet">
 </head>
 
 <body>
-    <h2>Records</h2>
-    <h3>카테고리</h3>
+<div class="container text-center">
 
-    <select id="categoryList" name="categoryList">
-    </select>
+    <div>
+        <h2>내가 보낸 시간</h2>
+    </div>
 
-    <button onclick="saveBehaviorRecord();">전송</button>
+    <div>
+        <p class="text-center fs-3">카테고리</p>
+    </div>
+    <div>
+        <select id="categoryList" name="categoryList" 
+            class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
+    </div>
 
+    <div>
+        <p>시작 시간</p>
+    </div>
+        
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="5" id="basic-url">
+            <span class="input-group-text" id="basic-addon1">시</span>
+            <input type="text" class="form-control" placeholder="00" id="basic-url">
+            <span class="input-group-text" id="basic-addon1">분</span>
+            <button type="button" class="btn btn-secondary">지금</button>
+        </div>
 
+    <div class="row">
+        <div class="col">
+            <select id="bhHour" name="bhHour" 
+                class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+                <option>24</option>
+            </select>
+        </div>
+        <div class="col-1">
+            <p class="text-start fs-5">시</p>
+        </div>
+        <div class="col">
+            <select id="bhMin" name="bhMin" 
+                class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option>00</option>
+                <option>10</option>
+                <option>20</option>
+                <option>30</option>
+                <option>40</option>
+                <option>50</option>
+            </select>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-light">분</button>
+        </div>
+    </div>
+
+    <div>
+        <p>얼마 동안</p>
+        <input type="button" id="during30min" value="30분">
+        <input type="button" id="during60min" value="1시간">    
+    </div>
+
+    <div>
+        <button onclick="saveBehaviorRecord();">전송</button>
+    </div>
+
+</div> <!-- container -->
 </body>
 
 </html>

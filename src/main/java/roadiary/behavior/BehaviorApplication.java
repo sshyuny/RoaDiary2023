@@ -9,7 +9,7 @@ public class BehaviorApplication {
 	public static void main(String[] args) {
 		//SpringApplication.run(BehaviorApplication.class, args);
 		SpringApplication app = new SpringApplication(BehaviorApplication.class);
-		app.setAdditionalProfiles("local-mariadb");
+		app.setAdditionalProfiles("local");
 		app.run();
 	}
 

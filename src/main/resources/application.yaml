@@ -4,7 +4,7 @@ spring:
       "local": "local_setting,common"
       "dev": "dev_setting,common"
       "prod": "prod_setting,common"
-      "local-mariadb": "local-mariadb_setting, common"
+      "local-mariadb": "local-mariadb_setting,common"
 
 ---
 
