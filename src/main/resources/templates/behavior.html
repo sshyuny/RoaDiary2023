@@ -14,7 +14,7 @@
 <div class="container text-center">
 
     <div>
-        <h2>내가 보낸 시간</h2>
+        <h2>나의 시간들</h2>
     </div>
 
     <div>
@@ -26,17 +26,11 @@
     </div>
 
     <div>
-        <p>시작 시간</p>
+        <p class="text-center fs-3">시작 시간</p>
     </div>
-        
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="5" id="basic-url">
-            <span class="input-group-text" id="basic-addon1">시</span>
-            <input type="text" class="form-control" placeholder="00" id="basic-url">
-            <span class="input-group-text" id="basic-addon1">분</span>
-            <button type="button" class="btn btn-secondary">지금</button>
-        </div>
 
+
+    
     <div class="row">
         <div class="col">
             <select id="bhHour" name="bhHour" 
@@ -77,18 +71,40 @@
             </select>
         </div>
         <div class="col-1">
-            <button type="button" class="btn btn-light">분</button>
+            <p class="text-start fs-5">분</p>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-secondary">직접 입력</button>
         </div>
     </div>
 
-    <div>
-        <p>얼마 동안</p>
-        <input type="button" id="during30min" value="30분">
-        <input type="button" id="during60min" value="1시간">    
+    <!-- 
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="5" id="basic-url">
+        <span class="input-group-text" id="basic-addon1">시</span>
+        <input type="text" class="form-control" placeholder="00" id="basic-url">
+        <span class="input-group-text" id="basic-addon1">분</span>
+        <button type="button" class="btn btn-secondary">직접 입력</button>
+    </div> -->
+
+    <div class="gap-3">
+        <p class="text-center fs-3">지속 시간</p>
+    </div>
+    <div class="mb-3">
+        <button type="button" id="during30m" class="btn btn-light">30분</button>
+        <button type="button" id="during1h" class="btn btn-light">1시간</button>
+        <button type="button" id="during1h30m" class="btn btn-light">1시간30분</button>
+        <button type="button" id="during2h" class="btn btn-light">2시간</button>
+        <button type="button" class="btn btn-secondary">직접 입력</button>
     </div>
 
-    <div>
-        <button onclick="saveBehaviorRecord();">전송</button>
+
+    <div class="d-grid mb-3">
+        <textarea class="form-control" aria-label="With textarea" placeholder="추가 내용"></textarea>
+    </div>
+
+    <div class="d-grid">
+        <button type="button" class="btn btn-primary btn-outline-light" onclick="saveBehaviorRecord();">저장</button>
     </div>
 
 </div> <!-- container -->

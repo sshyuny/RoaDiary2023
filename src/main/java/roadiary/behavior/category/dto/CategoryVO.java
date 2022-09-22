@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 public class CategoryVO {
     
+    // 이후에 user가 최근에 사용한 category 반환하는 걸로 수정하기
     private long userId;
     private String categoryContent;
     
