@@ -15,10 +15,5 @@ public class MainController {
     public String directToLogin() {
         return "login.html";
     }
-    
-    @GetMapping("/behavior")
-    public String directToSave() {
-        return "behavior.html";
-    }
 
 }

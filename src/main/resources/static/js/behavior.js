@@ -8,7 +8,7 @@ function makeCategorySelect() {
 		dataType: 'json',
 		success: function(data) {
             let categoryLength = data.length;
-            let categoryListSelect = document.getElementById("categoryList");
+            let categoryListSelect = document.getElementById("categoryId");
             for (var i = 0; i < categoryLength; i++) {
                 let categoryOne = document.createElement("option");
                 categoryOne.value = data[i].id;
@@ -20,12 +20,4 @@ function makeCategorySelect() {
 			alert("데이터를 가져오는 중 에러가 발생했습니다.");
 		}
     })
-}
-
-function saveBehaviorRecord() {
-    let categoryListSelect = document.getElementById("categoryList");
-    let whichCategory = categoryListSelect.value;
-    alert(whichCategory);
-
-    // 내용도 같이 받아서 서버로 전송하는 부분 추가
 }

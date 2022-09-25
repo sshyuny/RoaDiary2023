@@ -13,101 +13,135 @@
 <body>
 <div class="container text-center">
 
-    <div>
+    <div class="row mb-3">
         <h2>나의 시간들</h2>
     </div>
 
-    <div>
-        <p class="text-center fs-3">카테고리</p>
-    </div>
-    <div>
-        <select id="categoryList" name="categoryList" 
-            class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
-    </div>
+    <form action="" method="post">
 
-    <div>
-        <p class="text-center fs-3">시작 시간</p>
-    </div>
-
-
-    
-    <div class="row">
-        <div class="col">
-            <select id="bhHour" name="bhHour" 
-                class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-                <option>18</option>
-                <option>19</option>
-                <option>20</option>
-                <option>21</option>
-                <option>22</option>
-                <option>23</option>
-                <option>24</option>
-            </select>
+        <div class="row">
+            <div class="col-2">
+                <p class="text-center fs-4">카테고리</p>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-lg mb-3">
+                    <select id="categoryId" name="categoryId" 
+                        class="form-select" aria-label=".form-select-lg example"></select>
+                </div>
+            </div>
         </div>
-        <div class="col-1">
-            <p class="text-start fs-5">시</p>
+
+        <div class="row">
+            <div class="col-2">
+                <p class="text-center fs-4">시작</p>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-lg mb-3">
+                    
+                    <select id="startHour" name="startHour" 
+                        class="form-select" aria-label=".form-select-lg example">
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                    </select>
+                    <label class="input-group-text" for="">시</label>
+                    <select id="startMin" name="startMin" 
+                        class="form-select" aria-label=".form-select-lg example">
+                        <option>00</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                    </select>
+                    <label class="input-group-text" for="">분</label>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <select id="bhMin" name="bhMin" 
-                class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                <option>00</option>
-                <option>10</option>
-                <option>20</option>
-                <option>30</option>
-                <option>40</option>
-                <option>50</option>
-            </select>
+
+        <div class="row">
+            <div class="col-2">
+                <p class="text-center fs-4">끝</p>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-lg mb-3">
+                    <select id="endHour" name="endHour" 
+                        class="form-select" aria-label=".form-select-lg example">
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                    </select>
+                    <label class="input-group-text" for="">시</label>
+                    <select id="endMin" name="endMin" 
+                        class="form-select" aria-label=".form-select-lg example">
+                        <option>00</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                    </select>
+                    <label class="input-group-text" for="">분</label>
+                </div>
+            </div>
         </div>
-        <div class="col-1">
-            <p class="text-start fs-5">분</p>
+
+        <div class="mb-3">
+            <div  class="col">            
+                <button type="button" id="during30m" class="btn btn-outline-light">30분</button>
+                <button type="button" id="during1h" class="btn btn-outline-light">1시간</button>
+                <button type="button" id="during1h30m" class="btn btn-outline-light">1시간30분</button>
+                <button type="button" id="during2h" class="btn btn-outline-light">2시간</button>
+                <button type="button" id="during3h" class="btn btn-outline-light">3시간</button>
+                <button type="button" id="during4h" class="btn btn-outline-light">4시간</button>
+            </div>
         </div>
-        <div class="col-2">
-            <button type="button" class="btn btn-secondary">직접 입력</button>
+
+
+        <div class="d-grid mb-3">
+            <textarea class="form-control" aria-label="With textarea" placeholder="추가 내용"
+                id="detail" name="detail"></textarea>
         </div>
-    </div>
 
-    <!-- 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="5" id="basic-url">
-        <span class="input-group-text" id="basic-addon1">시</span>
-        <input type="text" class="form-control" placeholder="00" id="basic-url">
-        <span class="input-group-text" id="basic-addon1">분</span>
-        <button type="button" class="btn btn-secondary">직접 입력</button>
-    </div> -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-outline-light">저장</button>
+        </div>
 
-    <div class="gap-3">
-        <p class="text-center fs-3">지속 시간</p>
-    </div>
-    <div class="mb-3">
-        <button type="button" id="during30m" class="btn btn-light">30분</button>
-        <button type="button" id="during1h" class="btn btn-light">1시간</button>
-        <button type="button" id="during1h30m" class="btn btn-light">1시간30분</button>
-        <button type="button" id="during2h" class="btn btn-light">2시간</button>
-        <button type="button" class="btn btn-secondary">직접 입력</button>
-    </div>
+    </form>
 
-
-    <div class="d-grid mb-3">
-        <textarea class="form-control" aria-label="With textarea" placeholder="추가 내용"></textarea>
-    </div>
-
-    <div class="d-grid">
-        <button type="button" class="btn btn-primary btn-outline-light" onclick="saveBehaviorRecord();">저장</button>
-    </div>
-
-</div> <!-- container -->
+</div><!-- container -->
 </body>
 
 </html>
