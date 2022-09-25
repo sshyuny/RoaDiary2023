@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="roadiary.behavior.record.repository.RecordsMapper">
+
+    <insert id="insertRecord" parameterType="roadiary.behavior.record.dto.RecordDTO"> 
+        INSERT INTO behavior_records 
+            (behavior_category_id, user_id, start_time, end_time, detail) 
+            VALUES 
+            (#{categoryId}, #{userId}, #{startDateTime}, #{endDateTime}, #{detail}) 
+    </insert>
+    
+
+</mapper>

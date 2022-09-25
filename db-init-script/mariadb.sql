@@ -54,3 +54,8 @@ VALUES
 ('함께'), 
 ('집안일'), 
 ('나머지'); 
+
+INSERT INTO user
+(email, nickname, recently_visited, register_status)
+VALUES
+('devsshyuny@gmail.com', 'sshyuny', now(), 'normal');
