@@ -4,8 +4,12 @@
 <mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
     <select id="selectCategoryList" resultType="roadiary.behavior.category.dto.CategoryDTO">
-        SELECT * FROM behavior_category
-            LIMIT 8;
+        SELECT CATE.behavior_category_id, CATE.content 
+        FROM (SELECT * FROM behavior_priorityofcategory
+            WHERE user_id = #{})  PRIOR
+        LEFT JOIN behavior_category CATE
+            ON CATE.behavior_category_id = PRIOR.n1
+                OR CATE.behavior_category_id = PRIOR.n2
     </select>
 
     <insert id="insertCategory" parameterType="roadiary.behavior.category.dto.CategoryVO"> 
@@ -14,6 +18,5 @@
             VALUES 
             (#{userId}, #{categoryContent}) 
     </insert>
-    
 
 </mapper>
