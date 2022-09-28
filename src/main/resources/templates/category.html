@@ -5,19 +5,30 @@
     <title>기록 페이지</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/category.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/facility-common.css}" rel="stylesheet">
 </head>
 
 <body>
-    <h2>Records</h2>
-    <h3>카테고리</h3>
+<div class="container text-center">
+    <div class="row mb-3">
+        <h2>카테고리 수정</h2>
+    </div>
 
     <form action="/categories" method="POST">
-        <input type="text" name="categoryContent">
-        <input type="submit" value="Submit">
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" name="categoryContent" class="form-control" placeholder="">
+            </div>
+            <div class="col-2">
+                <input type="submit" value="새로 추가" class="btn btn-primary btn-outline-light">
+            </div>
+        </div>
     </form>
     
-    <table id="categoryTable"></table>
-
+    <table id="categoryTable" class="table table-info table-striped"></table>
+</div>
 </body>
 
 </html>

@@ -6,10 +6,20 @@
     <select id="selectCategoryList" resultType="roadiary.behavior.category.dto.CategoryDTO">
         SELECT CATE.behavior_category_id, CATE.content 
         FROM (SELECT * FROM behavior_priorityofcategory
-            WHERE user_id = #{})  PRIOR
+            WHERE user_id = #{userId})  PRIOR
         LEFT JOIN behavior_category CATE
             ON CATE.behavior_category_id = PRIOR.n1
                 OR CATE.behavior_category_id = PRIOR.n2
+                OR CATE.behavior_category_id = PRIOR.n3
+                OR CATE.behavior_category_id = PRIOR.n4
+                OR CATE.behavior_category_id = PRIOR.n5
+                OR CATE.behavior_category_id = PRIOR.n6
+                OR CATE.behavior_category_id = PRIOR.n7
+                OR CATE.behavior_category_id = PRIOR.n8
+                OR CATE.behavior_category_id = PRIOR.n9
+                OR CATE.behavior_category_id = PRIOR.n10
+                OR CATE.behavior_category_id = PRIOR.n11
+                OR CATE.behavior_category_id = PRIOR.n12
     </select>
 
     <insert id="insertCategory" parameterType="roadiary.behavior.category.dto.CategoryVO"> 
