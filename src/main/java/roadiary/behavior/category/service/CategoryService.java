@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import roadiary.behavior.category.dto.CategoryDTO;
 import roadiary.behavior.category.dto.CategoryResDTO;
-import roadiary.behavior.category.dto.CategoryVO;
+import roadiary.behavior.category.dto.CategoryReqDTO;
 import roadiary.behavior.category.repository.CategoryRepository;
 
 @Service
@@ -29,9 +29,13 @@ public class CategoryService {
         return sortedCategoryResDTOList;
     }
 
-    public int addCategory(Long userId, String categoryContent) {
+    public int addCategory(String categoryContent) {
+        
+        CategoryReqDTO categoryVO = new CategoryReqDTO();
+        categoryVO.setCategoryContent(categoryContent);
 
-        int addNum = categoryRepository.insertCategory(new CategoryVO(userId, categoryContent));
+        int addNum = categoryRepository.insertCategory(categoryVO);
+        System.out.println("categoryVO id = " + categoryVO.getId());
         return addNum;
     }
 }

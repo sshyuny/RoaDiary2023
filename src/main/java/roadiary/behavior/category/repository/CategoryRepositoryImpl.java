@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.category.dto.CategoryDTO;
-import roadiary.behavior.category.dto.CategoryVO;
+import roadiary.behavior.category.dto.CategoryReqDTO;
 import roadiary.behavior.category.mapper.CategoryMapper;
 
 @Component
@@ -27,7 +27,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int insertCategory(CategoryVO categoryVO) {
+    public int insertCategory(CategoryReqDTO categoryVO) {
 
         int addNum = categoryMapper.insertCategory(categoryVO);
         return addNum;

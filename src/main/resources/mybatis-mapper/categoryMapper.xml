@@ -22,11 +22,11 @@
                 OR CATE.behavior_category_id = PRIOR.n12
     </select>
 
-    <insert id="insertCategory" parameterType="roadiary.behavior.category.dto.CategoryVO"> 
+    <insert id="insertCategory" parameterType="roadiary.behavior.category.dto.CategoryDTO" useGeneratedKeys="true" keyProperty="id"> 
         INSERT INTO behavior_category 
-            (user_id, content) 
+            (content) 
             VALUES 
-            (#{userId}, #{categoryContent}) 
+            (#{categoryContent}) 
     </insert>
 
 </mapper>

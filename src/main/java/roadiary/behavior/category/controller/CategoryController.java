@@ -32,7 +32,7 @@ public class CategoryController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
-        int addNum = categoryService.addCategory(userId, categoryContent);
+        int addNum = categoryService.addCategory(categoryContent);
 
         System.out.println(addNum);
 
