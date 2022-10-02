@@ -3,17 +3,18 @@ package roadiary.behavior.category.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import roadiary.behavior.category.dto.CategoryDTO;
 import roadiary.behavior.category.dto.CategoryResDTO;
+import roadiary.behavior.entity.CategoryEntity;
 
 public class CategoryUnit {
     
-    static public List<CategoryResDTO> switchCategoryDTOToResDTO(List<CategoryDTO> categoryDTOList) {
-        // 이후에 user가 최근에 사용한 category 반환하는 걸로 수정하기
+
+    static public List<CategoryResDTO> fromEntityToResDTO(List<CategoryEntity> categoryEntities) {
+
         List<CategoryResDTO> newList = new ArrayList<>();
 
-        for (CategoryDTO categoryDTO : categoryDTOList) {
-            CategoryResDTO categoryResDTO = new CategoryResDTO(categoryDTO.getBehavior_category_id(), categoryDTO.getContent());
+        for (CategoryEntity categoryEntity : categoryEntities) {
+            CategoryResDTO categoryResDTO = new CategoryResDTO(categoryEntity.getBehavior_category_id(), categoryEntity.getContent());
             newList.add(categoryResDTO);
         }
 

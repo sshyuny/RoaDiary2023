@@ -7,9 +7,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 
-import roadiary.behavior.category.dto.CategoryDTO;
-import roadiary.behavior.category.dto.CategoryReqDTO;
 import roadiary.behavior.category.mapper.CategoryMapper;
+import roadiary.behavior.entity.CategoryEntity;
 
 @Component
 @Primary
@@ -20,16 +19,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     private CategoryMapper categoryMapper;
     
     @Override
-    public List<CategoryDTO> selectCategoryDTOs(Long userId) {
+    public List<CategoryEntity> selectCategoryDTOs(Long userId) {
         
-        List<CategoryDTO> categoryDTOList = categoryMapper.selectCategoryList(userId);
+        List<CategoryEntity> categoryDTOList = categoryMapper.selectCategoryList(userId);
         return categoryDTOList;
     }
 
     @Override
-    public int insertCategory(CategoryReqDTO categoryVO) {
+    public int insertCategory(CategoryEntity categoryEntity) {
 
-        int addNum = categoryMapper.insertCategory(categoryVO);
-        return addNum;
+        int addedNum = categoryMapper.insertCategory(categoryEntity);
+        return addedNum;
     }
 }

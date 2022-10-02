@@ -8,9 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import roadiary.behavior.category.dto.CategoryDTO;
 import roadiary.behavior.category.dto.CategoryResDTO;
 import roadiary.behavior.category.service.CategoryService;
+import roadiary.behavior.entity.CategoryEntity;
 
 public class CategoryServiceTest {
     

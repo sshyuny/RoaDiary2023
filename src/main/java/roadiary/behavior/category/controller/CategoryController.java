@@ -32,9 +32,9 @@ public class CategoryController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
-        int addNum = categoryService.addCategory(categoryContent);
+        int addedNum = categoryService.addCategory(categoryContent);
 
-        System.out.println(addNum);
+        System.out.println(addedNum);
 
         return "redirect:/category";
     }

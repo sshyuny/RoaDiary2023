@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import roadiary.behavior.category.dto.CategoryDTO;
-import roadiary.behavior.category.dto.CategoryReqDTO;
+import roadiary.behavior.entity.CategoryEntity;
 
 @Mapper
 public interface CategoryMapper {
     
-    public List<CategoryDTO> selectCategoryList(Long userId);
+    public List<CategoryEntity> selectCategoryList(Long userId);
 
-    public int insertCategory(CategoryReqDTO categoryVO);
+    public int insertCategory(CategoryEntity categoryEntity);
     
 }

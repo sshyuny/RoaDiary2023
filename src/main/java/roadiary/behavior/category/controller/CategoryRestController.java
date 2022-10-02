@@ -23,9 +23,9 @@ public class CategoryRestController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
-        List<CategoryResDTO> categoryDTOList = categoryService.getCategoryList(userId);
+        List<CategoryResDTO> categoryResDTOs = categoryService.getCategoryList(userId);
 
-        return categoryDTOList;
+        return categoryResDTOs;
     }
 
     
