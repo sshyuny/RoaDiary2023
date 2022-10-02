@@ -9,4 +9,6 @@ public interface CategoryRepository {
     public List<CategoryEntity> selectCategoryDtos(Long userId);
 
     public int insertCategory(CategoryEntity categoryEntity);
+
+    public int countSavedCategoryNum(long userId);
 }

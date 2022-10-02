@@ -31,4 +31,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         int addedNum = categoryMapper.insertCategory(categoryEntity);
         return addedNum;
     }
+
+    @Override
+    public int countSavedCategoryNum(long userId) {
+        int savedCategoryNum = categoryMapper.countSavedCategoryNum(userId);
+        return savedCategoryNum;
+    }
 }

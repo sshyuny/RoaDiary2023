@@ -18,7 +18,7 @@ public class RecordEntity {
     private LocalDateTime endDateTime;
     private String detail;
 
-    public static RecordEntity create(long categoryId, long userId, LocalDateTime startDateTime, LocalDateTime endDateTime, String detail) {
+    public static RecordEntity of(long categoryId, long userId, LocalDateTime startDateTime, LocalDateTime endDateTime, String detail) {
         RecordEntity recordEntity = new RecordEntity();
         recordEntity.setCategoryId(categoryId);
         recordEntity.setUserId(userId);

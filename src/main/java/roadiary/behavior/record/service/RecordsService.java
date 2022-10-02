@@ -24,7 +24,7 @@ public class RecordsService {
         LocalDateTime enddDateTime = LocalDateTime.of(LocalDate.now(), 
                 LocalTime.of(recordReqDto.getEndHour(), recordReqDto.getEndMin()));
 
-        RecordEntity recordEntity = RecordEntity.create(recordReqDto.getCategoryId(), userId, startDateTime, enddDateTime, recordReqDto.getDetail());
+        RecordEntity recordEntity = RecordEntity.of(recordReqDto.getCategoryId(), userId, startDateTime, enddDateTime, recordReqDto.getDetail());
         int insertedNum = recordsRepository.insertRecord(recordEntity);
 
         if (insertedNum == 1) return true;

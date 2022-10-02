@@ -1,5 +1,24 @@
-window.onload = function() { makeCategoryTable(); }
+window.onload = function() { statusCheck(); makeCategoryTable(); }
 
+
+// 카테고리를 추가할 경우
+function statusCheck() {
+    let urlParams = new URLSearchParams(location.search)
+    let status = urlParams.get('status');
+    if (status == "over") {
+        alert("카테고리 12개가 이미 다 차있기 때문에 새로 카테고리를 추가할 수 없습니다. \n"
+           + "먼저 삭제를 한 뒤 추가를 해주세요.");
+        location.replace("/category");
+    } else if(status == "success") {
+        alert("저장이 정상적으로 완료되었습니다.");
+        location.replace("/category");
+    } else if(status == "not") {
+        alert("저장이 완료되지 못했습니다. 다시 시도해주세요.");
+        location.replace("/category");
+    }
+        
+
+}
 function makeCategoryTable() {
     $.ajax({
         url: '/categories', 

@@ -2,22 +2,19 @@ package roadiary.behavior.category.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.entity.CategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 
+@RequiredArgsConstructor
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
     
     public List<CategoryResDto> getCategoryList(Long userId) {
 
@@ -27,14 +24,28 @@ public class CategoryService {
         return categoryResDtos;
     }
 
-    public int addCategory(String categoryContent) {
-        
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setContent(categoryContent);
+    public int getSavedCategoryNum(long userId) {
+        int savedCategoryNum = categoryRepository.countSavedCategoryNum(userId);
+        return savedCategoryNum;
+    }
 
-        int addedNum = categoryRepository.insertCategory(categoryEntity);
-        System.out.println("categoryEntity id = " + categoryEntity.getBehavior_category_id());
+    public int addCategory(CategoryReqDto categoryReqDto) {
+        
+        CategoryEntity categoryEntity = CategoryEntity.of(categoryReqDto.getCategoryContent());
+
+        int addedNum = categoryRepository.insertCategory(categoryEntity);  // 여기서 새로 추가된 category의 id값이 들어감
+        if (addedNum != 1) {
+            // 예외처리 추가하기
+            return addedNum;
+        }
+        
+        long behaviorCategoryId = categoryEntity.getBehavior_category_id();
+        categoryReqDto.setCategoryId(behaviorCategoryId);
 
         return addedNum;
+    }
+
+    public void addPriority(CategoryReqDto categoryReqDto) {
+
     }
 }

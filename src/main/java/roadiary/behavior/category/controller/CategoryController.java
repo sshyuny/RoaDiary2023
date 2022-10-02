@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.service.CategoryService;
 
 @Controller
@@ -32,10 +33,18 @@ public class CategoryController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
-        int addedNum = categoryService.addCategory(categoryContent);
+        // 이미 priorityofcategory에 12개 이상의 카테고리가 추가된 경우, 카테고리 추가 막음
+        int savedCategoryNum = categoryService.getSavedCategoryNum(userId);
+        if (savedCategoryNum >= 12) return "redirect:/category?status=over";
 
-        System.out.println(addedNum);
+        CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, categoryContent);
+        int addedNum = categoryService.addCategory(categoryReqDto);  // categoryReqDto에, 새로 추가된 category의 id값이 들어감
 
-        return "redirect:/category";
+        // 카테고리 추가가 되지 않은 경우
+        if (addedNum != 1) return "redirect:/category?status=not";
+
+        categoryService.addPriority(categoryReqDto);
+
+        return "redirect:/category?status=success";
     }
 }

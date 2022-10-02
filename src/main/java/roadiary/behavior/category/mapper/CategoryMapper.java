@@ -12,5 +12,7 @@ public interface CategoryMapper {
     public List<CategoryEntity> selectCategoryList(Long userId);
 
     public int insertCategory(CategoryEntity categoryEntity);
+
+    public int countSavedCategoryNum(long userId);
     
 }
