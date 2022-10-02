@@ -6,10 +6,9 @@ import java.time.LocalTime;
 
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import roadiary.behavior.record.dto.RecordDTO;
-import roadiary.behavior.record.dto.RecordReqDTO;
+import roadiary.behavior.record.dto.RecordReqDto;
+import roadiary.behavior.record.entity.RecordEntity;
 import roadiary.behavior.record.repository.RecordsRepository;
 
 @RequiredArgsConstructor
@@ -18,15 +17,15 @@ public class RecordsService {
 
     private final RecordsRepository recordsRepository;
     
-    public boolean addRecord(RecordReqDTO recordReqDTO, long userId) {
+    public boolean addRecord(RecordReqDto recordReqDto, long userId) {
 
         LocalDateTime startDateTime = LocalDateTime.of(LocalDate.now(), 
-                LocalTime.of(recordReqDTO.getStartHour(), recordReqDTO.getStartMin()));
+                LocalTime.of(recordReqDto.getStartHour(), recordReqDto.getStartMin()));
         LocalDateTime enddDateTime = LocalDateTime.of(LocalDate.now(), 
-                LocalTime.of(recordReqDTO.getEndHour(), recordReqDTO.getEndMin()));
+                LocalTime.of(recordReqDto.getEndHour(), recordReqDto.getEndMin()));
 
-        RecordDTO recordDTO = RecordDTO.create(recordReqDTO.getCategoryId(), userId, startDateTime, enddDateTime, recordReqDTO.getDetail());
-        int insertedNum = recordsRepository.insertRecord(recordDTO);
+        RecordEntity recordEntity = RecordEntity.create(recordReqDto.getCategoryId(), userId, startDateTime, enddDateTime, recordReqDto.getDetail());
+        int insertedNum = recordsRepository.insertRecord(recordEntity);
 
         if (insertedNum == 1) return true;
         else return false;

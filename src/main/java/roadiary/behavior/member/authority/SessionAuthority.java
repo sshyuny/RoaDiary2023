@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
-import roadiary.behavior.member.dto.MemberAuthorityDTO;
+import roadiary.behavior.member.dto.MemberAuthorityDto;
 
 @Component
 public class SessionAuthority implements Authority {
@@ -21,10 +21,10 @@ public class SessionAuthority implements Authority {
     }
 
     @Override
-    public void makeLoginStatus(HttpServletRequest request, MemberAuthorityDTO memberAuthorityDTO) {
+    public void makeLoginStatus(HttpServletRequest request, MemberAuthorityDto memberAuthorityDto) {
 
         HttpSession session = request.getSession();
-        session.setAttribute(SessionKeys.login, memberAuthorityDTO);
+        session.setAttribute(SessionKeys.login, memberAuthorityDto);
     }
 
     @Override

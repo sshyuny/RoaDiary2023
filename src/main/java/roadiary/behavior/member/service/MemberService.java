@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import roadiary.behavior.member.authority.Authority;
-import roadiary.behavior.member.dto.MemberAuthorityDTO;
+import roadiary.behavior.member.dto.MemberAuthorityDto;
 
 @Service
 public class MemberService {
@@ -23,8 +23,8 @@ public class MemberService {
 
     public void makeLoginStatus(HttpServletRequest request) {
         // 이후 수정
-        MemberAuthorityDTO memberAuthorityDTO = new MemberAuthorityDTO("name");
-        authority.makeLoginStatus(request, memberAuthorityDTO);
+        MemberAuthorityDto memberAuthorityDto = new MemberAuthorityDto("name");
+        authority.makeLoginStatus(request, memberAuthorityDto);
     }
 
     public void destroyLoginStatus(HttpServletRequest request) {

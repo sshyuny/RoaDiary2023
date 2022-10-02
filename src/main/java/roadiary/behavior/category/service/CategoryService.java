@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import roadiary.behavior.category.dto.CategoryResDTO;
+import roadiary.behavior.category.dto.CategoryResDto;
+import roadiary.behavior.category.entity.CategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
-import roadiary.behavior.entity.CategoryEntity;
 
 @Service
 public class CategoryService {
@@ -19,12 +19,12 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
     
-    public List<CategoryResDTO> getCategoryList(Long userId) {
+    public List<CategoryResDto> getCategoryList(Long userId) {
 
-        List<CategoryEntity> categoryEntities = categoryRepository.selectCategoryDTOs(userId);
-        List<CategoryResDTO> categoryResDTOs = CategoryUnit.fromEntityToResDTO(categoryEntities);
+        List<CategoryEntity> categoryEntities = categoryRepository.selectCategoryDtos(userId);
+        List<CategoryResDto> categoryResDtos = CategoryUnit.fromEntityToResDto(categoryEntities);
 
-        return categoryResDTOs;
+        return categoryResDtos;
     }
 
     public int addCategory(String categoryContent) {
@@ -34,7 +34,7 @@ public class CategoryService {
 
         int addedNum = categoryRepository.insertCategory(categoryEntity);
         System.out.println("categoryEntity id = " + categoryEntity.getBehavior_category_id());
-        
+
         return addedNum;
     }
 }

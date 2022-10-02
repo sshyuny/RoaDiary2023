@@ -1,9 +1,9 @@
 package roadiary.behavior.record.repository;
 
-import roadiary.behavior.record.dto.RecordDTO;
+import roadiary.behavior.record.entity.RecordEntity;
 
 public interface RecordsRepository {
     
-    public int insertRecord(RecordDTO recordDTO);
+    public int insertRecord(RecordEntity recordEntity);
     
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import roadiary.behavior.entity.CategoryEntity;
+import roadiary.behavior.category.entity.CategoryEntity;
 
 @Mapper
 public interface CategoryMapper {

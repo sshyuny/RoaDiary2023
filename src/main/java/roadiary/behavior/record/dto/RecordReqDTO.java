@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class RecordReqDTO {
+public class RecordReqDto {
     
     private long categoryId;
     private LocalDate startDate;

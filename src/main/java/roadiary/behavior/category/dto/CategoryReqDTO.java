@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CategoryReqDTO {
+public class CategoryReqDto {
     
     private long id;
     private String categoryContent;

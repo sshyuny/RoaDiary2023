@@ -3,7 +3,7 @@
 
 <mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
-    <select id="selectCategoryList" resultType="roadiary.behavior.entity.CategoryEntity">
+    <select id="selectCategoryList" resultType="roadiary.behavior.category.entity.CategoryEntity">
         SELECT CATE.behavior_category_id, CATE.content 
         FROM (SELECT * FROM behavior_priorityofcategory
             WHERE user_id = #{userId})  PRIOR
@@ -22,7 +22,7 @@
                 OR CATE.behavior_category_id = PRIOR.n12
     </select>
 
-    <insert id="insertCategory" parameterType="roadiary.behavior.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="behavior_category_id"> 
+    <insert id="insertCategory" parameterType="roadiary.behavior.category.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="behavior_category_id"> 
         INSERT INTO behavior_category 
             (content) 
             VALUES 

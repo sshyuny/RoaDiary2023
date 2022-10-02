@@ -1,11 +1,11 @@
 package roadiary.behavior.category.dto;
 
-public class CategoryResDTO {
+public class CategoryResDto {
     
     private long id;
     private String content;
     
-    public CategoryResDTO(long id, String content) {
+    public CategoryResDto(long id, String content) {
         this.id = id;
         this.content = content;
     }

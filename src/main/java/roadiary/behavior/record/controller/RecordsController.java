@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import roadiary.behavior.record.dto.RecordReqDTO;
+import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.service.RecordsService;
 
 @Controller
@@ -22,12 +21,12 @@ public class RecordsController {
     }
     
     @PostMapping("/behavior")
-    public String saveRecord(@ModelAttribute RecordReqDTO recordReqDTO) {
+    public String saveRecord(@ModelAttribute RecordReqDto recordReqDto) {
 
         // userId 세션에서 가져오기
         Long userId = 1L;
         
-        boolean isItAdded = recordsService.addRecord(recordReqDTO, userId);
+        boolean isItAdded = recordsService.addRecord(recordReqDto, userId);
 
         System.out.println(isItAdded);
 

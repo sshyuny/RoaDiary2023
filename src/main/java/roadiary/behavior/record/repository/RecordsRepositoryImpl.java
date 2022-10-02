@@ -3,7 +3,7 @@ package roadiary.behavior.record.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import roadiary.behavior.record.dto.RecordDTO;
+import roadiary.behavior.record.entity.RecordEntity;
 
 @Repository
 public class RecordsRepositoryImpl implements RecordsRepository {
@@ -12,8 +12,8 @@ public class RecordsRepositoryImpl implements RecordsRepository {
     private RecordsMapper recordsMapper;
     
     @Override
-    public int insertRecord(RecordDTO recordDTO) {
-        return recordsMapper.insertRecord(recordDTO);
+    public int insertRecord(RecordEntity recordEntity) {
+        return recordsMapper.insertRecord(recordEntity);
     }
 
 }

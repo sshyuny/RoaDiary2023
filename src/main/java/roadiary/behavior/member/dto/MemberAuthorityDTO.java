@@ -1,10 +1,10 @@
 package roadiary.behavior.member.dto;
 
-public class MemberAuthorityDTO {
+public class MemberAuthorityDto {
     
     private String name;
 
-    public MemberAuthorityDTO(String name) {
+    public MemberAuthorityDto(String name) {
         this.name = name;
     }
 

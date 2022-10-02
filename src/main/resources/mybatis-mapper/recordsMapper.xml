@@ -3,7 +3,7 @@
 
 <mapper namespace="roadiary.behavior.record.repository.RecordsMapper">
 
-    <insert id="insertRecord" parameterType="roadiary.behavior.record.dto.RecordDTO"> 
+    <insert id="insertRecord" parameterType="roadiary.behavior.record.entity.RecordEntity"> 
         INSERT INTO behavior_records 
             (behavior_category_id, user_id, start_time, end_time, detail) 
             VALUES 

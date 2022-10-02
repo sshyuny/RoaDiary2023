@@ -10,8 +10,8 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import roadiary.behavior.category.dto.CategoryDTO;
-import roadiary.behavior.category.dto.CategoryResDTO;
+import roadiary.behavior.category.Dto.CategoryDto;
+import roadiary.behavior.category.Dto.CategoryResDto;
 import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.category.service.CategoryUnit;
 
@@ -22,25 +22,25 @@ public class CategoryUnitTest {
     // 비즈니스 로직을 지우고, 같은 기능을 DB 쿼리로 옮김 
     // 필요 없어진 Test
     @Test
-    @DisplayName("CategoryDTO 최신순정렬 뒤 CategoryResDTO로 반환 확인")
-    void switchCategoryDTOToResDTOTest() {
+    @DisplayName("CategoryDto 최신순정렬 뒤 CategoryResDto로 반환 확인")
+    void switchCategoryDtoToResDtoTest() {
 
         // given
-        List<CategoryDTO> categoryDTOList = categoryRepository.selectCategoryDTOs(1L);
+        List<CategoryDto> categoryDtoList = categoryRepository.selectCategoryDtos(1L);
 
         // when
-        List<CategoryResDTO> sortedCategoryResDTOList = CategoryUnit.switchCategoryDTOToResDTO(categoryDTOList);
+        List<CategoryResDto> sortedCategoryResDtoList = CategoryUnit.switchCategoryDtoToResDto(categoryDtoList);
 
         Map<Long, LocalDateTime> categoryIdTimeMap = new HashMap<>();
-        for (CategoryDTO categoryDTO : categoryDTOList) {
-            categoryIdTimeMap.put(categoryDTO.getId(), categoryDTO.getRecently_used());
+        for (CategoryDto categoryDto : categoryDtoList) {
+            categoryIdTimeMap.put(categoryDto.getId(), categoryDto.getRecently_used());
         }
         
         // then
-        int listSize = sortedCategoryResDTOList.size();
-        long beforeId = sortedCategoryResDTOList.get(0).getId();
+        int listSize = sortedCategoryResDtoList.size();
+        long beforeId = sortedCategoryResDtoList.get(0).getId();
         for (int i = 1; i < listSize; i++) {
-            long curId = sortedCategoryResDTOList.get(i).getId();
+            long curId = sortedCategoryResDtoList.get(i).getId();
             LocalDateTime beforeTime = categoryIdTimeMap.get(beforeId);
             LocalDateTime curTime = categoryIdTimeMap.get(curId);
             
