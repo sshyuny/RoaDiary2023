@@ -40,6 +40,16 @@ CREATE TABLE behavior_records (
     FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
+CREATE TABLE behavior_priority_category (
+    user_id BIGINT,
+    priority_idx BIGINT,
+    behavior_category_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id), 
+    PRIMARY KEY(user_id, priority_idx)
+);
+
+-- delete it
 CREATE TABLE behavior_priorityofcategory (
     user_id BIGINT, 
     n1 BIGINT, n2 BIGINT, n3 BIGINT, n4 BIGINT, n5 BIGINT,
@@ -59,6 +69,7 @@ CREATE TABLE behavior_priorityofcategory (
     FOREIGN KEY (n11) REFERENCES behavior_category(behavior_category_id), 
     FOREIGN KEY (n12) REFERENCES behavior_category(behavior_category_id)
 );
+--insert into behavior_priorityofcategory (user_id, n1, n2, n3) values ('1', '1', '2', '3');
 
 INSERT INTO behavior_category
 (content)
@@ -80,4 +91,12 @@ INSERT INTO user
 VALUES
 ('devsshyuny@gmail.com', 'sshyuny', now(), 'normal');
 
-insert into behavior_priorityofcategory (user_id, n1, n2, n3) values ('1', '1', '2', '3');
+INSERT INTO behavior_priority_category
+(user_id, priority_idx, behavior_category_id)
+VALUES
+(1, 1, 1), 
+(1, 2, 5), 
+(1, 3, 20), 
+(1, 4, 22);
+
+delete from behavior_priority_category where user_id=1 and priority_idx=2;

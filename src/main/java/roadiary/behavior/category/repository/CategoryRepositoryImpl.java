@@ -40,12 +40,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int countSavedCategoryNum(long userId) {
-        int savedCategoryNum = categoryMapper.countSavedCategoryNum(userId);
-        return savedCategoryNum;
-    }
-
-    @Override
     public int updatePriority(PriorityOfCategoryEntity priorityOfCategoryEntity) {
         int addedPriorityNum = categoryMapper.updatePriority(priorityOfCategoryEntity);
         return addedPriorityNum;

@@ -26,23 +26,6 @@
         SELECT * FROM behavior_priorityofcategory where user_id = #{userId}
     </select>
 
-    <!-- 이후 수정 -->
-    <select id="countSavedCategoryNum" resultType="_int">
-        SELECT
-            SUM(num1) +  SUM(num2) + SUM(num3) + SUM(num4) +
-            SUM(num5) +  SUM(num6) + SUM(num7) + SUM(num8) +
-            SUM(num9) +  SUM(num10) + SUM(num11) + SUM(num12) 
-            as sum
-        FROM ( 
-            SELECT 
-                COUNT(n1) as num1, COUNT(n2) as num2, COUNT(n3) as num3, COUNT(n4) as num4, 
-                COUNT(n5) as num5, COUNT(n6) as num6, COUNT(n7) as num7, COUNT(n8) as num8, 
-                COUNT(n9) as num9, COUNT(n10) as num10, COUNT(n11) as num11, COUNT(n12) as num12
-                FROM behavior_priorityofcategory
-                WHERE user_id = #{userId}
-        ) as newtable;
-    </select>
-
     <insert id="insertCategory" parameterType="roadiary.behavior.category.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="behavior_category_id"> 
         INSERT INTO behavior_category 
             (content) 

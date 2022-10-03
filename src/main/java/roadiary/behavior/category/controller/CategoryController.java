@@ -35,8 +35,6 @@ public class CategoryController {
         Long userId = 1L;
 
         // 이미 priorityofcategory에 12개 이상의 카테고리가 추가된 경우, 카테고리 추가 막음
-        //int savedCategoryNum = categoryService.getSavedCategoryNum(userId);
-        //if (savedCategoryNum >= 12) return "redirect:/category?status=over";
         PriorityOfCategoryEntity priorityOfCategoryEntity = categoryService.getPriorityOfCategoryEntity(userId);
         int savedCategoryNum = categoryService.countNCols(priorityOfCategoryEntity);
         if (savedCategoryNum >= 12) return "redirect:/category?status=over";

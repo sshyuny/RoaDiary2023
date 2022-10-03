@@ -25,10 +25,6 @@ public class CategoryService {
         return categoryResDtos;
     }
 
-    public int getSavedCategoryNum(long userId) {
-        int savedCategoryNum = categoryRepository.countSavedCategoryNum(userId);
-        return savedCategoryNum;
-    }
     public int countNCols(PriorityOfCategoryEntity priorityOfCategoryEntity) {
         if (priorityOfCategoryEntity.getN2() == null) return 1;
         else if(priorityOfCategoryEntity.getN3() == null) return 2;

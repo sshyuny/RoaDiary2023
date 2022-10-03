@@ -14,8 +14,6 @@ public interface CategoryMapper {
 
     public int insertCategory(CategoryEntity categoryEntity);
 
-    public int countSavedCategoryNum(long userId);
-
     public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId);
 
     public int updatePriority(PriorityOfCategoryEntity priorityOfCategoryEntity);
