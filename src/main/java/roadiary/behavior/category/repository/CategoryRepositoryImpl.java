@@ -50,4 +50,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         int addedPriorityNum = categoryMapper.updatePriority(priorityOfCategoryEntity);
         return addedPriorityNum;
     }
+
+    @Override
+    public long selectNewCategoryId(String categoryContent) {
+        Long newCategoryId = categoryMapper.selectNewCategoryId(categoryContent);
+        System.out.println("newCategoryId " + newCategoryId);
+        if (newCategoryId == null) return 0;
+        else return newCategoryId;
+    }
 }

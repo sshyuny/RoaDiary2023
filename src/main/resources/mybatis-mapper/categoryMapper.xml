@@ -58,4 +58,9 @@
             WHERE user_id = #{user_id};
     </update>
 
+    
+    <select id="selectNewCategoryId" resultType="Long">
+        SELECT behavior_category_id FROM behavior_category WHERE content = #{categoryContent};
+    </select>
+
 </mapper>

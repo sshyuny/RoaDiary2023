@@ -41,14 +41,9 @@ public class CategoryController {
         int savedCategoryNum = categoryService.countNCols(priorityOfCategoryEntity);
         if (savedCategoryNum >= 12) return "redirect:/category?status=over";
 
-        // 중복 막는 부분 추가
-
         // [Repository]
         CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, categoryContent);
-        int addedNum = categoryService.addCategory(categoryReqDto);  // categoryReqDto에, 새로 추가된 category의 id값이 들어감
-
-        // 카테고리 추가가 되지 않은 경우
-        if (addedNum != 1) return "redirect:/category?status=not";
+        categoryService.addCategory(categoryReqDto);  // categoryReqDto에, 요청된 categoryId값이 들어감
 
         // [Repository]
         int addedPriorityNum = categoryService.addPriority(categoryReqDto, priorityOfCategoryEntity);

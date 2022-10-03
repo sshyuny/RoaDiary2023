@@ -16,4 +16,6 @@ public interface CategoryRepository {
     public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId);
 
     public int updatePriority(PriorityOfCategoryEntity priorityOfCategoryEntity);
+
+    public long selectNewCategoryId(String categoryContent);
 }

@@ -49,17 +49,20 @@ public class CategoryService {
         return priorityOfCategoryEntity;
     }
 
-    public int addCategory(CategoryReqDto categoryReqDto) {
+    public void addCategory(CategoryReqDto categoryReqDto) {
         
         CategoryEntity categoryEntity = CategoryEntity.of(categoryReqDto.getCategoryContent());
 
-        int addedNum = categoryRepository.insertCategory(categoryEntity);  // 여기서 새로 추가된 category의 id값이 들어감
-        if (addedNum != 1) return addedNum;
-        
-        long behaviorCategoryId = categoryEntity.getBehavior_category_id();
-        categoryReqDto.setCategoryId(behaviorCategoryId);
+        // 카테고리 id값 확인(이미 등록된 카테고리일 경우 0 반환)
+        long newCategoryId = categoryRepository.selectNewCategoryId(categoryReqDto.getCategoryContent());
 
-        return addedNum;
+        // categoryReqDto에 categoryId 값 추가
+        if (newCategoryId == 0) {
+            categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
+            categoryReqDto.setCategoryId(categoryEntity.getBehavior_category_id());
+        } else {
+            categoryReqDto.setCategoryId(newCategoryId);
+        }
     }
 
     public int addPriority(CategoryReqDto categoryReqDto, PriorityOfCategoryEntity priorityOfCategoryEntity) {
