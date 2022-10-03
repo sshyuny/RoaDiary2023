@@ -8,19 +8,19 @@ public class PriorityOfCategoryEntity {
     
     private long user_id;
 
-    private long n1;
-    private long n2;
-    private long n3;
-    private long n4;
-    private long n5;
+    private Long n1;
+    private Long n2;
+    private Long n3;
+    private Long n4;
+    private Long n5;
 
-    private long n6;
-    private long n7;
-    private long n8;
-    private long n9;
-    private long n10;
+    private Long n6;
+    private Long n7;
+    private Long n8;
+    private Long n9;
+    private Long n10;
 
-    private long n11;
-    private long n12;
+    private Long n11;
+    private Long n12;
 
 }

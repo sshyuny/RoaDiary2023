@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import roadiary.behavior.category.dto.CategoryReqDto;
-import roadiary.behavior.category.entity.CategoryEntity;
 import roadiary.behavior.category.entity.PriorityOfCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
 
@@ -52,7 +51,10 @@ public class CategoryController {
         if (addedNum != 1) return "redirect:/category?status=not";
 
         // [Repository]
-        categoryService.addPriority(categoryReqDto, priorityOfCategoryEntity);
+        int addedPriorityNum = categoryService.addPriority(categoryReqDto, priorityOfCategoryEntity);
+
+        // 카테고리 priority 추가가 되지 않은 경우
+        if (addedPriorityNum != 1) return "redirect:/category?status=not";
 
         return "redirect:/category?status=success";
     }

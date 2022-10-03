@@ -14,4 +14,6 @@ public interface CategoryRepository {
     public int countSavedCategoryNum(long userId);
 
     public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId);
+
+    public int updatePriority(PriorityOfCategoryEntity priorityOfCategoryEntity);
 }
