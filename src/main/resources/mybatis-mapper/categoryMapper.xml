@@ -22,6 +22,11 @@
                 OR CATE.behavior_category_id = PRIOR.n12
     </select>
 
+    <select id="selectPriorityOfCategoryEntity" resultType="roadiary.behavior.category.entity.PriorityOfCategoryEntity">
+        SELECT * FROM behavior_priorityofcategory where user_id = #{userId}
+    </select>
+
+    <!-- 이후 수정 -->
     <select id="countSavedCategoryNum" resultType="_int">
         SELECT
             SUM(num1) +  SUM(num2) + SUM(num3) + SUM(num4) +

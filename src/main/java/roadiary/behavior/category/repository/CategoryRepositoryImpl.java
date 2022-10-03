@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.category.entity.CategoryEntity;
+import roadiary.behavior.category.entity.PriorityOfCategoryEntity;
 import roadiary.behavior.category.mapper.CategoryMapper;
 
 @Component
@@ -23,6 +24,12 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         
         List<CategoryEntity> categoryDtoList = categoryMapper.selectCategoryList(userId);
         return categoryDtoList;
+    }
+
+    @Override
+    public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId) {
+        PriorityOfCategoryEntity priorityOfCategoryEntity = categoryMapper.selectPriorityOfCategoryEntity(userId);
+        return priorityOfCategoryEntity;
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import roadiary.behavior.category.entity.CategoryEntity;
+import roadiary.behavior.category.entity.PriorityOfCategoryEntity;
 
 @Mapper
 public interface CategoryMapper {
@@ -14,5 +15,7 @@ public interface CategoryMapper {
     public int insertCategory(CategoryEntity categoryEntity);
 
     public int countSavedCategoryNum(long userId);
+
+    public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId);
     
 }
