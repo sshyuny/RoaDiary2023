@@ -3,7 +3,7 @@ package roadiary.behavior.category.repository;
 import java.util.List;
 
 import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityOfCategoryEntity;
+import roadiary.behavior.category.entity.PriorityCategoryEntity;
 
 public interface CategoryRepository {
     
@@ -11,9 +11,7 @@ public interface CategoryRepository {
 
     public int insertCategory(CategoryEntity categoryEntity);
 
-    public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId);
-
-    public int updatePriority(PriorityOfCategoryEntity priorityOfCategoryEntity);
+    public int insertPriority(PriorityCategoryEntity priorityCategoryEntity);
 
     public long selectNewCategoryId(String categoryContent);
 }

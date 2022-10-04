@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityOfCategoryEntity;
+import roadiary.behavior.category.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.mapper.CategoryMapper;
 
 @Component
@@ -27,12 +27,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public PriorityOfCategoryEntity selectPriorityOfCategoryEntity(long userId) {
-        PriorityOfCategoryEntity priorityOfCategoryEntity = categoryMapper.selectPriorityOfCategoryEntity(userId);
-        return priorityOfCategoryEntity;
-    }
-
-    @Override
     public int insertCategory(CategoryEntity categoryEntity) {
 
         int addedNum = categoryMapper.insertCategory(categoryEntity);
@@ -40,16 +34,16 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int updatePriority(PriorityOfCategoryEntity priorityOfCategoryEntity) {
-        int addedPriorityNum = categoryMapper.updatePriority(priorityOfCategoryEntity);
+    public int insertPriority(PriorityCategoryEntity priorityCategoryEntity) {
+        int addedPriorityNum = categoryMapper.insertPriority(priorityCategoryEntity);
         return addedPriorityNum;
     }
 
     @Override
     public long selectNewCategoryId(String categoryContent) {
         Long newCategoryId = categoryMapper.selectNewCategoryId(categoryContent);
-        System.out.println("newCategoryId " + newCategoryId);
-        if (newCategoryId == null) return 0;
-        else return newCategoryId;
+
+        if (newCategoryId == null) return 0;  // 새 카테고리일 경우
+        else return newCategoryId;  // 이미 등록된 카테고리일 경우
     }
 }

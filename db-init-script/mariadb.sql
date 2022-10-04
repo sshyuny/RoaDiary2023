@@ -15,6 +15,10 @@ GRANT ALL PRIVILEGES ON bhdb.* TO 'bhuser'@'localhost';
 
 USE bhdb;
 
+
+---- ---- ---- ----
+-- TABLE
+---- ---- ---- ----
 CREATE TABLE behavior_category (
     behavior_category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     content CHAR(144) NOT NULL
@@ -46,31 +50,13 @@ CREATE TABLE behavior_priority_category (
     behavior_category_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id), 
-    PRIMARY KEY(user_id, priority_idx)
+    UNIQUE KEY priority_category_unique (user_id, priority_idx)
 );
 
--- delete it
-CREATE TABLE behavior_priorityofcategory (
-    user_id BIGINT, 
-    n1 BIGINT, n2 BIGINT, n3 BIGINT, n4 BIGINT, n5 BIGINT,
-    n6 BIGINT, n7 BIGINT, n8 BIGINT, n9 BIGINT, n10 BIGINT,
-    n11 BIGINT, n12 BIGINT,
-    FOREIGN KEY (user_id) REFERENCES user(user_id),
-    FOREIGN KEY (n1) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n2) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n3) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n4) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n5) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n6) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n7) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n8) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n9) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n10) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n11) REFERENCES behavior_category(behavior_category_id), 
-    FOREIGN KEY (n12) REFERENCES behavior_category(behavior_category_id)
-);
---insert into behavior_priorityofcategory (user_id, n1, n2, n3) values ('1', '1', '2', '3');
 
+---- ---- ---- ----
+-- DATA
+---- ---- ---- ----
 INSERT INTO behavior_category
 (content)
 VALUES
@@ -99,4 +85,4 @@ VALUES
 (1, 3, 20), 
 (1, 4, 22);
 
-delete from behavior_priority_category where user_id=1 and priority_idx=2;
+DELETE FROM behavior_priority_category WHERE user_id=1 AND priority_idx=12;

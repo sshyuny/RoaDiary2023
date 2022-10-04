@@ -4,26 +4,12 @@
 <mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
     <select id="selectCategoryList" resultType="roadiary.behavior.category.entity.CategoryEntity">
-        SELECT CATE.behavior_category_id, CATE.content 
-        FROM (SELECT * FROM behavior_priorityofcategory
-            WHERE user_id = #{userId})  PRIOR
-        LEFT JOIN behavior_category CATE
-            ON CATE.behavior_category_id = PRIOR.n1
-                OR CATE.behavior_category_id = PRIOR.n2
-                OR CATE.behavior_category_id = PRIOR.n3
-                OR CATE.behavior_category_id = PRIOR.n4
-                OR CATE.behavior_category_id = PRIOR.n5
-                OR CATE.behavior_category_id = PRIOR.n6
-                OR CATE.behavior_category_id = PRIOR.n7
-                OR CATE.behavior_category_id = PRIOR.n8
-                OR CATE.behavior_category_id = PRIOR.n9
-                OR CATE.behavior_category_id = PRIOR.n10
-                OR CATE.behavior_category_id = PRIOR.n11
-                OR CATE.behavior_category_id = PRIOR.n12
-    </select>
-
-    <select id="selectPriorityOfCategoryEntity" resultType="roadiary.behavior.category.entity.PriorityOfCategoryEntity">
-        SELECT * FROM behavior_priorityofcategory where user_id = #{userId}
+        SELECT behavior_category.behavior_category_id, behavior_category.content
+            FROM behavior_priority_category
+            LEFT JOIN behavior_category
+                ON behavior_category.behavior_category_id = behavior_priority_category.behavior_category_id
+            WHERE user_id = 1
+            ORDER BY priority_idx;
     </select>
 
     <insert id="insertCategory" parameterType="roadiary.behavior.category.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="behavior_category_id"> 
@@ -33,14 +19,12 @@
             (#{content}) 
     </insert>
 
-    <update id="updatePriority" parameterType="roadiary.behavior.category.entity.PriorityOfCategoryEntity">
-        UPDATE behavior_priorityofcategory SET 
-            n1 = #{n1}, n2 = #{n2}, n3 = #{n3}, n4 = #{n4}, 
-            n5 = #{n5}, n6 = #{n6}, n7 = #{n7}, n8 = #{n8}, 
-            n9 = #{n9}, n10 = #{n10}, n11 = #{n11}, n12 = #{n12}
-            WHERE user_id = #{user_id};
+    <update id="insertPriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        INSERT INTO behavior_priority_category
+            (user_id, priority_idx, behavior_category_id)
+            VALUES
+            (#{user_id}, #{priority_idx}, #{behavior_category_id})
     </update>
-
     
     <select id="selectNewCategoryId" resultType="Long">
         SELECT behavior_category_id FROM behavior_category WHERE content = #{categoryContent};
