@@ -37,10 +37,8 @@ public class CategoryRestController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
-        //List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
         categoryReqDto.setUserId(userId);
-        int deletedNum = categoryService.deleteUpdatePriority(categoryReqDto);
-        System.out.println(deletedNum);
+        categoryService.deleteSortPriority(categoryReqDto);
 
         //return "redirect:/category?status=success";
     }

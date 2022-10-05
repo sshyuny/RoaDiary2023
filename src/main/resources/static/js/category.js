@@ -67,7 +67,7 @@ function makeCategoryTableSuccess(data) {
         divColContent.textContent = categoryName;
         divColContent.id ="categoryTdId" + i;
         categoryBtnDel.innerHTML = "삭제" + data[i].id;
-        categoryBtnDel.onclick = function() { deleteCategory(categoryId); };
+        categoryBtnDel.onclick = function() { confirmDeleteCategory(categoryId); };
         categoryBtnUp.innerText = "위로";
         categoryBtnUp.onclick = function() { upCategory(categoryId); };
         categoryBtnDown.innerText = "아래로";
@@ -87,12 +87,15 @@ function makeCategoryTableSuccess(data) {
     }
 }
 
+function confirmDeleteCategory(categoryId) {
+    if (confirm("해당 카테고리를 삭제하시겠습니까? 카테고리 항목에서만 삭제됩니다. 이미 저장된 기록의 카테고리에는 영향을 주지 않습니다.")) {
+        deleteCategory(categoryId);
+    }
+}
 function deleteCategory(categoryId) {
-    alert("카테고리 항목에서만 삭제됩니다. 이미 저장된 기록의 카테고리에는 영향을 주지 않습니다.");
     let obj = new Object();
     obj.categoryId = categoryId;
     let jsonObj = JSON.stringify(obj);
-
     $.ajax({
 		type: "delete",
         url: "/categories", 
@@ -131,6 +134,8 @@ function downCategory(categoryId) {
 
 
 
+
+// 이후 지우기
 // 카테고리 이름 수정
 function modifyCategory(idx, categoryName, categoryId) {
     // 테이블에 있는 카테고리 이름 가져와서, type과 id 변경

@@ -19,12 +19,12 @@
             (#{content}) 
     </insert>
 
-    <update id="insertPriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+    <insert id="insertPriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
         INSERT INTO behavior_priority_category
             (user_id, priority_idx, behavior_category_id)
             VALUES
             (#{user_id}, #{priority_idx}, #{behavior_category_id})
-    </update>
+    </insert>
     
     <select id="selectNewCategoryId" resultType="Long">
         SELECT behavior_category_id FROM behavior_category WHERE content = #{categoryContent};
@@ -34,5 +34,14 @@
         DELETE FROM behavior_priority_category 
             WHERE user_id = #{user_id} AND behavior_category_id = #{behavior_category_id}
     </delete>
+
+    <select id="selectCateogryIdFromPriority" resultType="Long" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        SELECT behavior_category_id FROM behavior_priority_category
+            WHERE user_id = #{user_id} AND priority_idx = #{priority_idx}
+    </select>
+
+    <update id="updatePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        
+    </update>
 
 </mapper>

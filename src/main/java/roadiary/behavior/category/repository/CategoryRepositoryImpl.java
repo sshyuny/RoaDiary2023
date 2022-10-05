@@ -51,4 +51,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public int deletePriority(PriorityCategoryEntity priorityCategoryEntity) {
         return categoryMapper.deletePriority(priorityCategoryEntity);
     }
+
+    @Override
+    public Long selectCateogryIdFromPriority(PriorityCategoryEntity priorityCategoryEntity) {
+        return categoryMapper.selectCateogryIdFromPriority(priorityCategoryEntity);
+    }
+
+    @Override
+    public int updatePriority(PriorityCategoryEntity priorityCategoryEntity) {
+        return categoryMapper.updatePriority(priorityCategoryEntity);
+    }
 }
