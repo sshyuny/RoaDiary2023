@@ -2,9 +2,12 @@ package roadiary.behavior.category.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.service.CategoryService;
 
@@ -28,5 +31,18 @@ public class CategoryRestController {
         return categoryResDtos;
     }
 
+    @DeleteMapping("/categories")
+    public void deleteCategories(@RequestBody CategoryReqDto categoryReqDto) {
+
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        //List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
+        categoryReqDto.setUserId(userId);
+        int deletedNum = categoryService.deleteUpdatePriority(categoryReqDto);
+        System.out.println(deletedNum);
+
+        //return "redirect:/category?status=success";
+    }
     
 }

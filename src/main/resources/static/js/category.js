@@ -89,10 +89,27 @@ function makeCategoryTableSuccess(data) {
 
 function deleteCategory(categoryId) {
     alert("카테고리 항목에서만 삭제됩니다. 이미 저장된 기록의 카테고리에는 영향을 주지 않습니다.");
+    let obj = new Object();
+    obj.categoryId = categoryId;
+    let jsonObj = JSON.stringify(obj);
+
+    $.ajax({
+		type: "delete",
+        url: "/categories", 
+        data: jsonObj,
+		contentType: 'application/json',
+        dataType: '',
+		success: function(data) {
+            alert("삭제가 완료되었습니다.");
+        }, 
+        error: function() {
+			alert("데이터를 가져오는 중 에러가 발생했습니다.");
+		}
+    })
 }
 
 function upCategory(categoryId) {
-    $.ajax({
+    /*$.ajax({
         url: '/categories', 
         data: '',
 		method: 'UPDATE',
@@ -103,7 +120,7 @@ function upCategory(categoryId) {
         error: function() {
 			alert("데이터를 가져오는 중 에러가 발생했습니다.");
 		}
-    })
+    })*/
 }
 
 function downCategory(categoryId) {

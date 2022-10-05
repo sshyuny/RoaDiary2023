@@ -30,4 +30,9 @@
         SELECT behavior_category_id FROM behavior_category WHERE content = #{categoryContent};
     </select>
 
+    <delete id="deletePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        DELETE FROM behavior_priority_category 
+            WHERE user_id = #{user_id} AND behavior_category_id = #{behavior_category_id}
+    </delete>
+
 </mapper>

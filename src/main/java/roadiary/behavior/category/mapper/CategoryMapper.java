@@ -17,5 +17,7 @@ public interface CategoryMapper {
     public int insertPriority(PriorityCategoryEntity priorityCategoryEntity);
 
     public Long selectNewCategoryId(String categoryContent);
+
+    public int deletePriority(PriorityCategoryEntity priorityCategoryEntity);
     
 }

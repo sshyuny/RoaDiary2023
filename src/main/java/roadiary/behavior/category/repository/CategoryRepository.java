@@ -14,4 +14,6 @@ public interface CategoryRepository {
     public int insertPriority(PriorityCategoryEntity priorityCategoryEntity);
 
     public long selectNewCategoryId(String categoryContent);
+
+    public int deletePriority(PriorityCategoryEntity priorityCategoryEntity);
 }

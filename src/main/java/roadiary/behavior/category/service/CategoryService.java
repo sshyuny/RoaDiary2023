@@ -17,6 +17,11 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     
+    /**
+     * 로그인 유저의 Category를 Priority 순서대로 반환
+     * @param userId
+     * @return
+     */
     public List<CategoryResDto> getCategoryList(Long userId) {
 
         List<CategoryEntity> categoryEntities = categoryRepository.selectCategoryDtos(userId);
@@ -25,6 +30,12 @@ public class CategoryService {
         return categoryResDtos;
     }
 
+    /**
+     * 유저가 Category Priority에 등록한 카테고리를 처리함(Cateogry Priority와 무관).
+     * 이미 DB에 등록된 Category가 아닐 경우, DB에 category 등록.
+     * categoryId를 categoryReqDto에 넣어줌.
+     * @param categoryReqDto
+     */
     public void addCategory(CategoryReqDto categoryReqDto) {
         
         CategoryEntity categoryEntity = CategoryEntity.of(categoryReqDto.getCategoryContent());
@@ -41,6 +52,12 @@ public class CategoryService {
         }
     }
 
+    /**
+     * 유저가 Category Priority에 등록한 카테고리를 Priority 테이블에 등록
+     * @param categoryReqDto
+     * @param categoryResDtos
+     * @return
+     */
     public int addPriority(CategoryReqDto categoryReqDto, List<CategoryResDto> categoryResDtos) {
 
         PriorityCategoryEntity priorityCategoryEntity = new PriorityCategoryEntity(
@@ -48,5 +65,11 @@ public class CategoryService {
 
         int addedPriorityNum = categoryRepository.insertPriority(priorityCategoryEntity);
         return addedPriorityNum;
+    }
+
+    public int deleteUpdatePriority(CategoryReqDto categoryReqDto) {
+        int deletedNum = categoryRepository.deletePriority(
+                new PriorityCategoryEntity(categoryReqDto.getUserId(), 0, categoryReqDto.getCategoryId()));
+        return deletedNum;
     }
 }
