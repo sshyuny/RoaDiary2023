@@ -39,8 +39,6 @@ public class CategoryRestController {
 
         categoryReqDto.setUserId(userId);
         categoryService.deleteSortPriority(categoryReqDto);
-
-        //return "redirect:/category?status=success";
     }
     
 }

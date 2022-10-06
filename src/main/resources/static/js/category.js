@@ -12,8 +12,8 @@ function statusCheck() {
     } else if(status == "success") {
         alert("저장이 정상적으로 완료되었습니다.");
         location.replace("/category");
-    } else if(status == "not") {
-        alert("저장이 완료되지 못했습니다. 다시 시도해주세요.");
+    } else if(status == "dupli") {
+        alert("이미 존재하는 카테고리입니다. 새로운 항목을 입력해주세요.");
         location.replace("/category");
     }
         
@@ -36,6 +36,7 @@ function makeCategoryTable() {
 function makeCategoryTableSuccess(data) {
     let categoryLength = data.length;
     let categoryListElem = document.getElementById("categoryList");
+    categoryListElem.innerHTML = '';
 
     for (var i = 0; i < categoryLength; i++) {
         // 요소 생성
@@ -104,6 +105,7 @@ function deleteCategory(categoryId) {
         dataType: '',
 		success: function(data) {
             alert("삭제가 완료되었습니다.");
+            makeCategoryTable();
         }, 
         error: function() {
 			alert("데이터를 가져오는 중 에러가 발생했습니다.");

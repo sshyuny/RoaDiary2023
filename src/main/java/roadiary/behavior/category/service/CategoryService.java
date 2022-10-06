@@ -62,7 +62,10 @@ public class CategoryService {
     public int addPriority(CategoryReqDto categoryReqDto, List<CategoryResDto> categoryResDtos) {
 
         PriorityCategoryEntity priorityCategoryEntity = new PriorityCategoryEntity(
-                categoryReqDto.getUserId(), categoryResDtos.size() + 1, categoryReqDto.getCategoryId());
+            categoryReqDto.getUserId(), categoryResDtos.size() + 1, categoryReqDto.getCategoryId());
+
+        int alreadySaved = categoryRepository.countPriority(priorityCategoryEntity);
+        if (alreadySaved != 0) return 0; // 동일한 카테고리가 이미 저장돼있는 경우
 
         int addedPriorityNum = categoryRepository.insertPriority(priorityCategoryEntity);
         return addedPriorityNum;
@@ -88,7 +91,7 @@ public class CategoryService {
                     priorityCategoryEntity.setBehavior_category_id(behavior_category_id);
 
                     categoryRepository.deletePriority(priorityCategoryEntity);  // categoryId로, 뒤에 있던 category 삭제
-                    categoryRepository.insertPriority(priorityCategoryEntity);  // 삭제한 category를 옳은 위치(curIdx)에 넣기
+                    categoryRepository.insertPriority(priorityCategoryEntity);  // 삭제한 category를 맞는 위치(curIdx)에 넣기
 
                     lastNullIdx = idx;  // 앞서 지운 (뒤에 있던) category의 위치(idx)를 null 위치로 표시
                 }

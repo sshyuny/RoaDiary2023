@@ -40,6 +40,11 @@
             WHERE user_id = #{user_id} AND priority_idx = #{priority_idx}
     </select>
 
+    <select id="countPriority" resultType="int" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        SELECT COUNT(*) FROM behavior_priority_category
+            WHERE user_id = #{user_id} AND behavior_category_id = #{behavior_category_id}
+    </select>
+
     <update id="updatePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
         
     </update>

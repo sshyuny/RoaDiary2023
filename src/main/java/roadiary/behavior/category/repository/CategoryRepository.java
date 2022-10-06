@@ -20,4 +20,6 @@ public interface CategoryRepository {
     public Long selectCateogryIdFromPriority(PriorityCategoryEntity priorityCategoryEntity);
 
     public int updatePriority(PriorityCategoryEntity priorityCategoryEntity);
+
+    public int countPriority(PriorityCategoryEntity priorityCategoryEntity);
 }

@@ -19,9 +19,10 @@ USE bhdb;
 ---- ---- ---- ----
 -- TABLE
 ---- ---- ---- ----
-CREATE TABLE behavior_category (
+CREATE TABLE behavior_category ( 
     behavior_category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    content CHAR(144) NOT NULL
+    content CHAR(144) NOT NULL,
+    UNIQUE KEY category_unique (content)
 );
 
 --temp
@@ -80,9 +81,9 @@ VALUES
 INSERT INTO behavior_priority_category
 (user_id, priority_idx, behavior_category_id)
 VALUES
-(1, 1, 1), 
-(1, 2, 5), 
-(1, 3, 20), 
-(1, 4, 22);
+(1, 1, 3), 
+(1, 2, 2), 
+(1, 3, 4), 
+(1, 4, 5);
 
-DELETE FROM behavior_priority_category WHERE user_id=1 AND priority_idx=12;
+--DELETE FROM behavior_priority_category WHERE user_id=1 AND priority_idx=12;

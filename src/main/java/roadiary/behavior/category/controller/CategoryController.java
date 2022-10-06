@@ -3,11 +3,9 @@ package roadiary.behavior.category.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
@@ -38,6 +36,7 @@ public class CategoryController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
+        // [Repository]
         // 이미 priorityofcategory에 12개 이상의 카테고리가 추가된 경우, 카테고리 추가 막음
         List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
         int savedCategoryNum = categoryResDtos.size();
@@ -46,14 +45,10 @@ public class CategoryController {
         // [Repository]
         CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, categoryContent);
         categoryService.addCategory(categoryReqDto);  // categoryReqDto에, 요청된 categoryId값이 들어감
-            // @@ 중복일경우 막는 부분 추가
 
         // [Repository]
         int addedPriorityNum = categoryService.addPriority(categoryReqDto, categoryResDtos);
-            // @@ 중복일경우 막는 부분 추가
-
-        // 카테고리 priority 추가가 되지 않은 경우
-        if (addedPriorityNum != 1) return "redirect:/category?status=not";
+        if (addedPriorityNum == 0) return "redirect:/category?status=dupli";  // 이미 저장된 카테고리일 경우
 
         return "redirect:/category?status=success";
     }

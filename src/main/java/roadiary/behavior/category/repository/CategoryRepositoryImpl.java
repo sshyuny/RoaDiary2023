@@ -61,4 +61,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public int updatePriority(PriorityCategoryEntity priorityCategoryEntity) {
         return categoryMapper.updatePriority(priorityCategoryEntity);
     }
+
+    @Override
+    public int countPriority(PriorityCategoryEntity priorityCategoryEntity) {
+        return categoryMapper.countPriority(priorityCategoryEntity);
+    }
 }
