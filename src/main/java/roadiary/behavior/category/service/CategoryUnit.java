@@ -14,7 +14,7 @@ public class CategoryUnit {
         List<CategoryResDto> newList = new ArrayList<>();
 
         for (CategoryEntity categoryEntity : categoryEntities) {
-            CategoryResDto categoryResDto = new CategoryResDto(categoryEntity.getBehavior_category_id(), categoryEntity.getContent());
+            CategoryResDto categoryResDto = new CategoryResDto(categoryEntity.getBehaviorCategoryId(), categoryEntity.getContent());
             newList.add(categoryResDto);
         }
 

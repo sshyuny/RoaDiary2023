@@ -46,7 +46,8 @@ public class CategoryService {
         // categoryReqDto에 categoryId 값 추가
         if (newCategoryId == 0) {
             categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
-            categoryReqDto.setCategoryId(categoryEntity.getBehavior_category_id());
+            // categoryReqDto.setCategoryId(categoryEntity.getBehavior_category_id());
+            categoryReqDto.setCategoryId(categoryEntity.getBehaviorCategoryId());
         } else {
             categoryReqDto.setCategoryId(newCategoryId);
         }

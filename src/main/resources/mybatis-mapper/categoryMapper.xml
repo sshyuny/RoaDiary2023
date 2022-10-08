@@ -23,7 +23,7 @@
         INSERT INTO behavior_priority_category
             (user_id, priority_idx, behavior_category_id)
             VALUES
-            (#{user_id}, #{priority_idx}, #{behavior_category_id})
+            (#{userId}, #{priorityIdx}, #{behaviorCategoryId})
     </insert>
     
     <select id="selectNewCategoryId" resultType="Long">

@@ -136,7 +136,7 @@ function downCategory(categoryId) {
 
 
 
-
+/*
 // 이후 지우기
 // 카테고리 이름 수정
 function modifyCategory(idx, categoryName, categoryId) {
@@ -154,3 +154,4 @@ function reqModifyCategory(event, idx, categoryId) {
         alert(categoryId + " " + newCategoryName);
     }
 }
+*/

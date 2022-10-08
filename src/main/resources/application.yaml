@@ -14,7 +14,10 @@ spring:
     activate:
       on-profile: "common"
 mybatis:
-    mapper-locations: classpath:mybatis-mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mybatis-mapper/*.xml
+    
 
 ---
 
