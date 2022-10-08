@@ -3,12 +3,12 @@
 
 <mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
-    <select id="selectCategoryList" resultType="roadiary.behavior.category.entity.CategoryEntity">
+    <select id="selectCategoryEntities" resultType="roadiary.behavior.category.entity.CategoryEntity">
         SELECT behavior_category.behavior_category_id, behavior_category.content
             FROM behavior_priority_category
             LEFT JOIN behavior_category
                 ON behavior_category.behavior_category_id = behavior_priority_category.behavior_category_id
-            WHERE user_id = 1
+            WHERE user_id = #{userId}
             ORDER BY priority_idx;
     </select>
 
@@ -30,19 +30,19 @@
         SELECT behavior_category_id FROM behavior_category WHERE content = #{categoryContent};
     </select>
 
-    <delete id="deletePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
-        DELETE FROM behavior_priority_category 
-            WHERE user_id = #{user_id} AND behavior_category_id = #{behavior_category_id}
-    </delete>
-
-    <select id="selectCateogryIdFromPriority" resultType="Long" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
-        SELECT behavior_category_id FROM behavior_priority_category
-            WHERE user_id = #{user_id} AND priority_idx = #{priority_idx}
+    <select id="selectTheMaxPriority" resultType="_int">
+        SELECT MAX(priority_idx) FROM behavior_priority_category
+            WHERE user_id = #{userId}
     </select>
 
-    <select id="countPriority" resultType="int" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+    <delete id="deletePriority">
+        DELETE FROM behavior_priority_category 
+            WHERE user_id = #{userId} AND behavior_category_id = #{categoryId}
+    </delete>
+
+    <select id="countPriority" resultType="int">
         SELECT COUNT(*) FROM behavior_priority_category
-            WHERE user_id = #{user_id} AND behavior_category_id = #{behavior_category_id}
+            WHERE user_id = #{userId} AND behavior_category_id = #{categoryId}
     </select>
 
     <update id="updatePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">

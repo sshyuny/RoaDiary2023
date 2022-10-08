@@ -38,7 +38,7 @@ public class CategoryRestController {
         Long userId = 1L;
 
         categoryReqDto.setUserId(userId);
-        categoryService.deleteSortPriority(categoryReqDto);
+        categoryService.deleteAndSortPriority(categoryReqDto);
     }
     
 }

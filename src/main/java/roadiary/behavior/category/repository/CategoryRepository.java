@@ -7,19 +7,20 @@ import roadiary.behavior.category.entity.PriorityCategoryEntity;
 
 public interface CategoryRepository {
     
-    public List<CategoryEntity> selectCategoryDtos(Long userId);
+    public List<CategoryEntity> selectCategoryEntities(Long userId);
 
     public int insertCategory(CategoryEntity categoryEntity);
 
     public int insertPriority(PriorityCategoryEntity priorityCategoryEntity);
 
+    public int selectTheMaxPriority(long userId);
+
     public long selectNewCategoryId(String categoryContent);
 
-    public int deletePriority(PriorityCategoryEntity priorityCategoryEntity);
-
-    public Long selectCateogryIdFromPriority(PriorityCategoryEntity priorityCategoryEntity);
+    public int deletePriority(long userId, long categoryId);
 
     public int updatePriority(PriorityCategoryEntity priorityCategoryEntity);
 
-    public int countPriority(PriorityCategoryEntity priorityCategoryEntity);
+    public int countPriority(long userId, long categoryId);
+    
 }

@@ -15,6 +15,7 @@ import roadiary.behavior.category.service.CategoryService;
 public class CategoryController {
     
     private final CategoryService categoryService;
+    private final int MAX_PRIORITY = 12; // Priority Category에 저장할 수 있는 최대 개수
     
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -40,7 +41,7 @@ public class CategoryController {
         // 이미 priorityofcategory에 12개 이상의 카테고리가 추가된 경우, 카테고리 추가 막음
         List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
         int savedCategoryNum = categoryResDtos.size();
-        if (savedCategoryNum >= 12) return "redirect:/category?status=over";
+        if (savedCategoryNum >= MAX_PRIORITY) return "redirect:/category?status=over";
 
         // [Repository]
         CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, categoryContent);

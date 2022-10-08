@@ -20,9 +20,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     private CategoryMapper categoryMapper;
     
     @Override
-    public List<CategoryEntity> selectCategoryDtos(Long userId) {
+    public List<CategoryEntity> selectCategoryEntities(Long userId) {
         
-        List<CategoryEntity> categoryDtoList = categoryMapper.selectCategoryList(userId);
+        List<CategoryEntity> categoryDtoList = categoryMapper.selectCategoryEntities(userId);
         return categoryDtoList;
     }
 
@@ -40,6 +40,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
+    public int selectTheMaxPriority(long userId) {
+        return categoryMapper.selectTheMaxPriority(userId);
+    }
+
+    @Override
     public long selectNewCategoryId(String categoryContent) {
         Long newCategoryId = categoryMapper.selectNewCategoryId(categoryContent);
 
@@ -48,13 +53,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int deletePriority(PriorityCategoryEntity priorityCategoryEntity) {
-        return categoryMapper.deletePriority(priorityCategoryEntity);
-    }
-
-    @Override
-    public Long selectCateogryIdFromPriority(PriorityCategoryEntity priorityCategoryEntity) {
-        return categoryMapper.selectCateogryIdFromPriority(priorityCategoryEntity);
+    public int deletePriority(long userId, long categoryId) {
+        return categoryMapper.deletePriority(userId, categoryId);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int countPriority(PriorityCategoryEntity priorityCategoryEntity) {
-        return categoryMapper.countPriority(priorityCategoryEntity);
+    public int countPriority(long userId, long categoryId) {
+        return categoryMapper.countPriority(userId, categoryId);
     }
 }
