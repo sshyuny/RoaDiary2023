@@ -119,7 +119,7 @@ function upCategory(categoryId) {
     obj.categoryId = categoryId;
     obj.direction = "up";
     let jsonObj = JSON.stringify(obj);
-    
+
     $.ajax({
 		type: "put",
         url: "/categories", 
@@ -136,7 +136,24 @@ function upCategory(categoryId) {
 }
 
 function downCategory(categoryId) {
-    alert(categoryId);
+    let obj = new Object();
+    obj.categoryId = categoryId;
+    obj.direction = "down";
+    let jsonObj = JSON.stringify(obj);
+
+    $.ajax({
+		type: "put",
+        url: "/categories", 
+        data: jsonObj,
+		contentType: 'application/json',
+        dataType: '',
+		success: function(data) {
+            makeCategoryTable();
+        }, 
+        error: function() {
+			alert("에러가 발생했습니다.");
+		}
+    })
 }
 
 

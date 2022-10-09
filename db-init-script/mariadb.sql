@@ -50,9 +50,9 @@ CREATE TABLE behavior_priority_category (
     priority_idx BIGINT,
     behavior_category_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
-    FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id), 
-    UNIQUE KEY priority_category_unique (user_id, priority_idx)
+    FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id)
 );
+--UNIQUE KEY priority_category_unique (user_id, priority_idx)
 
 
 ---- ---- ---- ----

@@ -26,5 +26,6 @@ public interface CategoryRepository {
     public int selectPriorityIdx(long userId, long categoryId);
 
     public List<PriorityCategoryEntity> selectUpPriorityEntities(long userId, long pirorityIdx);
+    public List<PriorityCategoryEntity> selectDownPriorityEntities(long userId, long pirorityIdx);
     
 }

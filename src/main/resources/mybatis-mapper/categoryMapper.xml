@@ -52,11 +52,22 @@
 
     <select id="selectUpPriorityEntities" resultType="roadiary.behavior.category.entity.PriorityCategoryEntity">
         SELECT * FROM behavior_priority_category
-            WHERE user_id = #{userId} AND priority_idx &lt; #{priorityIdx}
+            WHERE user_id = #{userId} AND priority_idx &lt;= #{priorityIdx}
             ORDER BY priority_idx DESC
             LIMIT 2
     </select>
+    <select id="selectDownPriorityEntities" resultType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        SELECT * FROM behavior_priority_category
+            WHERE user_id = #{userId} AND priority_idx &gt;= #{priorityIdx}
+            ORDER BY priority_idx ASC
+            LIMIT 2
+    </select>
 
-    
+    <update id="updatePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        UPDATE behavior_priority_category
+            SET 
+            priority_idx = #{priorityIdx}
+                WHERE user_id = #{userId} AND behavior_category_id = #{behaviorCategoryId}
+    </update>
 
 </mapper>

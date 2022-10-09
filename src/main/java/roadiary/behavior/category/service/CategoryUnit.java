@@ -5,6 +5,7 @@ import java.util.List;
 
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.entity.CategoryEntity;
+import roadiary.behavior.category.entity.PriorityCategoryEntity;
 
 public class CategoryUnit {
     
@@ -19,6 +20,13 @@ public class CategoryUnit {
         }
 
         return newList;
+    }
+
+    static public void switchPriority(List<PriorityCategoryEntity> priorityCategoryEntities) {
+        int priority1 = priorityCategoryEntities.get(0).getPriorityIdx();
+        int priority2 = priorityCategoryEntities.get(1).getPriorityIdx();
+        priorityCategoryEntities.get(0).setPriorityIdx(priority2);
+        priorityCategoryEntities.get(1).setPriorityIdx(priority1);
     }
     
 }

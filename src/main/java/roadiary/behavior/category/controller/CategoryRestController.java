@@ -50,12 +50,9 @@ public class CategoryRestController {
         
         // userId 세션에서 가져오기
         Long userId = 1L;
-        int checkPossibleNum;
-        if (priorityAndDirectionDto.getDirection().equals("up"))
-            checkPossibleNum = categoryService.upPriority(userId, priorityAndDirectionDto.getCategoryId());
-        else if (priorityAndDirectionDto.getDirection().equals("down"))
-            categoryService.downPriority(userId, priorityAndDirectionDto.getCategoryId());
-        
+        int checkPossibleNum = categoryService.updateDirectionOfPriority(userId, priorityAndDirectionDto.getCategoryId(), 
+            priorityAndDirectionDto.getDirection());
+
     }
     
 }

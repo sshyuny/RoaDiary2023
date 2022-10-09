@@ -76,4 +76,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public List<PriorityCategoryEntity> selectUpPriorityEntities(long userId, long priorityIdx) { 
         return categoryMapper.selectUpPriorityEntities(userId, priorityIdx);
     }
+    @Override
+    public List<PriorityCategoryEntity> selectDownPriorityEntities(long userId, long priorityIdx) { 
+        return categoryMapper.selectDownPriorityEntities(userId, priorityIdx);
+    }
 }

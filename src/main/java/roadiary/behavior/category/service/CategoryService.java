@@ -1,5 +1,6 @@
 package roadiary.behavior.category.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -79,19 +80,29 @@ public class CategoryService {
 
     }
 
-    public int upPriority(long userId, long categoryId) {
+    public int updateDirectionOfPriority(long userId, long categoryId, String direction) {
 
+        
         int priorityIdx = categoryRepository.selectPriorityIdx(userId, categoryId);
+        List<PriorityCategoryEntity> priorityCategoryEntities = new ArrayList<>();
 
         // 선택된 카테고리보다 높은 priority 반환
-        List<PriorityCategoryEntity> priorityCategoryEntities = categoryRepository.selectUpPriorityEntities(userId, priorityIdx);
-        if (priorityCategoryEntities.size() < 2) return 0;
+        if (direction.equals("up")) {
+            priorityCategoryEntities = categoryRepository.selectUpPriorityEntities(userId, priorityIdx);
+            if (priorityCategoryEntities.size() < 2) return 0;
+        } else if (direction.equals("down")) {
+            priorityCategoryEntities = categoryRepository.selectDownPriorityEntities(userId, priorityIdx);
+            if (priorityCategoryEntities.size() < 2) return 0;
+        } else {
+            // 예외 처리
+        }
 
-        //return categoryRepository.movePriorityToUp(priorityCategoryEntities);
+        // priorityCategoryEntities에 저장된 priority 서로 뒤바꿔준 뒤, update 
+        CategoryUnit.switchPriority(priorityCategoryEntities);
+        for (PriorityCategoryEntity priorityCategoryEntity : priorityCategoryEntities)
+            categoryRepository.updatePriority(priorityCategoryEntity);
+
         return 1;
     }
 
-    public void downPriority(long userId, long categoryId) {
-
-    }
 }
