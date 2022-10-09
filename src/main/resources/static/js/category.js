@@ -19,6 +19,8 @@ function statusCheck() {
         
 
 }
+
+// 사용자의 priority category 가져옴
 function makeCategoryTable() {
     $.ajax({
         url: '/categories', 
@@ -88,44 +90,49 @@ function makeCategoryTableSuccess(data) {
     }
 }
 
+// 버튼: 카테고리 삭제
 function confirmDeleteCategory(categoryId) {
     if (confirm("해당 카테고리를 삭제하시겠습니까? 카테고리 항목에서만 삭제됩니다. 이미 저장된 기록의 카테고리에는 영향을 주지 않습니다.")) {
         deleteCategory(categoryId);
     }
 }
 function deleteCategory(categoryId) {
-    let obj = new Object();
-    obj.categoryId = categoryId;
-    let jsonObj = JSON.stringify(obj);
     $.ajax({
 		type: "delete",
         url: "/categories", 
-        data: jsonObj,
-		contentType: 'application/json',
+        data: categoryId + "",
+		contentType: 'text/plain',
         dataType: '',
 		success: function(data) {
             alert("삭제가 완료되었습니다.");
             makeCategoryTable();
         }, 
         error: function() {
-			alert("데이터를 가져오는 중 에러가 발생했습니다.");
+			alert("에러가 발생했습니다.");
 		}
     })
 }
 
+// 버튼: 카테고리 위로
 function upCategory(categoryId) {
-    /*$.ajax({
-        url: '/categories', 
-        data: '',
-		method: 'UPDATE',
-		contentType: 'json',
+    let obj = new Object();
+    obj.categoryId = categoryId;
+    obj.direction = "up";
+    let jsonObj = JSON.stringify(obj);
+    
+    $.ajax({
+		type: "put",
+        url: "/categories", 
+        data: jsonObj,
+		contentType: 'application/json',
+        dataType: '',
 		success: function(data) {
-            makeCategoryTableSuccess(data);
+            makeCategoryTable();
         }, 
         error: function() {
-			alert("데이터를 가져오는 중 에러가 발생했습니다.");
+			alert("에러가 발생했습니다.");
 		}
-    })*/
+    })
 }
 
 function downCategory(categoryId) {

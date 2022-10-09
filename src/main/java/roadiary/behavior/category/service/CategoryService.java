@@ -46,7 +46,6 @@ public class CategoryService {
         // categoryReqDto에 categoryId 값 추가
         if (newCategoryId == 0) {
             categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
-            // categoryReqDto.setCategoryId(categoryEntity.getBehavior_category_id());
             categoryReqDto.setCategoryId(categoryEntity.getBehaviorCategoryId());
         } else {
             categoryReqDto.setCategoryId(newCategoryId);
@@ -61,20 +60,38 @@ public class CategoryService {
      */
     public int addPriority(CategoryReqDto categoryReqDto, List<CategoryResDto> categoryResDtos) {
 
+        // 요청 카테고리, 저장 유무 확인
         int alreadySaved = categoryRepository.countPriority(categoryReqDto.getUserId(), categoryReqDto.getCategoryId());
         if (alreadySaved != 0) return 0; // 동일한 카테고리가 이미 저장돼있는 경우
 
+        // 사용자에게 기록된 최대 priority idx 확인 후, 그보다 큰 값으로, 요청 카테고리 insert
         int theMaxPriority = categoryRepository.selectTheMaxPriority(categoryReqDto.getUserId());
         PriorityCategoryEntity priorityCategoryEntity = new PriorityCategoryEntity(
             categoryReqDto.getUserId(), theMaxPriority + 1, categoryReqDto.getCategoryId());
-        int addedPriorityNum = categoryRepository.insertPriority(priorityCategoryEntity);
-        return addedPriorityNum;
+
+        return categoryRepository.insertPriority(priorityCategoryEntity);
     }
 
-    public void deleteAndSortPriority(CategoryReqDto categoryReqDto) {
+    public void deleteAndSortPriority(Long userId, Long categoryId) {
 
         // [요청된 Priority 삭제]
-        categoryRepository.deletePriority(categoryReqDto.getUserId(), categoryReqDto.getCategoryId());
+        categoryRepository.deletePriority(userId, categoryId);
+
+    }
+
+    public int upPriority(long userId, long categoryId) {
+
+        int priorityIdx = categoryRepository.selectPriorityIdx(userId, categoryId);
+
+        // 선택된 카테고리보다 높은 priority 반환
+        List<PriorityCategoryEntity> priorityCategoryEntities = categoryRepository.selectUpPriorityEntities(userId, priorityIdx);
+        if (priorityCategoryEntities.size() < 2) return 0;
+
+        //return categoryRepository.movePriorityToUp(priorityCategoryEntities);
+        return 1;
+    }
+
+    public void downPriority(long userId, long categoryId) {
 
     }
 }

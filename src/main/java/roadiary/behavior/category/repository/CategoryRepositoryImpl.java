@@ -66,4 +66,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public int countPriority(long userId, long categoryId) {
         return categoryMapper.countPriority(userId, categoryId);
     }
+
+    @Override
+    public int selectPriorityIdx(long userId, long categoryId) {
+        return categoryMapper.selectPriorityIdx(userId, categoryId);
+    }
+
+    @Override
+    public List<PriorityCategoryEntity> selectUpPriorityEntities(long userId, long priorityIdx) { 
+        return categoryMapper.selectUpPriorityEntities(userId, priorityIdx);
+    }
 }

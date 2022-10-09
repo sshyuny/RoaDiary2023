@@ -38,7 +38,7 @@ public class CategoryController {
         Long userId = 1L;
 
         // [Repository]
-        // 이미 priorityofcategory에 12개 이상의 카테고리가 추가된 경우, 카테고리 추가 막음
+        // 이미 priorityofcategory에 최대 개수(MAX_PRIORITY) 이상의 카테고리가 추가된 경우, 카테고리 추가 막음
         List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
         int savedCategoryNum = categoryResDtos.size();
         if (savedCategoryNum >= MAX_PRIORITY) return "redirect:/category?status=over";

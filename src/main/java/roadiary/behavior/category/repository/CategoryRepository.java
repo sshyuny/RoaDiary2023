@@ -22,5 +22,9 @@ public interface CategoryRepository {
     public int updatePriority(PriorityCategoryEntity priorityCategoryEntity);
 
     public int countPriority(long userId, long categoryId);
+
+    public int selectPriorityIdx(long userId, long categoryId);
+
+    public List<PriorityCategoryEntity> selectUpPriorityEntities(long userId, long pirorityIdx);
     
 }

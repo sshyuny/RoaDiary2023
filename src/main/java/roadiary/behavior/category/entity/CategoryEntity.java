@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter @Getter
 public class CategoryEntity {
     
-    //private long behavior_category_id;
     private long behaviorCategoryId;
     private String content;
 

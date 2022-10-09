@@ -45,8 +45,18 @@
             WHERE user_id = #{userId} AND behavior_category_id = #{categoryId}
     </select>
 
-    <update id="updatePriority" parameterType="roadiary.behavior.category.entity.PriorityCategoryEntity">
-        
-    </update>
+    <select id="selectPriorityIdx" resultType="int">
+        SELECT priority_idx FROM behavior_priority_category
+            WHERE user_id = #{userId} AND behavior_category_id = #{categoryId}
+    </select>
+
+    <select id="selectUpPriorityEntities" resultType="roadiary.behavior.category.entity.PriorityCategoryEntity">
+        SELECT * FROM behavior_priority_category
+            WHERE user_id = #{userId} AND priority_idx &lt; #{priorityIdx}
+            ORDER BY priority_idx DESC
+            LIMIT 2
+    </select>
+
+    
 
 </mapper>
