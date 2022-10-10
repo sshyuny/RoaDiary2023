@@ -31,7 +31,7 @@ public class CategoryController {
      * @param categoryContent 요청받은 카테고리 이름
      * @return
      */
-    @PostMapping("/categories")
+    @PostMapping("/priority")
     public String saveCategories(@ModelAttribute("categoryContent") String categoryContent) {
         
         // userId 세션에서 가져오기

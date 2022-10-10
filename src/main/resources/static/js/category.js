@@ -23,7 +23,7 @@ function statusCheck() {
 // 사용자의 priority category 가져옴
 function makeCategoryTable() {
     $.ajax({
-        url: '/categories', 
+        url: '/priority', 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -99,7 +99,7 @@ function confirmDeleteCategory(categoryId) {
 function deleteCategory(categoryId) {
     $.ajax({
 		type: "delete",
-        url: "/categories", 
+        url: "/priority", 
         data: categoryId + "",
 		contentType: 'text/plain',
         dataType: '',
@@ -122,11 +122,12 @@ function upCategory(categoryId) {
 
     $.ajax({
 		type: "put",
-        url: "/categories", 
+        url: "/priority", 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
+            if (data == "0") alert("더이상 위로 올릴 수 없습니다.");
             makeCategoryTable();
         }, 
         error: function() {
@@ -143,11 +144,12 @@ function downCategory(categoryId) {
 
     $.ajax({
 		type: "put",
-        url: "/categories", 
+        url: "/priority", 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
+            if (data == "0") alert("더이상 아래로 내릴 수 없습니다.");
             makeCategoryTable();
         }, 
         error: function() {
@@ -155,27 +157,3 @@ function downCategory(categoryId) {
 		}
     })
 }
-
-
-
-
-
-/*
-// 이후 지우기
-// 카테고리 이름 수정
-function modifyCategory(idx, categoryName, categoryId) {
-    // 테이블에 있는 카테고리 이름 가져와서, type과 id 변경
-    let categoryNameDom = document.getElementById("categoryTdId" + idx);
-    categoryNameDom.innerHTML = "<input type='text' id='categoryTextId" + idx + "' " 
-                                + "placeholder='" + categoryName + "' " 
-                                + "onkeydown='reqModifyCategory(event, "+ idx + ", " + categoryId +")' " + "'>";
-}
-// 카테고리 이름 수정 - 요청
-function reqModifyCategory(event, idx, categoryId) {
-    // 엔터 누를 경우 실행
-    if (event.keyCode == 13) {
-        let newCategoryName = document.getElementById("categoryTextId" + idx).value;
-        alert(categoryId + " " + newCategoryName);
-    }
-}
-*/
