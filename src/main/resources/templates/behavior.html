@@ -33,6 +33,22 @@
 
         <div class="row">
             <div class="col-2">
+                <p class="text-center fs-4">날짜</p>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-lg mb-3">
+                    <input type="text" class="form-control" id="startYear" placeholder="">
+                    <label class="input-group-text" for="">년</label>
+                    <input type="text" class="form-control" id="startMon" placeholder="">
+                    <label class="input-group-text" for="">월</label>
+                    <input type="text" class="form-control" id="startDate" placeholder="">
+                    <label class="input-group-text" for="">일</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
                 <p class="text-center fs-4">시작</p>
             </div>
             <div class="col">
@@ -40,6 +56,7 @@
                     
                     <select id="startHour" name="startHour" 
                         class="form-select" aria-label=".form-select-lg example">
+                        <option>5</option>
                         <option>6</option>
                         <option>7</option>
                         <option>8</option>
@@ -58,7 +75,6 @@
                         <option>21</option>
                         <option>22</option>
                         <option>23</option>
-                        <option>24</option>
                     </select>
                     <label class="input-group-text" for="">시</label>
                     <select id="startMin" name="startMin" 
@@ -83,6 +99,7 @@
                 <div class="input-group input-group-lg mb-3">
                     <select id="endHour" name="endHour" 
                         class="form-select" aria-label=".form-select-lg example">
+                        <option>5</option>
                         <option>6</option>
                         <option>7</option>
                         <option>8</option>
@@ -101,7 +118,6 @@
                         <option>21</option>
                         <option>22</option>
                         <option>23</option>
-                        <option>24</option>
                     </select>
                     <label class="input-group-text" for="">시</label>
                     <select id="endMin" name="endMin" 
@@ -120,12 +136,12 @@
 
         <div class="mb-3">
             <div  class="col">            
-                <button type="button" id="during30m" class="btn btn-outline-light">30분</button>
-                <button type="button" id="during1h" class="btn btn-outline-light">1시간</button>
-                <button type="button" id="during1h30m" class="btn btn-outline-light">1시간30분</button>
-                <button type="button" id="during2h" class="btn btn-outline-light">2시간</button>
-                <button type="button" id="during3h" class="btn btn-outline-light">3시간</button>
-                <button type="button" id="during4h" class="btn btn-outline-light">4시간</button>
+                <button type="button" onclick="during30m();" class="btn btn-outline-light">30분</button>
+                <button type="button" onclick="during1h();" class="btn btn-outline-light">1시간</button>
+                <button type="button" onclick="during1h30m();" class="btn btn-outline-light">1시간30분</button>
+                <button type="button" onclick="during2h();" class="btn btn-outline-light">2시간</button>
+                <button type="button" onclick="during3h();" class="btn btn-outline-light">3시간</button>
+                <button type="button" onclick="during4h();" class="btn btn-outline-light">4시간</button>
             </div>
         </div>
 
