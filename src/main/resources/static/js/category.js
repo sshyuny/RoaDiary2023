@@ -53,9 +53,9 @@ function makeCategoryTableSuccess(data) {
         let divColDelBtn = document.createElement("div");
         let divColUpBtn = document.createElement("div");
         let divColDownBtn = document.createElement("div");
-        divRow.setAttribute('class', 'row mb-3');
+        divRow.setAttribute('class', 'row justify-content-md-center mb-3');
         divColIdx.setAttribute('class', 'col-1');
-        divColContent.setAttribute('class', 'col');
+        divColContent.setAttribute('class', 'col-5 ');
         divColDelBtn.setAttribute('class', 'col-2');
         divColUpBtn.setAttribute('class', 'col-2');
         divColDownBtn.setAttribute('class', 'col-2');
@@ -66,14 +66,14 @@ function makeCategoryTableSuccess(data) {
         let idx = i;
 
         // 요소에 내용 추가
-        divColIdx.textContent = idx + 1;
+        divColIdx.textContent = idx + 1 + ".";
         divColContent.textContent = categoryName;
         divColContent.id ="categoryTdId" + i;
-        categoryBtnDel.innerHTML = "삭제" + data[i].id;
+        categoryBtnDel.innerHTML = "❌";
         categoryBtnDel.onclick = function() { confirmDeleteCategory(categoryId); };
-        categoryBtnUp.innerText = "위로";
+        categoryBtnUp.innerText = "👆";
         categoryBtnUp.onclick = function() { upCategory(categoryId); };
-        categoryBtnDown.innerText = "아래로";
+        categoryBtnDown.innerText = "👇";
         categoryBtnDown.onclick = function() { downCategory(categoryId); };
 
         // 붙이기

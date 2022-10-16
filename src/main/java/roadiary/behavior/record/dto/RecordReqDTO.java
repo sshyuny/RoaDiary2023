@@ -9,7 +9,9 @@ import lombok.Setter;
 public class RecordReqDto {
     
     private long categoryId;
-    private LocalDate startDate;
+    private Integer startYear;
+    private Integer startMonth;
+    private Integer startDate;
     private int startHour;
     private int startMin;
     private LocalDate endDate;

@@ -94,7 +94,7 @@ public class CategoryService {
             priorityCategoryEntities = categoryRepository.selectDownPriorityEntities(userId, priorityIdx);
             if (priorityCategoryEntities.size() < 2) return 0;
         } else {
-            // 예외 처리
+            // @@예외 처리
         }
 
         // priorityCategoryEntities에 저장된 priority 서로 뒤바꿔준 뒤, update 

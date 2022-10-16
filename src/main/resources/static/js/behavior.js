@@ -26,7 +26,7 @@ function makeCategorySelect() {
 function addPlaceholder() {
     let today = new Date();
     document.getElementById("startYear").setAttribute("placeholder", today.getFullYear());
-    document.getElementById("startMon").setAttribute("placeholder", today.getMonth() + 1);
+    document.getElementById("startMonth").setAttribute("placeholder", today.getMonth() + 1);
     document.getElementById("startDate").setAttribute("placeholder", today.getDate());
 }
 
