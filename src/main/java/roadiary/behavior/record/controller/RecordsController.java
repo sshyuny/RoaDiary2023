@@ -1,8 +1,11 @@
 package roadiary.behavior.record.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -36,8 +39,12 @@ public class RecordsController {
         return "redirect:/behavior";
     }
 
-    @GetMapping("/behavior/records")
-    public String directToWatch() {
+    @GetMapping("/behavior/main/{year}/{month}/{day}")
+    public String directToBehaviorMain(
+            @PathVariable(value = "year", required = true) String year, 
+            @PathVariable(value = "month", required = true) String month, 
+            @PathVariable(value = "day", required = true) String day) {
+        
         return "behavior-records.html";
     }
 }

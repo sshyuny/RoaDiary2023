@@ -23,7 +23,7 @@ function statusCheck() {
 // 사용자의 priority category 가져옴
 function makeCategoryTable() {
     $.ajax({
-        url: '/priority', 
+        url: '/category/priority', 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -99,7 +99,7 @@ function confirmDeleteCategory(categoryId) {
 function deleteCategory(categoryId) {
     $.ajax({
 		type: "delete",
-        url: "/priority", 
+        url: "/category/priority", 
         data: categoryId + "",
 		contentType: 'text/plain',
         dataType: '',
@@ -122,7 +122,7 @@ function upCategory(categoryId) {
 
     $.ajax({
 		type: "put",
-        url: "/priority", 
+        url: "/category/priority", 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',
@@ -144,7 +144,7 @@ function downCategory(categoryId) {
 
     $.ajax({
 		type: "put",
-        url: "/priority", 
+        url: "/category/priority", 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',

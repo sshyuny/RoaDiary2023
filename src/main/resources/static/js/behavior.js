@@ -2,7 +2,7 @@ window.onload = function() { makeCategorySelect(); addPlaceholder(); }
 
 function makeCategorySelect() {
     $.ajax({
-        url: '/priority', 
+        url: '/category/priority', 
         data: '',
 		method: 'GET',
 		dataType: 'json',

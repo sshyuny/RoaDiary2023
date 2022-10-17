@@ -22,7 +22,7 @@ public class CategoryRestController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/priority")
+    @GetMapping("/category/priority")
     public List<CategoryResDto> getCategories() throws Exception {
 
         // userId 세션에서 가져오기
@@ -33,7 +33,7 @@ public class CategoryRestController {
         return categoryResDtos;
     }
 
-    @DeleteMapping("/priority")
+    @DeleteMapping("/category/priority")
     public void deleteCategories(HttpEntity<String> httpEntity) {
 
         // userId 세션에서 가져오기
@@ -43,7 +43,7 @@ public class CategoryRestController {
         categoryService.deleteAndSortPriority(userId, categoryId);
     }
 
-    @PutMapping("/priority")
+    @PutMapping("/category/priority")
     public String updateCategories(@RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
         // userId 세션에서 가져오기

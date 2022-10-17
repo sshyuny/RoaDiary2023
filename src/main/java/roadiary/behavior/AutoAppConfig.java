@@ -18,7 +18,7 @@ public class AutoAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sessionInterceptor)
-            .addPathPatterns("/behavior", "/category")
+            .addPathPatterns("/behavior", "/behavior/*", "/category", "/category/*")
             .excludePathPatterns("/", "/login", "/error");
     }
 

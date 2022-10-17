@@ -34,6 +34,7 @@ public class RecordsService {
 
         //@@ enddDateTime이 더 앞설 경우 예외처리
         //@@ 12시간 이상 지속될경우 예외처리
+        //@@ 하루 최대 저장 개수 제한
 
         RecordEntity recordEntity = RecordEntity.of(recordReqDto.getCategoryId(), userId, startDateTime, enddDateTime, recordReqDto.getDetail());
         int insertedNum = recordsRepository.insertRecord(recordEntity);
