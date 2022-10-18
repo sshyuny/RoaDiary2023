@@ -1,5 +1,6 @@
 package roadiary.behavior.record.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,11 @@ public class RecordsRestController {
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day) {
 
-        List<RecordResDto> recordResDtos = new ArrayList<>();
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        LocalDate reqDate = LocalDate.of(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
+        List<RecordResDto> recordResDtos = recordsService.getRecords(reqDate, userId);
 
         return recordResDtos;
     }

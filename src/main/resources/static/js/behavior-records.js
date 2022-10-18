@@ -23,5 +23,5 @@ function makeRecordsTable(dayUrl) {
 }
 
 function makeRecordsTableSuccess(data) {
-    alert("t");
+    alert(data[0].startTime);
 }

@@ -3,11 +3,13 @@ package roadiary.behavior.record.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import roadiary.behavior.record.dto.RecordReqDto;
+import roadiary.behavior.record.dto.RecordResDto;
 import roadiary.behavior.record.entity.RecordEntity;
 import roadiary.behavior.record.repository.RecordsRepository;
 
@@ -41,5 +43,9 @@ public class RecordsService {
 
         if (insertedNum == 1) return true;
         else return false;
+    }
+
+    public List<RecordResDto> getRecords(LocalDate reqDate, long userId) {
+        return recordsRepository.selectRecords(reqDate, userId);
     }
 }   
