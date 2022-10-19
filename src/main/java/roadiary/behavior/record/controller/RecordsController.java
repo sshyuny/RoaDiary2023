@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.service.RecordsService;
 
@@ -46,5 +47,16 @@ public class RecordsController {
             @PathVariable(value = "day", required = true) String day) {
         
         return "behavior-records.html";
+    }
+    @PostMapping("/behavior/main/{year}/{month}/{day}")
+    public String modifyRecord(@ModelAttribute RecordModifyReqDto recordModifyReqDto, 
+            @PathVariable(value = "year", required = true) String year, 
+            @PathVariable(value = "month", required = true) String month, 
+            @PathVariable(value = "day", required = true) String day) {
+
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        return "redirect:/behavior/main/" + year + "/" + month + "/" + day;
     }
 }
