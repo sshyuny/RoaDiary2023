@@ -30,7 +30,7 @@ function addPlaceholder() {
     document.getElementById("startDate").setAttribute("placeholder", today.getDate());
 }
 
-// 시간 계산 버튼
+// 시간 계산 버튼(@@Date로 수정)
 function during30m() {
     let startHour = Number( document.getElementById("startHour").value ) ;
     let startMin = Number( document.getElementById("startMin").value );
@@ -74,11 +74,11 @@ function during1h() {
     document.getElementById("endMin").value = endMin;
 }
 function during1h30m() {
-    let startHour = Number( document.getElementById("startHour").value ) ;
+    let startHour = Number( document.getElementById("startHour").value );
     let startMin = Number( document.getElementById("startMin").value );
     let endHour, endMin;
 
-    if (startHour >= 22 && startMin > 25) {
+    if ((startHour >= 22 && startMin > 25) || (startHour >= 23  )) {
         alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
         if (startMin == 0) startMin = "00";
         document.getElementById("endHour").value = startHour;
