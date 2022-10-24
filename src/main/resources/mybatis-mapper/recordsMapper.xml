@@ -11,7 +11,7 @@
     </insert>
     
     <select id="selectRecords" resultType="roadiary.behavior.record.dto.RecordResDto">
-        SELECT r.behavior_category_id, r.start_time, r.end_time, r.detail, c.content
+        SELECT r.behavior_records_id, r.behavior_category_id, r.start_time, r.end_time, r.detail, c.content
         FROM behavior_records as r
             LEFT JOIN behavior_category as c
             ON r.behavior_category_id = c.behavior_category_id

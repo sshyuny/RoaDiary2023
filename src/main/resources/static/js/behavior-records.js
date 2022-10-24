@@ -1,10 +1,19 @@
 window.onload = function() { getRecordsTable(); }
 
+let curUrlYear;
+let curUrlMonth;
+let curUrlDate;
+
 function getRecordsTable() {
     const url = window.location.pathname;
     let urls = url.split("/");
-    document.getElementById("aboveDate").textContent = urls[3] + "." + urls[4] + "." + urls[5] + ".";
-    makeRecordsTable(urls[3] + "/" + urls[4] + "/" + urls[5]);
+
+    curUrlYear = urls[3];
+    curUrlMonth = urls[4];
+    curUrlDate = urls[5];
+
+    document.getElementById("aboveDate").textContent = curUrlYear + "." + curUrlMonth + "." + curUrlDate + ".";
+    makeRecordsTable(curUrlYear + "/" + curUrlMonth + "/" + curUrlDate);
 }
 
 function makeRecordsTable(dayUrl) {
@@ -28,13 +37,10 @@ function makeRowsSuccess(data) {
     for (let i = 0; i < length; i++) {
 
         // 기본 div 생성
-        let divModal = document.createElement("div");
         let divRow = document.createElement("div");
         let divColS = document.createElement("div");
         let divColM = document.createElement("div");
 
-        divModal.setAttribute('class', 'modal-dialog modal-dialog-centered');
-        divModal.setAttribute('id', 'staticBackdrop');
         divRow.setAttribute('id', 'divRow' + i);
         divRow.setAttribute('class', 'row justify-content-md-center mb-3');
         divColS.setAttribute('class', 'col-4 d-grid');
@@ -43,123 +49,63 @@ function makeRowsSuccess(data) {
         // Btn 생성
         let timeBtn1 = document.createElement("button");
         let timeBtn2 = document.createElement("button");
-        let contentBtn = document.createElement("text");
+        let contentBtn = document.createElement("span");
         let detailtBtn = document.createElement("span");
 
         timeBtn1.innerHTML = data[i].startTime.substring(0, 5);
         timeBtn2.innerHTML = data[i].endTime.substring(0, 5);
         contentBtn.innerHTML = data[i].content;
         detailtBtn.innerHTML = data[i].detail;
-        timeBtn1.onclick = function() { timeBtnOnclick(data, i, data[i].startTime.substring(0, 5)); };
-        contentBtn.onclick = function() { contentBtnOnclick(data, i); };
-
-        timeBtn1.setAttribute('id', 'timeBtn' + i);
-        timeBtn1.setAttribute('class', 'btn btn-outline-light');
+        
+        timeBtn1.setAttribute('type', 'button');
         timeBtn1.setAttribute('data-bs-toggle', 'modal');
-        timeBtn1.setAttribute('data-bs-target', '#staticBackdrop');
+        timeBtn1.setAttribute('data-bs-target', '#recordModal');
+        timeBtn1.setAttribute('class', 'btn btn-outline-light');
+        timeBtn2.setAttribute('type', 'button');
+        timeBtn2.setAttribute('data-bs-toggle', 'modal');
+        timeBtn2.setAttribute('data-bs-target', '#recordModal');
         timeBtn2.setAttribute('class', 'btn btn-outline-light');
-        contentBtn.setAttribute('id', 'contentBtn' + i);
+
+        timeBtn1.onclick = function() { makeModal(data[i]); };
+        timeBtn2.onclick = function() { makeModal(data[i]); };
 
         // 붙이기
         divColS.append(timeBtn1, timeBtn2);
         divColM.append(contentBtn, detailtBtn);
         divRow.append(divColS, divColM);
-        records.append(divRow, divModal);
+        records.append(divRow);
     }
 }
 
+function makeModal(dataI) {
 
-/*
-function timeBtnOnclick(data, i, preStartTime) {
+    let contentModify = dataI.content;
+    let startYearModify = curUrlYear;
+    let startMonthModify = curUrlMonth;
+    let startDateModify = curUrlDate;
+    let startHourModify = dataI.startTime.substring(0, 2);
+    let startMinModify = dataI.startTime.substring(3, 5);
+    let endHourModify = dataI.endTime.substring(0, 2);
+    let endMinModify = dataI.endTime.substring(3, 5);
+    let detailModify = dataI.detail;
 
-    let divRow = document.getElementById("divRow" + i);
+    makeCategorySelect(contentModify);
+    document.getElementById("startYear").value = startYearModify;
+    document.getElementById("startMonth").value = startMonthModify;
+    document.getElementById("startDate").value = startDateModify;
+    document.getElementById("startHour").value = startHourModify;
+    document.getElementById("startMin").value = startMinModify;
+    document.getElementById("endHour").value = endHourModify;
+    document.getElementById("endMin").value = endMinModify;
+    document.getElementById("detail").value = detailModify;
 
-    // 기본 div 생성
-    let newForm = document.createElement("form");
-    newForm.setAttribute("charset", "UTF-8");
-    newForm.setAttribute("method", "Post");
-
-    let divNewRow = document.createElement("div");
-    let divNewCol = document.createElement("div");
-    let divNewColSubmit = document.createElement("div");
-    let divNewColDel = document.createElement("div");
-    divNewRow.setAttribute('class', 'row justify-content-md-center mt-3 modal-dialog modal-dialog-centered');
-    divNewCol.setAttribute('class', 'col-4 d-grid');
-    divNewColSubmit.setAttribute('class', 'col-2 d-grid');
-    divNewColDel.setAttribute('class', 'col-2 d-grid');
-
-    // input text, button 생성
-    let hidden = document.createElement("input");
-    let startInput = document.createElement("input");
-    let endInput = document.createElement("input");
-    let submitBtn = document.createElement("button");
-    let delBtn = document.createElement("button");
-    hidden.setAttribute('type', 'hidden');
-    hidden.setAttribute('name', 'preStartTime');
-    hidden.setAttribute('value', preStartTime);
-    startInput.setAttribute('class', 'form-control');
-    startInput.setAttribute('name', 'startTime');
-    endInput.setAttribute('class', 'form-control');
-    endInput.setAttribute('name', 'endTime');
-    submitBtn.setAttribute('class', 'btn btn-primary');
-    delBtn.setAttribute('class', 'btn btn-danger');
-    submitBtn.innerHTML = "수정";
-    delBtn.innerHTML = "삭제";
-    submitBtn.onclick = function() { newForm.submit(); };
-
-    // 붙이기
-    newForm.append(startInput, endInput, hidden);
-    divNewCol.append(newForm);
-    divNewColSubmit.append(submitBtn);
-    divNewColDel.append( delBtn);
-    divNewRow.append(divNewCol, divNewColSubmit, divNewColDel);
-    divRow.appendChild(divNewRow);
-    
-    
-    // timeBtn 버튼 수정
-    document.getElementById("timeBtn" + i).onclick = function() {
-        // 다시 누르면, 방금 만든 input text 삭제
-        divNewRow.remove();
-        // 거기서 다시 누르면, input text 생성 function으로 다시 연결해줌
-        document.getElementById("timeBtn" + i).onclick = function() { timeBtnOnclick(data, i); };
-    };
-}
-
-
-
-function contentBtnOnclick(data, i) {
-
-    let divRow = document.getElementById("divRow" + i);
-
-    // 기본 div 생성
-    let divNewRow = document.createElement("div");
-    let divNewCol = document.createElement("div");
-    divNewRow.setAttribute('class', 'row justify-content-md-center mt-3');
-    divNewCol.setAttribute('class', 'col-6');
-
-    // select 생성
-    let select = document.createElement("select");
-    select.setAttribute('class', 'form-select');
-    select.setAttribute('aria-label', '.form-select');
-
-    // 붙이기
-    divNewCol.appendChild(select);
-    divNewRow.appendChild(divNewCol);
-    divRow.appendChild(divNewRow);
-    
-    // 카테고리 불러오기
-    makeCategorySelect(select);
-
-    // contentBtn 버튼 수정
-    document.getElementById("contentBtn" + i).onclick = function() {
-        // 다시 누르면, 방금 만든 input text 삭제
-        divNewRow.remove();
-        // 거기서 다시 누르면, input text 생성 function으로 다시 연결해줌
-        document.getElementById("contentBtn" + i).onclick = function() { contentBtnOnclick(data, i); };
-    };
+    document.getElementById("modifyBtn").onclick = function() { modifyRecord(dataI.behaviorRecordsId); };
 
 }
-function makeCategorySelect(select) {  //behavior.js와 일부 동일 부분
+
+// Modal에서 카테고리 가져오기 
+function makeCategorySelect(selectedCategory) {  //behavior.js와 일부 동일 부분
+    let select = document.getElementById("categoryId");
     $.ajax({
         url: '/category/priority', 
         data: '',
@@ -172,10 +118,51 @@ function makeCategorySelect(select) {  //behavior.js와 일부 동일 부분
                 categoryOne.value = data[i].id;
                 categoryOne.text = data[i].content;
                 select.append(categoryOne);
+
+                if (categoryOne.text == selectedCategory) categoryOne.selected = true;
             }
         }, 
         error: function() {
 			alert("데이터를 가져오는 중 에러가 발생했습니다.");
 		}
     })
-}*/
+}
+
+// 수정된 기록 JSON으로 만들기
+function modifyRecord(behaviorRecordsId) {
+
+    let jsonObj = makeJson(behaviorRecordsId);
+    
+    $.ajax({
+		type: "put",
+        url: "/behavior/records/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
+        data: jsonObj,
+		contentType: 'application/json',
+        dataType: '',
+		success: function(data) {
+            alert("수정이 완료되었습니다.");
+            document.getElementById("records").innerHTML = "";
+            getRecordsTable();
+        }, 
+        error: function() {
+			alert("에러가 발생했습니다.");
+		}
+    })
+
+}
+function makeJson(behaviorRecordsId) {
+
+    let obj = new Object();
+    obj.behaviorRecordsId = behaviorRecordsId;
+    obj.behaviorCategoryId = document.getElementById("categoryId").value;
+    obj.startYear = document.getElementById("startYear").value;
+    obj.startMonth = document.getElementById("startMonth").value;
+    obj.startDate = document.getElementById("startDate").value;
+    obj.startHour = document.getElementById("startHour").value;
+    obj.startMin = document.getElementById("startMin").value;
+    obj.endHour = document.getElementById("endHour").value;
+    obj.endMin = document.getElementById("endMin").value;
+    obj.detail = document.getElementById("detail").value;
+
+    return JSON.stringify(obj);
+}

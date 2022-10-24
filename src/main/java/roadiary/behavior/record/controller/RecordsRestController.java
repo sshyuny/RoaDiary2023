@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordResDto;
 import roadiary.behavior.record.service.RecordsService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +35,15 @@ public class RecordsRestController {
         List<RecordResDto> recordResDtos = recordsService.getRecords(reqDate, userId);
 
         return recordResDtos;
+    }
+
+    @PutMapping(value="/behavior/records/{year}/{month}/{day}")
+    public void putMethodName(@PathVariable(value = "year", required = true) String year, 
+            @PathVariable(value = "month", required = true) String month, 
+            @PathVariable(value = "day", required = true) String day, 
+            @RequestBody RecordModifyReqDto recordModifyReqDto) {
+
+        System.out.println(recordModifyReqDto.getBehaviorCategoryId());
     }
     
 }

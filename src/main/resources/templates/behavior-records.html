@@ -12,6 +12,10 @@
 </head>
 
 <body>
+<style>
+    .modal-content{ background-color:rgb(40, 40, 40); }
+</style>
+
 <div id="container" class="container text-center">
 
     <div class="row">
@@ -41,6 +45,85 @@
     </div>
 
     <div id="records"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="recordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="recordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recordModalLabel">기록 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-md-center">
+                        <div class="col">
+                            <p class="text-center fs-5">카테고리</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="input-group input-group-lg mb-2">
+                                <select id="categoryId" class="form-select" aria-label=".form-select-lg example"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-center fs-5">날짜(년/월/일)</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="input-group input-group-lg mb-2">
+                                <input type="text" class="form-control" id="startYear" placeholder="">
+                                <input type="text" class="form-control" id="startMonth" placeholder="">
+                                <input type="text" class="form-control" id="startDate" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-center fs-5">시작</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="input-group input-group-lg mb-2">
+                                <input type="text" class="form-control" id="startHour" placeholder="">
+                                <label class="input-group-text" for="">시</label>
+                                <input type="text" class="form-control" id="startMin" placeholder="">
+                                <label class="input-group-text" for="">분</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-center fs-5">끝</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="input-group input-group-lg mb-4">
+                                <input type="text" class="form-control" id="endHour" placeholder="">
+                                <label class="input-group-text" for="">시</label>
+                                <input type="text" class="form-control" id="endMin" placeholder="">
+                                <label class="input-group-text" for="">분</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mb-2">
+                        <textarea class="form-control" aria-label="With textarea" placeholder="추가 내용"
+                            id="detail"></textarea>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col d-grid">
+                            <button type="button" id="modifyBtn" class="btn btn-primary btn-outline-light">수정</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-2 d-grid">
+                        <button type="button" class="btn btn-danger btn-outline-light">삭제</button>
+                    </div>
+                    <div class="col-5 d-grid">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 </body>
