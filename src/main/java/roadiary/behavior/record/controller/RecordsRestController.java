@@ -1,7 +1,6 @@
 package roadiary.behavior.record.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpEntity;
@@ -65,7 +64,7 @@ public class RecordsRestController {
         Long behaviorRecordsId = Long.valueOf(httpEntity.getBody());
         int deletedNum = recordsService.deleteRecord(userId, behaviorRecordsId);
 
-        System.out.println(deletedNum);
+        //if (deletedNum == 0) @@적절하지 않은 값 요청됨. 예외처리 필요. (클라이언트가 behaviorRecordId를 임의로 변경 등)
 
     }
     

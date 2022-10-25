@@ -23,7 +23,7 @@ public class MemberService {
 
     public void makeLoginStatus(HttpServletRequest request) {
         // 이후 수정
-        MemberAuthorityDto memberAuthorityDto = new MemberAuthorityDto("name");
+        MemberAuthorityDto memberAuthorityDto = new MemberAuthorityDto("temp-user");
         authority.makeLoginStatus(request, memberAuthorityDto);
     }
 

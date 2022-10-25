@@ -25,6 +25,7 @@ public class SessionAuthority implements Authority {
 
         HttpSession session = request.getSession();
         session.setAttribute(SessionKeys.login, memberAuthorityDto);
+        session.setAttribute(SessionKeys.loginUserName, memberAuthorityDto.getName());
     }
 
     @Override
@@ -32,5 +33,11 @@ public class SessionAuthority implements Authority {
         
         HttpSession session = request.getSession();
         session.removeAttribute(SessionKeys.login);
+    }
+
+    @Override
+    public String getLoginUserName(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return String.valueOf(session.getAttribute(SessionKeys.loginUserName));
     }
 }

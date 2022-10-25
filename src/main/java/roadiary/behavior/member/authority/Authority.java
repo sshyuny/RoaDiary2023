@@ -12,4 +12,6 @@ public interface Authority {
 
     public void destroyLoginStatus(HttpServletRequest request);
 
+    public String getLoginUserName(HttpServletRequest request);
+
 }
