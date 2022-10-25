@@ -16,4 +16,6 @@ public interface RecordsMapper {
 
     public List<RecordResDto> selectRecords(@Param("reqDate") LocalDate reqDate, @Param("userId") long userId);
 
+    public int updateRecord(RecordEntity recordEntity);
+
 }

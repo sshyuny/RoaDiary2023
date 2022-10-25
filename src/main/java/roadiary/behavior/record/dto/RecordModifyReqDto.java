@@ -7,6 +7,7 @@ import lombok.Setter;
 public class RecordModifyReqDto {
     
     private long behaviorRecordsId;
+
     private long behaviorCategoryId;
 
     private Integer startYear;

@@ -43,7 +43,12 @@ public class RecordsRestController {
             @PathVariable(value = "day", required = true) String day, 
             @RequestBody RecordModifyReqDto recordModifyReqDto) {
 
-        System.out.println(recordModifyReqDto.getBehaviorCategoryId());
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        int updatedNum = recordsService.modifyRecord(userId, recordModifyReqDto);
+
+        //if (updatedNum == 0) @@적절하지 않은 값 요청됨. 예외처리 필요. (클라이언트가 behaviorRecordId를 임의로 변경 등)
     }
     
 }

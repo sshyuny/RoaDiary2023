@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.dto.RecordResDto;
 import roadiary.behavior.record.entity.RecordEntity;
@@ -47,5 +48,21 @@ public class RecordsService {
 
     public List<RecordResDto> getRecords(LocalDate reqDate, long userId) {
         return recordsRepository.selectRecords(reqDate, userId);
+    }
+
+    public int modifyRecord(long userId, RecordModifyReqDto recordModifyReqDto) {
+
+        LocalDateTime start = LocalDateTime.of(
+            recordModifyReqDto.getStartYear(), recordModifyReqDto.getStartMonth(), recordModifyReqDto.getStartDate(), 
+            recordModifyReqDto.getStartHour(), recordModifyReqDto.getStartMin());
+        LocalDateTime end = LocalDateTime.of(
+            recordModifyReqDto.getStartYear(), recordModifyReqDto.getStartMonth(), recordModifyReqDto.getStartDate(), 
+            recordModifyReqDto.getEndHour(), recordModifyReqDto.getEndMin());
+
+        RecordEntity recordEntity = RecordEntity.of(
+            recordModifyReqDto.getBehaviorRecordsId(), recordModifyReqDto.getBehaviorCategoryId(), 
+            userId, start, end, recordModifyReqDto.getDetail());
+
+        return recordsRepository.updateRecord(recordEntity);
     }
 }   

@@ -25,4 +25,9 @@ public class RecordsRepositoryImpl implements RecordsRepository {
         return recordsMapper.selectRecords(reqDate, userId);
     }
 
+    @Override
+    public int updateRecord(RecordEntity recordEntity) {
+        return recordsMapper.updateRecord(recordEntity);
+    }
+
 }

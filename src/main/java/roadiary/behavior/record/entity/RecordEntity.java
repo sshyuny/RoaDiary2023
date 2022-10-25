@@ -11,19 +11,30 @@ import lombok.Setter;
 @Getter @Setter
 public class RecordEntity {
     
-    private long recordsId;
-    private long categoryId;
+    private long behaviorRecordsId;
+    private long behaviorCategoryId;
     private long userId;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String detail;
 
-    public static RecordEntity of(long categoryId, long userId, LocalDateTime startDateTime, LocalDateTime endDateTime, String detail) {
+    public static RecordEntity of(long categoryId, long userId, LocalDateTime startTime, LocalDateTime endTime, String detail) {
         RecordEntity recordEntity = new RecordEntity();
-        recordEntity.setCategoryId(categoryId);
+        recordEntity.setBehaviorCategoryId(categoryId);
         recordEntity.setUserId(userId);
-        recordEntity.setStartDateTime(startDateTime);
-        recordEntity.setEndDateTime(endDateTime);
+        recordEntity.setStartTime(startTime);
+        recordEntity.setEndTime(endTime);
+        recordEntity.setDetail(detail);
+        return recordEntity;
+    }
+
+    public static RecordEntity of(long behaviorRecordsId, long categoryId, long userId, LocalDateTime startTime, LocalDateTime endTime, String detail) {
+        RecordEntity recordEntity = new RecordEntity();
+        recordEntity.setBehaviorRecordsId(behaviorRecordsId);
+        recordEntity.setBehaviorCategoryId(categoryId);
+        recordEntity.setUserId(userId);
+        recordEntity.setStartTime(startTime);
+        recordEntity.setEndTime(endTime);
         recordEntity.setDetail(detail);
         return recordEntity;
     }

@@ -7,7 +7,7 @@
         INSERT INTO behavior_records 
             (behavior_category_id, user_id, start_time, end_time, detail) 
             VALUES 
-            (#{categoryId}, #{userId}, #{startDateTime}, #{endDateTime}, #{detail}) 
+            (#{behaviorCategoryId}, #{userId}, #{startTime}, #{endTime}, #{detail}) 
     </insert>
     
     <select id="selectRecords" resultType="roadiary.behavior.record.dto.RecordResDto">
@@ -17,5 +17,15 @@
             ON r.behavior_category_id = c.behavior_category_id
             WHERE r.user_id = #{userId} AND DATE(r.start_time) = #{reqDate};
     </select>
+
+    <update id="updateRecord" parameterType="roadiary.behavior.record.entity.RecordEntity">
+        UPDATE behavior_records
+            SET 
+                behavior_category_id = #{behaviorCategoryId},
+                start_time = #{startTime},
+                end_time = #{endTime},
+                detail = #{detail}
+            WHERE user_id = #{userId} AND behavior_records_id = #{behaviorRecordsId}
+    </update>
 
 </mapper>
