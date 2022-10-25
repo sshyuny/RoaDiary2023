@@ -18,4 +18,6 @@ public interface RecordsMapper {
 
     public int updateRecord(RecordEntity recordEntity);
 
+    public int deleteRecord(@Param("userId") long userId, @Param("behaviorRecordsId") long behaviorRecordsId);
+
 }

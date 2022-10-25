@@ -28,4 +28,9 @@
             WHERE user_id = #{userId} AND behavior_records_id = #{behaviorRecordsId}
     </update>
 
+    <delete id="deleteRecord">
+        DELETE FROM behavior_records 
+            WHERE user_id = #{userId} AND behavior_records_id = #{behaviorRecordsId}
+    </delete>
+
 </mapper>

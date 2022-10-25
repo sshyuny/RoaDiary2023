@@ -13,5 +13,7 @@ public interface RecordsRepository {
     public List<RecordResDto> selectRecords(LocalDate reqDate, long userId);
 
     public int updateRecord(RecordEntity recordEntity);
+
+    public int deleteRecord(long userId, long behaviorRecordsId);
     
 }

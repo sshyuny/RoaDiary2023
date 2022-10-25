@@ -30,4 +30,9 @@ public class RecordsRepositoryImpl implements RecordsRepository {
         return recordsMapper.updateRecord(recordEntity);
     }
 
+    @Override
+    public int deleteRecord(long userId, long behaviorRecordsId) {
+        return recordsMapper.deleteRecord(userId, behaviorRecordsId);
+    }
+
 }

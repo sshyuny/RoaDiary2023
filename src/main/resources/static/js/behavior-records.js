@@ -100,6 +100,7 @@ function makeModal(dataI) {
     document.getElementById("detail").value = detailModify;
 
     document.getElementById("modifyBtn").onclick = function() { modifyRecord(dataI.behaviorRecordsId); };
+    document.getElementById("deleteBtn").onclick = function() { confirmDeleteRecord(dataI.behaviorRecordsId); };
 
 }
 
@@ -165,4 +166,29 @@ function makeJson(behaviorRecordsId) {
     obj.detail = document.getElementById("detail").value;
 
     return JSON.stringify(obj);
+}
+
+// 기록 삭제
+function confirmDeleteRecord(behaviorRecordsId) {
+    if (confirm("이 기록을 삭제하시겠습니까?")) {
+        deleteRecord(behaviorRecordsId);
+    }
+}
+function deleteRecord(behaviorRecordsId) {
+    $.ajax({
+		type: "delete",
+        url:  "/behavior/records/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
+        data: behaviorRecordsId + "",
+		contentType: 'text/plain',
+        dataType: '',
+		success: function(data) {
+            alert("삭제가 완료되었습니다.");
+            document.getElementById("modalClose").click();
+            document.getElementById("records").innerHTML = "";
+            getRecordsTable();
+        }, 
+        error: function() {
+			alert("에러가 발생했습니다.");
+		}
+    })
 }

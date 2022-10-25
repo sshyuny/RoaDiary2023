@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +40,7 @@ public class RecordsRestController {
     }
 
     @PutMapping(value="/behavior/records/{year}/{month}/{day}")
-    public void putMethodName(@PathVariable(value = "year", required = true) String year, 
+    public void modifyRecord(@PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 
             @RequestBody RecordModifyReqDto recordModifyReqDto) {
@@ -49,6 +51,22 @@ public class RecordsRestController {
         int updatedNum = recordsService.modifyRecord(userId, recordModifyReqDto);
 
         //if (updatedNum == 0) @@적절하지 않은 값 요청됨. 예외처리 필요. (클라이언트가 behaviorRecordId를 임의로 변경 등)
+    }
+
+    @DeleteMapping(value="/behavior/records/{year}/{month}/{day}")
+    public void deleteRecord(@PathVariable(value = "year", required = true) String year, 
+            @PathVariable(value = "month", required = true) String month, 
+            @PathVariable(value = "day", required = true) String day, 
+            HttpEntity<String> httpEntity) {
+
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        Long behaviorRecordsId = Long.valueOf(httpEntity.getBody());
+        int deletedNum = recordsService.deleteRecord(userId, behaviorRecordsId);
+
+        System.out.println(deletedNum);
+
     }
     
 }

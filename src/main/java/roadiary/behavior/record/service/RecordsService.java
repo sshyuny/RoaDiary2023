@@ -65,4 +65,8 @@ public class RecordsService {
 
         return recordsRepository.updateRecord(recordEntity);
     }
+
+    public int deleteRecord(long userId, long behaviorRecordsId) {
+        return recordsRepository.deleteRecord(userId, behaviorRecordsId);
+    }
 }   
