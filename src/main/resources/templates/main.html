@@ -55,7 +55,32 @@
         </div>
     </div>
         
-</div>
+</div><!-- container -->
+
+<div class="container">
+    <style>
+        #contactOffcanvas { background-color:rgb(40, 40, 40); }
+    </style>
+    <div class="position-static">
+        <div class="position-absolute bottom-0 start-0">
+            <button class="btn" type="button" id="contactBtn" data-bs-toggle="offcanvas" data-bs-target="#contactOffcanvas" aria-controls="contactOffcanvas">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="contactOffcanvas" aria-labelledby="contactOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="contactOffcanvasLabel">Contact</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            devsshyuny@gmail.com
+        </div>
+    </div>
+</div><!-- container -->
+
 </body>
 
 </html>

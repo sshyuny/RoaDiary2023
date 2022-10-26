@@ -23,7 +23,7 @@ function makeRecordsTable(dayUrl) {
 		method: 'GET',
 		dataType: 'json',
 		success: function(data) {
-            makeRowsSuccess(data);
+            if (data.length >= 1) makeRowsSuccess(data);
         }, 
         error: function() {
 			alert("데이터를 가져오는 중 에러가 발생했습니다.");
@@ -33,6 +33,7 @@ function makeRecordsTable(dayUrl) {
 
 function makeRowsSuccess(data) {
     let records = document.getElementById("records");
+    records.innerHTML = "";
     let length = data.length;
     for (let i = 0; i < length; i++) {
 
@@ -49,13 +50,15 @@ function makeRowsSuccess(data) {
         // Btn 생성
         let timeBtn1 = document.createElement("button");
         let timeBtn2 = document.createElement("button");
-        let contentBtn = document.createElement("span");
+        let contentBtn = document.createElement("p");
         let detailtBtn = document.createElement("span");
 
         timeBtn1.innerHTML = data[i].startTime.substring(0, 5);
         timeBtn2.innerHTML = data[i].endTime.substring(0, 5);
         contentBtn.innerHTML = data[i].content;
         detailtBtn.innerHTML = data[i].detail;
+        
+        contentBtn.setAttribute('class', 'fs-5 fw-bold');
         
         timeBtn1.setAttribute('type', 'button');
         timeBtn1.setAttribute('data-bs-toggle', 'modal');
@@ -191,4 +194,26 @@ function deleteRecord(behaviorRecordsId) {
 			alert("에러가 발생했습니다.");
 		}
     })
+}
+
+// 어제 버튼
+function toYesterday() {
+    let yesterdayTime = new Date(curUrlYear, curUrlMonth - 1, curUrlDate).getTime() - 86400000;
+    let yesterday = new Date(yesterdayTime);
+    let month = yesterday.getMonth() + 1;
+    location.replace("/behavior/main/" + 
+        yesterday.getFullYear() + "/" + 
+        month + "/" + 
+        yesterday.getDate());
+}
+
+// 내일 버튼
+function toTomorrow() {
+    let tomorrowTime = new Date(curUrlYear, curUrlMonth - 1, curUrlDate).getTime() + 86400000;
+    let tomorrow = new Date(tomorrowTime);
+    let month = tomorrow.getMonth() + 1;
+    location.replace("/behavior/main/" + 
+        tomorrow.getFullYear() + "/" + 
+        month + "/" + 
+        tomorrow.getDate());
 }

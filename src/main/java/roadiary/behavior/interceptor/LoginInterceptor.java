@@ -24,9 +24,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         
         HttpSession session = request.getSession();
-        session.setAttribute(SessionKeys.afterLoginPage, request.getRequestURI());
-
+        
+        
         if (!authority.isItLoginStatus(request)) {
+            session.setAttribute(SessionKeys.afterLoginPage, request.getRequestURI());
             response.sendRedirect("/login");
             return false;
         }
