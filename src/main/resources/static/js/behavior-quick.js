@@ -127,7 +127,7 @@ function saveBehaviorAjax(jsonObj) {  // behavior.js와 동일 부분
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
-            alert('s');
+            alert('저장이 완료되었습니다.');
         }, 
         error: function() {
 			alert("에러가 발생했습니다.");
