@@ -3,7 +3,7 @@ window.onload = function() {
     let today = new Date();
     let month = today.getMonth() + 1;
     let todayUrl = "/" + today.getFullYear() + "/" + month + "/" + today.getDate();
-    document.getElementById("behaviorMain").setAttribute("href", "/behavior/main" + todayUrl);
+    document.getElementById("recordsMain").setAttribute("href", "/records/main" + todayUrl);
 
     getUserName();
 }
@@ -37,8 +37,7 @@ function destroyLoginSession() {
 		method: 'GET',
 		dataType: '',
 		success: function(data) {
-            alert("로그인 세션이 제거되었습니다.");
-            window.location.href =  "http://localhost:8080";
+            window.location.href =  "/";
         }, 
         error: function() {
 			alert("에러가 발생했습니다.");

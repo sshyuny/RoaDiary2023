@@ -7,8 +7,7 @@ function makeLoginSession() {
 		method: 'GET',
 		dataType: '',
 		success: function(data) {
-            alert("로그인 세션이 생성되었습니다.");
-            window.location.href =  "http://localhost:8080" + data;
+            window.location.href =  "/";
         }, 
         error: function() {
 			alert("에러가 발생했습니다.");

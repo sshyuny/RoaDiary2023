@@ -23,7 +23,7 @@ public class RecordsRestController {
     
     private final RecordsService recordsService;
 
-    @GetMapping("/behavior/records/{year}/{month}/{day}")
+    @GetMapping("/records/manage/{year}/{month}/{day}")
     public List<RecordResDto> getRecords(
             @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
@@ -38,7 +38,7 @@ public class RecordsRestController {
         return recordResDtos;
     }
 
-    @PutMapping(value="/behavior/records/{year}/{month}/{day}")
+    @PutMapping(value="/records/manage/{year}/{month}/{day}")
     public void modifyRecord(@PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 
@@ -52,7 +52,7 @@ public class RecordsRestController {
         //if (updatedNum == 0) @@적절하지 않은 값 요청됨. 예외처리 필요. (클라이언트가 behaviorRecordId를 임의로 변경 등)
     }
 
-    @DeleteMapping(value="/behavior/records/{year}/{month}/{day}")
+    @DeleteMapping(value="/records/manage/{year}/{month}/{day}")
     public void deleteRecord(@PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 

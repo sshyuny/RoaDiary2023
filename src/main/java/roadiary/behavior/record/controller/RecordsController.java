@@ -21,6 +21,10 @@ public class RecordsController {
     public String directToSave() {
         return "behavior.html";
     }
+    @GetMapping("/behavior-quick")
+    public String directToSaveQuick() {
+        return "behavior-quick.html";
+    }
     
     @PostMapping("/behavior")
     public String saveRecord(@ModelAttribute RecordReqDto recordReqDto) {
@@ -38,15 +42,15 @@ public class RecordsController {
         return "redirect:/behavior";
     }
 
-    @GetMapping("/behavior/main/{year}/{month}/{day}")
+    @GetMapping("/records/main/{year}/{month}/{day}")
     public String directToBehaviorMain(
             @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day) {
         
-        return "behavior-records.html";
+        return "records.html";
     }
-    @PostMapping("/behavior/main/{year}/{month}/{day}")
+    @PostMapping("/records/main/{year}/{month}/{day}")
     public String modifyRecord(@ModelAttribute RecordModifyReqDto recordModifyReqDto, 
             @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
@@ -55,6 +59,6 @@ public class RecordsController {
         // userId 세션에서 가져오기
         Long userId = 1L;
 
-        return "redirect:/behavior/main/" + year + "/" + month + "/" + day;
+        return "redirect:/records/main/" + year + "/" + month + "/" + day;
     }
 }

@@ -18,7 +18,7 @@ function getRecordsTable() {
 
 function makeRecordsTable(dayUrl) {
     $.ajax({
-        url: '/behavior/records/' + dayUrl, 
+        url: '/records/manage/' + dayUrl, 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -139,7 +139,7 @@ function modifyRecord(behaviorRecordsId) {
     
     $.ajax({
 		type: "put",
-        url: "/behavior/records/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
+        url: "/records/manage/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',
@@ -180,7 +180,7 @@ function confirmDeleteRecord(behaviorRecordsId) {
 function deleteRecord(behaviorRecordsId) {
     $.ajax({
 		type: "delete",
-        url:  "/behavior/records/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
+        url:  "/records/manage/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
         data: behaviorRecordsId + "",
 		contentType: 'text/plain',
         dataType: '',
@@ -201,7 +201,7 @@ function toYesterday() {
     let yesterdayTime = new Date(curUrlYear, curUrlMonth - 1, curUrlDate).getTime() - 86400000;
     let yesterday = new Date(yesterdayTime);
     let month = yesterday.getMonth() + 1;
-    location.replace("/behavior/main/" + 
+    location.replace("/records/main/" + 
         yesterday.getFullYear() + "/" + 
         month + "/" + 
         yesterday.getDate());
@@ -212,7 +212,7 @@ function toTomorrow() {
     let tomorrowTime = new Date(curUrlYear, curUrlMonth - 1, curUrlDate).getTime() + 86400000;
     let tomorrow = new Date(tomorrowTime);
     let month = tomorrow.getMonth() + 1;
-    location.replace("/behavior/main/" + 
+    location.replace("/records/main/" + 
         tomorrow.getFullYear() + "/" + 
         month + "/" + 
         tomorrow.getDate());

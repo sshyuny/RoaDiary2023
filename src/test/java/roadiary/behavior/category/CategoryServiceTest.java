@@ -14,14 +14,18 @@ import roadiary.behavior.category.service.CategoryService;
 
 public class CategoryServiceTest {
     
-    //AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(CategoryTestConfig.class);
-
-    // 이런 식으로 의존 빈 사용해도 되는건지 추후 확인하기 / 생성자로 주입해야하나?
     //private CategoryService categoryService = ac.getBean(CategoryService.class);
 
     @Test
     @DisplayName("")
-    void getCategoryListTest() {
+    void 카테고리추가테스트() {
+
+        
+    }
+
+    @Test
+    @DisplayName("")
+    void 카테고리순서변경테스트() {
 
         
     }

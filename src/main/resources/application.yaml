@@ -6,6 +6,9 @@ spring:
       "prod": "prod_setting,common"
       "local-mariadb": "local-mariadb_setting,common"
 
+server:
+  port: 80
+
 ---
 
 # common setting

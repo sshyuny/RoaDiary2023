@@ -1,0 +1,88 @@
+window.onload = function() { makeCategorySelect(); fillDate(); }
+
+function fillDate() {
+    
+    let today = new Date();
+    let todayMon = today.getMonth() + 1;
+    let todayStr = toCalendarFormat(today.getFullYear(), todayMon, today.getDate());
+    let todayHour = today.getHours();
+    let todayMin = parseInt(today.getMinutes() / 10) * 10;
+
+    document.getElementById("startCalendar").value = todayStr;
+    document.getElementById("endCalendar").value = todayStr;
+    document.getElementById("startHour").value = todayHour;
+    document.getElementById("endHour").value = todayHour;
+    document.getElementById("startMin").value = todayMin;
+    document.getElementById("endMin").value = todayMin;
+}
+
+function makeCategorySelect() {
+    $.ajax({
+        url: '/category/priority', 
+        data: '',
+		method: 'GET',
+		dataType: 'json',
+		success: function(data) {
+            let categoryLength = data.length;
+            let categoryListSelect = document.getElementById("categoryId");
+            for (var i = 0; i < categoryLength; i++) {
+                let categoryOne = document.createElement("option");
+                categoryOne.value = data[i].id;
+                categoryOne.text = data[i].content;
+                categoryListSelect.append(categoryOne);
+            }
+        }, 
+        error: function() {
+			alert("데이터를 가져오는 중 에러가 발생했습니다.");
+		}
+    })
+}
+
+function toCalendarFormat(year, month, day) {
+
+    let monthStr = String(month);
+    let dayStr = String(day);
+
+    if (month <= 9) monthStr = "0" + month;
+    if (day <= 9) dayStr = "0" + day;
+
+    return year + "-" + monthStr + "-" + dayStr;
+}
+
+function calculateDate(min) {
+    
+    let endCalendarEle = document.getElementById("endCalendar");
+    let endHourEle = document.getElementById("endHour");
+    let endMinEle = document.getElementById("endMin");
+    let endCalendarDates = endCalendarEle.value.split("-");
+
+    let endYear = Number( endCalendarDates[0] );
+    let endMonth = Number( endCalendarDates[1] );
+    let endDate = Number( endCalendarDates[2] );
+    let endHour = Number( endHourEle.value );
+    let endMin = Number( endMinEle.value );
+
+    let afterDate = new Date(endYear, endMonth - 1, endDate, endHour, endMin + min);
+    let newEndMonth = afterDate.getMonth() + 1;
+    let newEndCalendarVal = toCalendarFormat(afterDate.getFullYear(), newEndMonth, afterDate.getDate());
+
+    endCalendarEle.value = newEndCalendarVal;
+    endHourEle.value =afterDate.getHours();
+    endMinEle.value = afterDate.getMinutes();
+}
+
+function resetDate() {
+
+    let startCalendarDates = document.getElementById("startCalendar").value.split("-");
+
+    let startYear = Number( startCalendarDates[0] );
+    let startMonth = Number( startCalendarDates[1] );
+    let startDate = Number( startCalendarDates[2] );
+    let startHour = Number( document.getElementById("startHour").value );
+    let startMinStr = document.getElementById("startMin").value;
+    let startMin = Number( startMinStr );
+    
+    document.getElementById("endCalendar").value = toCalendarFormat(startYear, startMonth, startDate);
+    document.getElementById("endHour").value = startHour;
+    document.getElementById("endMin").value = startMin;
+}

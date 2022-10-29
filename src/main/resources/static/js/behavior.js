@@ -25,131 +25,66 @@ function makeCategorySelect() {
 // 날짜 placeholder 추가
 function addPlaceholder() {
     let today = new Date();
-    document.getElementById("startYear").setAttribute("placeholder", today.getFullYear());
-    document.getElementById("startMonth").setAttribute("placeholder", today.getMonth() + 1);
-    document.getElementById("startDate").setAttribute("placeholder", today.getDate());
+    
+    let startYear = document.getElementById("startYear");
+    let startMonth = document.getElementById("startMonth");
+    let startDate = document.getElementById("startDate");
+    let startHour = document.getElementById("startHour");
+    let startMin = document.getElementById("startMin");
+
+    let endYear = document.getElementById("endYear");
+    let endMonth = document.getElementById("endMonth");
+    let endDate = document.getElementById("endDate");
+    let endHour = document.getElementById("endHour");
+    let endMin = document.getElementById("endMin");
+
+    repeateAddPlaceholder(startYear, today.getFullYear());
+    repeateAddPlaceholder(startMonth, today.getMonth() + 1);
+    repeateAddPlaceholder(startDate, today.getDate());
+    repeateAddPlaceholder(startHour, today.getHours());
+    repeateAddPlaceholder(startMin, today.getMinutes());
+
+    repeateAddPlaceholder(endYear, today.getFullYear());
+    repeateAddPlaceholder(endMonth, today.getMonth() + 1);
+    repeateAddPlaceholder(endDate, today.getDate());
+    repeateAddPlaceholder(endHour, today.getHours());
+    repeateAddPlaceholder(endMin, today.getMinutes());
+}
+function repeateAddPlaceholder(dom, todayDetail) {
+    dom.setAttribute("placeholder", todayDetail);
+    dom.setAttribute("value", todayDetail);
+    dom.onclick = function(e) { e.target.value = "";};
 }
 
-// 시간 계산 버튼(@@Date로 수정)
-function during30m() {
-    let startHour = Number( document.getElementById("startHour").value ) ;
-    let startMin = Number( document.getElementById("startMin").value );
-    let endHour, endMin;
 
-    if (startHour >= 23 && startMin > 25) {
-        alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
-        if (startMin == 0) startMin = "00";
-        document.getElementById("endHour").value = startHour;
-        document.getElementById("endMin").value = startMin;
-        return;
-    }
+function calculateDate(min) {
+    let endYear = Number( document.getElementById("endYear").value );
+    let endMonth = Number( document.getElementById("endMonth").value );
+    let endDate = Number( document.getElementById("endDate").value );
+    let endHour = Number( document.getElementById("endHour").value );
+    let endMin = Number( document.getElementById("endMin").value );
 
-    if (startMin < 25) {
-        endHour = startHour; endMin = startMin + 30;
-    } else {
-        endHour = startHour + 1; endMin = startMin - 30;
-    }
+    let afterDate = new Date(endYear, endMonth - 1, endDate, endHour, endMin + min);
 
-    if (endMin == 0) endMin = "00";
-    document.getElementById("endHour").value = endHour;
-    document.getElementById("endMin").value = endMin;
+    document.getElementById("endYear").value = afterDate.getFullYear();
+    document.getElementById("endMonth").value = afterDate.getMonth() + 1;
+    document.getElementById("endDate").value = afterDate.getDate();
+    document.getElementById("endHour").value =afterDate.getHours();
+    document.getElementById("endMin").value = afterDate.getMinutes();
 }
-function during1h() {
-    let startHour = Number( document.getElementById("startHour").value ) ;
-    let startMin = Number( document.getElementById("startMin").value );
-    let endHour, endMin;
 
-    if (startHour >= 23) {
-        alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
-        if (startMin == 0) startMin = "00";
-        document.getElementById("endHour").value = startHour;
-        document.getElementById("endMin").value = startMin;
-        return;
-    }
-
-    endHour = startHour + 1; endMin = startMin;
-
-    if (endMin == 0) endMin = "00";
-    document.getElementById("endHour").value = endHour;
-    document.getElementById("endMin").value = endMin;
-}
-function during1h30m() {
+function resetDate() {
+    let startYear = Number( document.getElementById("startYear").value );
+    let startMonth = Number( document.getElementById("startMonth").value );
+    let startDate = Number( document.getElementById("startDate").value );
     let startHour = Number( document.getElementById("startHour").value );
     let startMin = Number( document.getElementById("startMin").value );
-    let endHour, endMin;
 
-    if ((startHour >= 22 && startMin > 25) || (startHour >= 23  )) {
-        alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
-        if (startMin == 0) startMin = "00";
-        document.getElementById("endHour").value = startHour;
-        document.getElementById("endMin").value = startMin;
-        return;
-    }
+    let afterDate = new Date(startYear, startMonth - 1, startDate, startHour, startMin);
 
-    if (startMin < 25) {
-        endHour = startHour + 1; endMin = startMin + 30;
-    } else {
-        endHour = startHour + 2; endMin = startMin - 30;
-    }
-
-    if (endMin == 0) endMin = "00";
-    document.getElementById("endHour").value = endHour;
-    document.getElementById("endMin").value = endMin;
-}
-function during2h() {
-    let startHour = Number( document.getElementById("startHour").value ) ;
-    let startMin = Number( document.getElementById("startMin").value );
-    let endHour, endMin;
-
-    if (startHour >= 22) {
-        alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
-        if (startMin == 0) startMin = "00";
-        document.getElementById("endHour").value = startHour;
-        document.getElementById("endMin").value = startMin;
-        return;
-    }
-
-    endHour = startHour + 2; endMin = startMin;
-
-    if (endMin == 0) endMin = "00";
-    document.getElementById("endHour").value = endHour;
-    document.getElementById("endMin").value = endMin;
-}
-function during3h() {
-    let startHour = Number( document.getElementById("startHour").value ) ;
-    let startMin = Number( document.getElementById("startMin").value );
-    let endHour, endMin;
-
-    if (startHour >= 21) {
-        alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
-        if (startMin == 0) startMin = "00";
-        document.getElementById("endHour").value = startHour;
-        document.getElementById("endMin").value = startMin;
-        return;
-    }
-
-    endHour = startHour + 3; endMin = startMin;
-
-    if (endMin == 0) endMin = "00";
-    document.getElementById("endHour").value = endHour;
-    document.getElementById("endMin").value = endMin;
-}
-function during4h() {
-    let startHour = Number( document.getElementById("startHour").value ) ;
-    let startMin = Number( document.getElementById("startMin").value );
-    let endHour, endMin;
-
-    if (startHour >= 20) {
-        alert("시간이 다음 날로 넘어갑니다. 일상 저장 페이지에서 완료해주세요.");
-        if (startMin == 0) startMin = "00";
-        document.getElementById("endHour").value = startHour;
-        document.getElementById("endMin").value = startMin;
-        return;
-    }
-
-    endHour = startHour + 4; endMin = startMin;
-
-    if (endMin == 0) endMin = "00";
-    document.getElementById("endHour").value = endHour;
-    document.getElementById("endMin").value = endMin;
+    document.getElementById("endYear").value = afterDate.getFullYear();
+    document.getElementById("endMonth").value = afterDate.getMonth() + 1;
+    document.getElementById("endDate").value = afterDate.getDate();
+    document.getElementById("endHour").value =afterDate.getHours();
+    document.getElementById("endMin").value = afterDate.getMinutes();
 }

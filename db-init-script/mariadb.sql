@@ -76,6 +76,7 @@ VALUES
 INSERT INTO user
 (email, nickname, recently_visited, register_status)
 VALUES
+('test@test.com', 'test-user', now(), 'normal'),
 ('devsshyuny@gmail.com', 'sshyuny', now(), 'normal');
 
 INSERT INTO behavior_priority_category
