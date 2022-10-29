@@ -22,17 +22,9 @@ public class RecordsService {
     
     public boolean addRecord(RecordReqDto recordReqDto, long userId) {
 
-        int startYear, startMonth, startDate;
-        if (recordReqDto.getStartYear() == null) startYear = LocalDate.now().getYear();
-        else startYear = recordReqDto.getStartYear();
-        if (recordReqDto.getStartMonth() == null) startMonth = LocalDate.now().getMonthValue();
-        else startMonth = recordReqDto.getStartMonth();
-        if (recordReqDto.getStartDate() == null) startDate = LocalDate.now().getDayOfMonth();
-        else startDate = recordReqDto.getStartDate();
-
-        LocalDateTime startDateTime = LocalDateTime.of(LocalDate.of(startYear, startMonth, startDate), 
+        LocalDateTime startDateTime = LocalDateTime.of(LocalDate.of(recordReqDto.getStartYear(), recordReqDto.getStartMonth(), recordReqDto.getStartDate()), 
                 LocalTime.of(recordReqDto.getStartHour(), recordReqDto.getStartMin()));
-        LocalDateTime enddDateTime = LocalDateTime.of(LocalDate.of(startYear, startMonth, startDate), 
+        LocalDateTime enddDateTime = LocalDateTime.of(LocalDate.of(recordReqDto.getEndYear(), recordReqDto.getEndMonth(), recordReqDto.getEndDate()), 
                 LocalTime.of(recordReqDto.getEndHour(), recordReqDto.getEndMin()));
 
         //@@ enddDateTime이 더 앞설 경우 예외처리

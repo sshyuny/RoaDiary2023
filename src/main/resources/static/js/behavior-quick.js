@@ -1,7 +1,8 @@
 window.onload = function() { makeCategorySelect(); fillDate(); }
+function reload() { location.reload(); }
 
 function fillDate() {
-    
+
     let today = new Date();
     let todayMon = today.getMonth() + 1;
     let todayStr = toCalendarFormat(today.getFullYear(), todayMon, today.getDate());
@@ -51,9 +52,9 @@ function toCalendarFormat(year, month, day) {
 
 function calculateDate(min) {
     
-    let endCalendarEle = document.getElementById("endCalendar");
     let endHourEle = document.getElementById("endHour");
     let endMinEle = document.getElementById("endMin");
+    let endCalendarEle = document.getElementById("endCalendar");
     let endCalendarDates = endCalendarEle.value.split("-");
 
     let endYear = Number( endCalendarDates[0] );
@@ -85,4 +86,51 @@ function resetDate() {
     document.getElementById("endCalendar").value = toCalendarFormat(startYear, startMonth, startDate);
     document.getElementById("endHour").value = startHour;
     document.getElementById("endMin").value = startMin;
+}
+
+function saveBehavior() {
+    let obj = new Object();
+
+    let endCalendarEle = document.getElementById("endCalendar");
+    let endCalendarDates = endCalendarEle.value.split("-");
+    let endYear = Number( endCalendarDates[0] );
+    let endMonth = Number( endCalendarDates[1] );
+    let endDate = Number( endCalendarDates[2] );
+
+    let startCalendarEle = document.getElementById("startCalendar");
+    let startCalendarDates = startCalendarEle.value.split("-");
+    let startYear = Number( startCalendarDates[0] );
+    let startMonth = Number( startCalendarDates[1] );
+    let startDate = Number( startCalendarDates[2] );
+
+    obj.categoryId = document.getElementById("categoryId").value;
+    obj.startYear = startYear;
+    obj.startMonth = startMonth;
+    obj.startDate = startDate;
+    obj.startHour = document.getElementById("startHour").value;
+    obj.startMin = document.getElementById("startMin").value;
+    obj.endYear = endYear;
+    obj.endMonth = endMonth;
+    obj.endDate = endDate;
+    obj.endHour = document.getElementById("endHour").value;
+    obj.endMin = document.getElementById("endMin").value;
+    obj.detail = document.getElementById("detail").value;
+
+    let jsonObj = JSON.stringify(obj);
+    saveBehaviorAjax(jsonObj);
+}
+function saveBehaviorAjax(jsonObj) {  // behavior.js와 동일 부분
+    $.ajax({
+		type: "post",
+        url: "/behavior", 
+        data: jsonObj,
+		contentType: 'application/json',
+        dataType: '',
+		success: function(data) {
+            alert('s');
+        }, 
+        error: function() {
+			alert("에러가 발생했습니다.");
+		}
+    })
 }

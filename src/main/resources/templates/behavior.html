@@ -16,106 +16,100 @@
 
     <div class="row justify-content-md-center">
         <div class="col mt-4 mb-4">
-            <h1 class="display-4 text-center">
+            <h1 class="display-4 text-center" onclick="reload();">
                 기록 입력
             </h1>
         </div>
     </div>
 
-    <form action="" method="post">
-
-        <div class="row">
-            <div class="col">
-                <p class="fs-4">🗂카테고리</p>
-            </div>
-            <div class="col-lg-8">
-                <div class="input-group input-group-lg mb-3">
-                    <select id="categoryId" name="categoryId" 
-                        class="form-select" aria-label=".form-select-lg example"></select>
-                </div>
+    <div class="row">
+        <div class="col">
+            <p class="fs-4">🗂카테고리</p>
+        </div>
+        <div class="col-lg-8">
+            <div class="input-group input-group-lg mb-3">
+                <select id="categoryId" class="form-select" aria-label=".form-select-lg example"></select>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col">
-                <p class="fs-4">⏲시작(년/월/일)</p>
+    <div class="row">
+        <div class="col">
+            <p class="fs-4">⏲시작(년/월/일)</p>
+        </div>
+        <div class="col-lg-8">
+            <div class="input-group input-group-lg mb-1">
+                <input type="text" class="form-control" id="startYear" placeholder="">
+                <input type="text" class="form-control" id="startMonth" placeholder="">
+                <input type="text" class="form-control" id="startDate" placeholder="">
             </div>
-            <div class="col-lg-8">
-                <div class="input-group input-group-lg mb-1">
-                    <input type="text" class="form-control" id="startYear" placeholder="">
-                    <input type="text" class="form-control" id="startMonth" placeholder="">
-                    <input type="text" class="form-control" id="startDate" placeholder="">
-                </div>
-                <div class="input-group input-group-lg mb-3">
-                    <input type="text" class="form-control" id="startHour" placeholder="">
-                    <label class="input-group-text" for="">시</label>
-                    <input type="text" class="form-control" id="startMin" placeholder="">
-                    <label class="input-group-text" for="">분</label>
-                </div>
+            <div class="input-group input-group-lg mb-3">
+                <input type="text" class="form-control" id="startHour" placeholder="">
+                <label class="input-group-text" for="">시</label>
+                <input type="text" class="form-control" id="startMin" placeholder="">
+                <label class="input-group-text" for="">분</label>
             </div>
         </div>
+    </div>
 
-        <div class="row g-0">
-            <div class="col mb-0">
-                <p class="fs-4">⏲끝(년/월/일)</p>
+    <div class="row g-0">
+        <div class="col mb-0">
+            <p class="fs-4">⏲끝(년/월/일)</p>
+        </div>
+        <div class="col-lg-8">
+            <div class="input-group input-group-lg mb-1">
+                <input type="text" class="form-control" id="endYear" placeholder="">
+                <input type="text" class="form-control" id="endMonth" placeholder="">
+                <input type="text" class="form-control" id="endDate" placeholder="">
             </div>
-            <div class="col-lg-8">
-                <div class="input-group input-group-lg mb-1">
-                    <input type="text" class="form-control" id="endYear" name="endYear" placeholder="">
-                    <input type="text" class="form-control" id="endMonth" name="endMonth" placeholder="">
-                    <input type="text" class="form-control" id="endDate" name="endDate" placeholder="">
+            <div class="input-group input-group-lg mb-3">
+                <input type="text" class="form-control" id="endHour" placeholder="">
+                <label class="input-group-text" for="">시</label>
+                <input type="text" class="form-control" id="endMin" placeholder="">
+                <label class="input-group-text" for="">분</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-0 mb-3">
+        <div class="col-2 d-grid">
+            <button type="button" onclick="resetDate();" class="btn btn-outline-light">리셋</button>
+        </div>
+        <div class="col-10 d-grid">
+            <div class="row g-0">
+                <div class="col-4 d-grid">
+                    <button type="button" onclick="calculateDate(15);" class="btn btn-outline-light">+15분</button>
                 </div>
-                <div class="input-group input-group-lg mb-3">
-                    <input type="text" class="form-control" id="endHour" placeholder="">
-                    <label class="input-group-text" for="">시</label>
-                    <input type="text" class="form-control" id="endMin" placeholder="">
-                    <label class="input-group-text" for="">분</label>
+                <div class="col-4 d-grid">
+                    <button type="button" onclick="calculateDate(30);" class="btn btn-outline-light">+30분</button>
+                </div>
+                <div class="col-4 d-grid">
+                    <button type="button" onclick="calculateDate(60);" class="btn btn-outline-light">+1시간</button>
                 </div>
             </div>
-        </div>
-
-        <div class="row g-0 mb-3">
-            <div class="col-2 d-grid">
-                <button type="button" onclick="resetDate();" class="btn btn-outline-light">리셋</button>
-            </div>
-            <div class="col-10 d-grid">
-                <div class="row g-0">
-                    <div class="col-4 d-grid">
-                        <button type="button" onclick="calculateDate(15);" class="btn btn-outline-light">+15분</button>
-                    </div>
-                    <div class="col-4 d-grid">
-                        <button type="button" onclick="calculateDate(30);" class="btn btn-outline-light">+30분</button>
-                    </div>
-                    <div class="col-4 d-grid">
-                        <button type="button" onclick="calculateDate(60);" class="btn btn-outline-light">+1시간</button>
-                    </div>
+            <div class="row g-0">
+                <div class="col-4 d-grid">
+                    <button type="button" onclick="calculateDate(-15);" class="btn btn-outline-light">-15분</button>
                 </div>
-                <div class="row g-0">
-                    <div class="col-4 d-grid">
-                        <button type="button" onclick="calculateDate(-15);" class="btn btn-outline-light">-15분</button>
-                    </div>
-                    <div class="col-4 d-grid">
-                        <button type="button" onclick="calculateDate(-30);" class="btn btn-outline-light">-30분</button>
-                    </div>
-                    <div class="col-4 d-grid">
-                        <button type="button" onclick="calculateDate(-60);" class="btn btn-outline-light">-1시간</button>
-                    </div>
-                </div>   
-            </div>
+                <div class="col-4 d-grid">
+                    <button type="button" onclick="calculateDate(-30);" class="btn btn-outline-light">-30분</button>
+                </div>
+                <div class="col-4 d-grid">
+                    <button type="button" onclick="calculateDate(-60);" class="btn btn-outline-light">-1시간</button>
+                </div>
+            </div>   
         </div>
+    </div>
 
-        <div class="d-grid mb-3">
-            <textarea class="form-control" aria-label="With textarea" placeholder="추가 내용"
-                id="detail" name="detail"></textarea>
-        </div>
+    <div class="d-grid mb-3">
+        <textarea class="form-control" aria-label="With textarea" placeholder="추가 내용" id="detail"></textarea>
+    </div>
 
-        <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-outline-light">저장</button>
-        </div>
+    <div class="d-grid">
+        <button type="button" onclick="saveBehavior();" class="btn btn-primary btn-outline-light">저장</button>
+    </div>
 
-    </form>
-
-</div><!-- container -->
+</div><!-- container1 -->
 
 <div class="container">
     <div class="position-static">
@@ -148,7 +142,7 @@
         <div class="offcanvas-body small">
         </div>
     </div>
-</div><!-- container -->
+</div><!-- container2 -->
 
 </body>
 

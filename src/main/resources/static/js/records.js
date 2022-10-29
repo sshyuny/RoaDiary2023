@@ -1,4 +1,5 @@
 window.onload = function() { getRecordsTable(); }
+function reload() { location.reload(); }
 
 let curUrlYear;
 let curUrlMonth;
@@ -45,20 +46,18 @@ function makeRowsSuccess(data) {
         divRow.setAttribute('id', 'divRow' + i);
         divRow.setAttribute('class', 'row justify-content-md-center mb-3');
         divColS.setAttribute('class', 'col-4 d-grid');
-        divColM.setAttribute('class', 'col-8 d-grid border border-light rounded');
+        divColM.setAttribute('class', 'col-8 d-grid');
 
         // Btn 생성
         let timeBtn1 = document.createElement("button");
         let timeBtn2 = document.createElement("button");
-        let contentBtn = document.createElement("p");
-        let detailtBtn = document.createElement("span");
+        let contentBtn = document.createElement("button");
+        let detailtBtn = document.createElement("button");
 
         timeBtn1.innerHTML = data[i].startTime.substring(0, 5);
         timeBtn2.innerHTML = data[i].endTime.substring(0, 5);
         contentBtn.innerHTML = data[i].content;
         detailtBtn.innerHTML = data[i].detail;
-        
-        contentBtn.setAttribute('class', 'fs-5 fw-bold');
         
         timeBtn1.setAttribute('type', 'button');
         timeBtn1.setAttribute('data-bs-toggle', 'modal');
@@ -68,9 +67,19 @@ function makeRowsSuccess(data) {
         timeBtn2.setAttribute('data-bs-toggle', 'modal');
         timeBtn2.setAttribute('data-bs-target', '#recordModal');
         timeBtn2.setAttribute('class', 'btn btn-outline-light');
+        contentBtn.setAttribute('type', 'button');
+        contentBtn.setAttribute('data-bs-toggle', 'modal');
+        contentBtn.setAttribute('data-bs-target', '#recordModal');
+        contentBtn.setAttribute('class', 'btn btn-secondary');
+        detailtBtn.setAttribute('type', 'button');
+        detailtBtn.setAttribute('data-bs-toggle', 'modal');
+        detailtBtn.setAttribute('data-bs-target', '#recordModal');
+        detailtBtn.setAttribute('class', 'btn btn-secondary');
 
         timeBtn1.onclick = function() { makeModal(data[i]); };
         timeBtn2.onclick = function() { makeModal(data[i]); };
+        contentBtn.onclick = function() { makeModal(data[i]); };
+        detailtBtn.onclick = function() { makeModal(data[i]); };
 
         // 붙이기
         divColS.append(timeBtn1, timeBtn2);
@@ -145,6 +154,7 @@ function modifyRecord(behaviorRecordsId) {
         dataType: '',
 		success: function(data) {
             alert("수정이 완료되었습니다.");
+            document.getElementById("modalClose").click();
             document.getElementById("records").innerHTML = "";
             getRecordsTable();
         }, 

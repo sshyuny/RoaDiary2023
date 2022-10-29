@@ -7,10 +7,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import roadiary.behavior.record.dto.RecordModifyReqDto;
+import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.dto.RecordResDto;
 import roadiary.behavior.record.service.RecordsService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +24,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RecordsRestController {
     
     private final RecordsService recordsService;
+
+    @PostMapping("/behavior")
+    public String saveRecord(@RequestBody RecordReqDto recordReqDto) {
+
+        // userId 세션에서 가져오기
+        Long userId = 1L;
+
+        // @@요청 데이터에서 데이터 타입 맞지 않을 경우 처리
+        // @@겹치는 시간일 경우 처리
+        
+        boolean isItAdded = recordsService.addRecord(recordReqDto, userId);
+
+        return "redirect:/behavior";
+    }
 
     @GetMapping("/records/manage/{year}/{month}/{day}")
     public List<RecordResDto> getRecords(
