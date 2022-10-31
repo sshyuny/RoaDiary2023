@@ -3,7 +3,7 @@ function reload() { location.reload(); }
 
 function makeCategorySelect() {
     $.ajax({
-        url: '/category/priority', 
+        url: '/api/category/priority', 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -127,7 +127,7 @@ function isItNull(validatedVal) {
 function saveBehaviorAjax(jsonObj) {
     $.ajax({
 		type: "post",
-        url: "/behavior", 
+        url: "/api/behavior", 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',

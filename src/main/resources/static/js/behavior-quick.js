@@ -19,7 +19,7 @@ function fillDate() {
 
 function makeCategorySelect() {
     $.ajax({
-        url: '/category/priority', 
+        url: '/api/category/priority', 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -122,7 +122,7 @@ function saveBehavior() {
 function saveBehaviorAjax(jsonObj) {  // behavior.js와 동일 부분
     $.ajax({
 		type: "post",
-        url: "/behavior", 
+        url: "/api/behavior", 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',

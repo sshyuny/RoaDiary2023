@@ -19,7 +19,7 @@ function getRecordsTable() {
 
 function makeRecordsTable(dayUrl) {
     $.ajax({
-        url: '/records/manage/' + dayUrl, 
+        url: '/api/records/manage/' + dayUrl, 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -121,7 +121,7 @@ function makeCategorySelect(selectedCategory) {  //behavior.js와 일부 동일 
     let select = document.getElementById("categoryId");
     select.innerHTML = "";
     $.ajax({
-        url: '/category/priority', 
+        url: '/api/category/priority', 
         data: '',
 		method: 'GET',
 		dataType: 'json',
@@ -149,7 +149,7 @@ function modifyRecord(behaviorRecordsId) {
     
     $.ajax({
 		type: "put",
-        url: "/records/manage/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
+        url: "/api/records/manage/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
         data: jsonObj,
 		contentType: 'application/json',
         dataType: '',
@@ -191,7 +191,7 @@ function confirmDeleteRecord(behaviorRecordsId) {
 function deleteRecord(behaviorRecordsId) {
     $.ajax({
 		type: "delete",
-        url:  "/records/manage/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
+        url:  "/api/records/manage/" + curUrlYear + "/" + curUrlMonth + "/" + curUrlDate, 
         data: behaviorRecordsId + "",
 		contentType: 'text/plain',
         dataType: '',

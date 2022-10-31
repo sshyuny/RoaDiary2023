@@ -25,7 +25,7 @@ public class RecordsRestController {
     
     private final RecordsService recordsService;
 
-    @PostMapping("/behavior")
+    @PostMapping("/api/behavior")
     public String saveRecord(@RequestBody RecordReqDto recordReqDto) {
 
         // userId 세션에서 가져오기
@@ -36,10 +36,10 @@ public class RecordsRestController {
         
         boolean isItAdded = recordsService.addRecord(recordReqDto, userId);
 
-        return "redirect:/behavior";
+        return "";
     }
 
-    @GetMapping("/records/manage/{year}/{month}/{day}")
+    @GetMapping("/api/records/manage/{year}/{month}/{day}")
     public List<RecordResDto> getRecords(
             @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
@@ -54,7 +54,7 @@ public class RecordsRestController {
         return recordResDtos;
     }
 
-    @PutMapping(value="/records/manage/{year}/{month}/{day}")
+    @PutMapping(value="/api/records/manage/{year}/{month}/{day}")
     public void modifyRecord(@PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 
@@ -68,7 +68,7 @@ public class RecordsRestController {
         //if (updatedNum == 0) @@적절하지 않은 값 요청됨. 예외처리 필요. (클라이언트가 behaviorRecordId를 임의로 변경 등)
     }
 
-    @DeleteMapping(value="/records/manage/{year}/{month}/{day}")
+    @DeleteMapping(value="/api/records/manage/{year}/{month}/{day}")
     public void deleteRecord(@PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 

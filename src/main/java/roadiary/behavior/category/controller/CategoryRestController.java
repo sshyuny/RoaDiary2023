@@ -25,7 +25,7 @@ public class CategoryRestController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category/priority")
+    @GetMapping("/api/category/priority")
     public List<CategoryResDto> getCategories() throws Exception {
 
         // userId 세션에서 가져오기
@@ -41,7 +41,7 @@ public class CategoryRestController {
      * @param categoryContent 요청받은 카테고리 이름
      * @return
      */
-    @PostMapping("/category/priority")
+    @PostMapping("/api/category/priority")
     public String saveCategories(HttpEntity<String> httpEntity) {
         
         // userId 세션에서 가져오기
@@ -66,7 +66,7 @@ public class CategoryRestController {
         return "success";
     }
 
-    @DeleteMapping("/category/priority")
+    @DeleteMapping("/api/category/priority")
     public void deleteCategories(HttpEntity<String> httpEntity) {
 
         // userId 세션에서 가져오기
@@ -76,7 +76,7 @@ public class CategoryRestController {
         categoryService.deleteAndSortPriority(userId, categoryId);
     }
 
-    @PutMapping("/category/priority")
+    @PutMapping("/api/category/priority")
     public String updateCategories(@RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
         // userId 세션에서 가져오기
