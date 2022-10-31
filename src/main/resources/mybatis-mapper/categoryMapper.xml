@@ -12,7 +12,7 @@
             ORDER BY priority_idx;
     </select>
 
-    <insert id="insertCategory" parameterType="roadiary.behavior.category.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="behavior_category_id"> 
+    <insert id="insertCategory" parameterType="roadiary.behavior.category.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="behaviorCategoryId"> 
         INSERT INTO behavior_category 
             (content) 
             VALUES 

@@ -119,6 +119,7 @@ function makeModal(dataI) {
 // Modal에서 카테고리 가져오기 
 function makeCategorySelect(selectedCategory) {  //behavior.js와 일부 동일 부분
     let select = document.getElementById("categoryId");
+    select.innerHTML = "";
     $.ajax({
         url: '/category/priority', 
         data: '',

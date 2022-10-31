@@ -1,23 +1,45 @@
-window.onload = function() { statusCheck(); makeCategoryTable(); }
+window.onload = function() { 
+    makeCategoryTable(); 
+
+    // 이벤트 추가
+    let categoryContentEle = document.getElementById("categoryContent");
+    categoryContentEle.addEventListener("keydown", event => pressEnterToPostCategory(event));
+}
 
 
-// 카테고리를 추가할 경우
-function statusCheck() {
-    let urlParams = new URLSearchParams(location.search)
-    let status = urlParams.get('status');
-    if (status == "over") {
+// 카테고리 추가
+function postCategory() {
+    let categoryContent = document.getElementById("categoryContent").value;
+    $.ajax({
+		type: "post",
+        url: "/category/priority", 
+        data: categoryContent + "",
+		contentType: 'text/plain',
+        dataType: '',
+		success: function(data) {
+            statusCheck(data);
+            makeCategoryTable();
+        }, 
+        error: function() {
+			alert("에러가 발생했습니다.");
+		}
+    })
+}
+function statusCheck(resData) {
+    if (resData == "over") {
         alert("카테고리 12개가 이미 다 차있기 때문에 새로 카테고리를 추가할 수 없습니다. \n"
            + "먼저 삭제를 한 뒤 추가를 해주세요.");
         location.replace("/category");
-    } else if(status == "success") {
-        alert("저장이 정상적으로 완료되었습니다.");
-        location.replace("/category");
-    } else if(status == "dupli") {
+    } else if(resData == "dupli") {
         alert("이미 존재하는 카테고리입니다. 새로운 항목을 입력해주세요.");
         location.replace("/category");
-    }
-        
-
+    } else if(resData == "success") {
+        location.replace("/category");
+    } 
+}
+// 카테고리 추가 - 엔터 누른 경우
+function pressEnterToPostCategory(event) {
+    if (event.key === 'Enter') postCategory();
 }
 
 // 사용자의 priority category 가져옴
@@ -104,7 +126,6 @@ function deleteCategory(categoryId) {
 		contentType: 'text/plain',
         dataType: '',
 		success: function(data) {
-            alert("삭제가 완료되었습니다.");
             makeCategoryTable();
         }, 
         error: function() {

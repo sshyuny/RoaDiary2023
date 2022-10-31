@@ -21,17 +21,17 @@ USE bhdb;
 ---- ---- ---- ----
 CREATE TABLE behavior_category ( 
     behavior_category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    content CHAR(144) NOT NULL,
+    content VARCHAR(144) NOT NULL,
     UNIQUE KEY category_unique (content)
 );
 
 --temp
 CREATE TABLE user (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email CHAR(144) NOT NULL, 
-    nickname CHAR(64) NOT NULL,
+    email VARCHAR(144) NOT NULL, 
+    nickname VARCHAR(64) NOT NULL,
     recently_visited DATETIME, 
-    register_status CHAR(64)
+    register_status VARCHAR(64)
 );
 
 CREATE TABLE behavior_records (
@@ -40,7 +40,7 @@ CREATE TABLE behavior_records (
     user_id BIGINT, 
     start_time DATETIME, 
     end_time DATETIME, 
-    detail CHAR(144), 
+    detail VARCHAR(144), 
     FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id), 
     FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
@@ -54,6 +54,14 @@ CREATE TABLE behavior_priority_category (
 );
 --UNIQUE KEY priority_category_unique (user_id, priority_idx)
 
+--DESC behavior_category;
+--ALTER TABLE behavior_category MODIFY content VARCHAR(144);
+--DESC user;
+--ALTER TABLE user MODIFY email VARCHAR(144);
+--ALTER TABLE user MODIFY nickname VARCHAR(64);
+--ALTER TABLE user MODIFY register_status VARCHAR(64);
+--DESC behavior_records;
+--ALTER TABLE behavior_records MODIFY detail VARCHAR(144);
 
 ---- ---- ---- ----
 -- DATA

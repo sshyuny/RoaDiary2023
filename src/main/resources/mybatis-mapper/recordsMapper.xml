@@ -15,7 +15,8 @@
         FROM behavior_records as r
             LEFT JOIN behavior_category as c
             ON r.behavior_category_id = c.behavior_category_id
-            WHERE r.user_id = #{userId} AND DATE(r.start_time) = #{reqDate};
+            WHERE r.user_id = #{userId} AND DATE(r.start_time) = #{reqDate}
+        ORDER BY r.start_time
     </select>
 
     <update id="updateRecord" parameterType="roadiary.behavior.record.entity.RecordEntity">
