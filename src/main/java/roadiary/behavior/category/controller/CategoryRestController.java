@@ -60,7 +60,7 @@ public class CategoryRestController {
         categoryService.addCategory(categoryReqDto);  // categoryReqDto에, 요청된 categoryId값이 들어감
 
         // [Repository]
-        int addedPriorityNum = categoryService.addPriority(categoryReqDto, categoryResDtos);
+        int addedPriorityNum = categoryService.addPriority(categoryReqDto);
         if (addedPriorityNum == 0) return "dupli";  // 이미 저장된 카테고리일 경우
 
         return "success";

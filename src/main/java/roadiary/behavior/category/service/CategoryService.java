@@ -59,7 +59,7 @@ public class CategoryService {
      * @param categoryResDtos
      * @return
      */
-    public int addPriority(CategoryReqDto categoryReqDto, List<CategoryResDto> categoryResDtos) {
+    public int addPriority(CategoryReqDto categoryReqDto) {
 
         // 요청 카테고리, 저장 유무 확인
         int alreadySaved = categoryRepository.countPriority(categoryReqDto.getUserId(), categoryReqDto.getCategoryId());
