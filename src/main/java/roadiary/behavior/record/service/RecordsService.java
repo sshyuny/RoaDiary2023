@@ -20,22 +20,23 @@ public class RecordsService {
 
     private final RecordsRepository recordsRepository;
     
-    public boolean addRecord(RecordReqDto recordReqDto, long userId) {
+    public String addRecord(RecordReqDto recordReqDto, long userId) {
 
         LocalDateTime startDateTime = LocalDateTime.of(LocalDate.of(recordReqDto.getStartYear(), recordReqDto.getStartMonth(), recordReqDto.getStartDate()), 
                 LocalTime.of(recordReqDto.getStartHour(), recordReqDto.getStartMin()));
         LocalDateTime enddDateTime = LocalDateTime.of(LocalDate.of(recordReqDto.getEndYear(), recordReqDto.getEndMonth(), recordReqDto.getEndDate()), 
                 LocalTime.of(recordReqDto.getEndHour(), recordReqDto.getEndMin()));
 
-        //@@ enddDateTime이 더 앞설 경우 예외처리
-        //@@ 12시간 이상 지속될경우 예외처리
+        //enddDateTime이 더 앞설 경우
+        boolean startDateEarlier = RecordsUtil.isStartDateEarlier(startDateTime, enddDateTime);
+        if (!startDateEarlier) return RecordsStatus.endDateIsEarlier;
         //@@ 하루 최대 저장 개수 제한
 
         RecordEntity recordEntity = RecordEntity.of(recordReqDto.getCategoryId(), userId, startDateTime, enddDateTime, recordReqDto.getDetail());
         int insertedNum = recordsRepository.insertRecord(recordEntity);
 
-        if (insertedNum == 1) return true;
-        else return false;
+        if (insertedNum == 1) return RecordsStatus.success;
+        else return RecordsStatus.fail;
     }
 
     public List<RecordResDto> getRecords(LocalDate reqDate, long userId) {

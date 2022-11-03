@@ -34,9 +34,9 @@ public class RecordsRestController {
         // @@요청 데이터에서 데이터 타입 맞지 않을 경우 처리
         // @@겹치는 시간일 경우 처리
         
-        boolean isItAdded = recordsService.addRecord(recordReqDto, userId);
+        String addedStatus = recordsService.addRecord(recordReqDto, userId);
 
-        return "";
+        return addedStatus;
     }
 
     @GetMapping("/api/records/manage/{year}/{month}/{day}")
