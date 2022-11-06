@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,15 +58,29 @@ public class MemberRestController {
 
         long kakaoId = kakaoUserInfoResDto.getId();
         if (memberService.isItRegisteredMember(kakaoId)) {
-            memberService.makeLoginStatus(session, kakaoId);
-            response.sendRedirect("/");
+            String status = memberService.makeLoginStatus(session, kakaoId);
+            if (status.equals("withdrawal")) response.sendRedirect("/?alert=withdrawal");
+            else response.sendRedirect("/");
         } else {
             memberService.addKakaoUser(kakaoUserInfoResDto);
             memberService.makeLoginStatus(session, kakaoId);
             // 닉네임 등록 후 메인으로
             response.sendRedirect("/");
         }
+    }
 
+    @DeleteMapping("/api/member/withdrawal")
+    public String withdrawal(HttpServletRequest request) {
+
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+
+        if (userId == 1L) return "guestAccount";
+        else {
+            int withdrawedNum = memberService.withdrawalUser(userId);
+            memberService.destroyLoginStatus(request);
+            if(withdrawedNum == 1) return "success";
+            else return "fail";
+        }
     }
     
 }

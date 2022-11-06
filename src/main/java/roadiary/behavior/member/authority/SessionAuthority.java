@@ -23,7 +23,6 @@ public class SessionAuthority implements Authority {
     @Override
     public void makeLoginStatus(HttpSession session, MemberAuthorityDto memberAuthorityDto) {
 
-        //HttpSession session = request.getSession();
         session.setAttribute(SessionKeys.login, memberAuthorityDto);
         session.setAttribute(SessionKeys.loginUserName, memberAuthorityDto.getNickname());
         session.setAttribute(SessionKeys.loginUserId, memberAuthorityDto.getUserId());
@@ -35,6 +34,7 @@ public class SessionAuthority implements Authority {
         HttpSession session = request.getSession();
         session.removeAttribute(SessionKeys.login);
         session.removeAttribute(SessionKeys.loginUserName);
+        session.removeAttribute(SessionKeys.loginUserId);
     }
 
     @Override

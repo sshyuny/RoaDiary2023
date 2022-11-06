@@ -1,4 +1,5 @@
 window.onload = function() {
+
     // 오늘의 기록을 확인할 수 있도록, href 주소 변경
     let today = new Date();
     let month = today.getMonth() + 1;

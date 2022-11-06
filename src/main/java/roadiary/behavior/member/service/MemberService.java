@@ -39,10 +39,14 @@ public class MemberService {
         MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(1, "guest");
         authority.makeLoginStatus(session, memberAuthorityDto);
     }
-    public void makeLoginStatus(HttpSession session, long kakaoId) {
+    public String makeLoginStatus(HttpSession session, long kakaoId) {
         UserEntity userEntity = memberRepository.selectUserByUsingKakaoId(kakaoId);
-        MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(userEntity.getUserId(), userEntity.getNickname());
-        authority.makeLoginStatus(session, memberAuthorityDto);
+        if(userEntity.getRegisterStatus().equals("withdrawal")) return "withdrawal";
+        else {
+            MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(userEntity.getUserId(), userEntity.getNickname());
+            authority.makeLoginStatus(session, memberAuthorityDto);
+            return "success";
+        }
     }
 
     public void destroyLoginStatus(HttpServletRequest request) {
@@ -97,6 +101,11 @@ public class MemberService {
     public void addKakaoUser(KakaoUserInfoResDto kakaoUserInfoResDto) {
         UserEntity userEntity = UserEntity.of(kakaoUserInfoResDto);
         userEntity.setNickname("user");
-        memberRepository.insertKakaoUser(userEntity);
+        memberRepository.insertKakaoUser(userEntity);  // 여기서 userId 들어감
+        memberRepository.insertPriorityForNewUser(userEntity.getUserId());
+    }
+
+    public Integer withdrawalUser(long userId) {
+        return memberRepository.withdrawalUser(userId);
     }
 }

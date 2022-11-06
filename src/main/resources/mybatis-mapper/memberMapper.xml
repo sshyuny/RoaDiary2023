@@ -8,16 +8,41 @@
             WHERE kakao_id = #{kakaoId}
     </select>
 
+    <select id="selectUserByUsingUserId" resultType="roadiary.behavior.member.entity.UserEntity">
+        SELECT * FROM user
+            WHERE user_id = #{userId}
+    </select>
+
     <select id="countKakaoIdUser" resultType="_int">
         SELECT COUNT(*) FROM user
             WHERE kakao_id = #{kakaoId}
     </select>
 
-    <insert id="insertKakaoUser" parameterType="roadiary.behavior.member.entity.UserEntity">
+    <insert id="insertKakaoUser" parameterType="roadiary.behavior.member.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO user
             (kakao_id, kakao_connected_at, email, nickname, recently_visited, register_status)
             VALUES
             (#{kakaoId}, #{kakaoConnectedAt}, #{email}, #{nickname}, now(), "normal")
     </insert>
+
+    <insert id="insertPriorityForNewUser" parameterType="_long">
+        INSERT INTO behavior_priority_category
+            (user_id, priority_idx, behavior_category_id)
+            VALUES
+            (#{userId}, 1, 1), 
+            (#{userId}, 2, 2), 
+            (#{userId}, 3, 3), 
+            (#{userId}, 4, 4), 
+            (#{userId}, 5, 5), 
+            (#{userId}, 6, 7)
+    </insert>
+
+    <update id="withdrawalUser" parameterType="_long">
+        UPDATE user
+            SET 
+            register_status = "withdrawal", 
+            recently_visited = now()
+                WHERE user_id = #{userId}
+    </update>
 
 </mapper>

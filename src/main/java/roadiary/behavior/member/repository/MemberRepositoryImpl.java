@@ -17,6 +17,10 @@ public class MemberRepositoryImpl implements MemberRepository {
         UserEntity userEntity = memberMapper.selectUserByUsingKakaoId(kakaoId);
         return userEntity;
     }
+    @Override
+    public UserEntity selectUserByUsingUserId(long userId) {
+        return memberMapper.selectUserByUsingUserId(userId);
+    }
 
     @Override
     public int countKakaoIdUser(long kakaoId) {
@@ -27,4 +31,15 @@ public class MemberRepositoryImpl implements MemberRepository {
     public int insertKakaoUser(UserEntity userEntity) {
         return memberMapper.insertKakaoUser(userEntity);
     }
+
+    @Override
+    public void insertPriorityForNewUser(long userId) {
+        memberMapper.insertPriorityForNewUser(userId);
+    }
+
+    @Override
+    public Integer withdrawalUser(long userId) {
+        return memberMapper.withdrawalUser(userId);
+    }
+
 }

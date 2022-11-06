@@ -100,6 +100,7 @@ VALUES
 --DESC behavior_records;
 --ALTER TABLE behavior_records MODIFY detail VARCHAR(144);
 
+--DESC user;
 --ALTER TABLE user ADD kakao_user_id BIGINT AFTER user_id;
 --ALTER TABLE user CHANGE kakao_user_id kakao_id BIGINT;
 --ALTER TABLE user MODIFY COLUMN email VARCHAR(144);

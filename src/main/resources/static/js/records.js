@@ -70,11 +70,11 @@ function makeRowsSuccess(data) {
         contentBtn.setAttribute('type', 'button');
         contentBtn.setAttribute('data-bs-toggle', 'modal');
         contentBtn.setAttribute('data-bs-target', '#recordModal');
-        contentBtn.setAttribute('class', 'btn btn-secondary');
+        contentBtn.setAttribute('class', 'btn btn-secondary text-break');
         detailtBtn.setAttribute('type', 'button');
         detailtBtn.setAttribute('data-bs-toggle', 'modal');
         detailtBtn.setAttribute('data-bs-target', '#recordModal');
-        detailtBtn.setAttribute('class', 'btn btn-secondary');
+        detailtBtn.setAttribute('class', 'btn btn-secondary text-break');
 
         timeBtn1.onclick = function() { makeModal(data[i]); };
         timeBtn2.onclick = function() { makeModal(data[i]); };

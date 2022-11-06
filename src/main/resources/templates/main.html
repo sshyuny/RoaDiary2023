@@ -81,6 +81,30 @@
     </div>
 </div><!-- container -->
 
+<div class="container">
+    <style>
+        #menuOffcanvas { background-color:rgb(40, 40, 40); }
+    </style>
+    <div class="position-static">
+        <div class="position-absolute top-0 end-0">
+            <button class="btn" type="button" id="menuBtn" data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="menuOffcanvas" aria-labelledby="menuOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <a class="btn btn-secondary btn-outline-light" href="/member" role="button">내 계정</a>
+        </div>
+    </div>
+</div><!-- container -->
+
 </body>
 
 </html>

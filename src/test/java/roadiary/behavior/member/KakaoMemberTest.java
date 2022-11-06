@@ -38,9 +38,11 @@ public class KakaoMemberTest {
         //when
         memberRepository.insertKakaoUser(userEntity1);
         UserEntity userEntity2 = memberRepository.selectUserByUsingKakaoId(kakaoId);
+        long userId = userEntity2.getUserId();
         int countNum = memberRepository.countKakaoIdUser(kakaoId);
 
         //then
+        assertThat(userId).isNotEqualTo(0L);
         assertThat(countNum).isEqualTo(1);
         assertThat(userEntity2.getEmail()).isEqualTo(email);
         assertThat(userEntity2.getKakaoConnectedAt()).isEqualTo(kakaoConnectedAt);
