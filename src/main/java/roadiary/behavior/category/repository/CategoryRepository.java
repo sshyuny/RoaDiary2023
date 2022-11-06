@@ -13,7 +13,7 @@ public interface CategoryRepository {
 
     public int insertPriority(PriorityCategoryEntity priorityCategoryEntity);
 
-    public int selectTheMaxPriority(long userId);
+    public Integer selectTheMaxPriority(long userId);
 
     public long selectNewCategoryId(String categoryContent);
 

@@ -3,6 +3,8 @@ package roadiary.behavior.record.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.member.authority.SessionKeys;
 import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.dto.RecordResDto;
@@ -26,10 +29,10 @@ public class RecordsRestController {
     private final RecordsService recordsService;
 
     @PostMapping("/api/behavior")
-    public String saveRecord(@RequestBody RecordReqDto recordReqDto) {
+    public String saveRecord(HttpServletRequest request, @RequestBody RecordReqDto recordReqDto) {
 
         // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         // @@요청 데이터에서 데이터 타입 맞지 않을 경우 처리
         // @@겹치는 시간일 경우 처리
@@ -41,12 +44,13 @@ public class RecordsRestController {
 
     @GetMapping("/api/records/manage/{year}/{month}/{day}")
     public List<RecordResDto> getRecords(
+            HttpServletRequest request, 
             @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day) {
 
         // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         LocalDate reqDate = LocalDate.of(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
         List<RecordResDto> recordResDtos = recordsService.getRecords(reqDate, userId);
@@ -55,13 +59,15 @@ public class RecordsRestController {
     }
 
     @PutMapping(value="/api/records/manage/{year}/{month}/{day}")
-    public void modifyRecord(@PathVariable(value = "year", required = true) String year, 
+    public void modifyRecord(
+            HttpServletRequest request, 
+            @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 
             @RequestBody RecordModifyReqDto recordModifyReqDto) {
 
         // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         int updatedNum = recordsService.modifyRecord(userId, recordModifyReqDto);
 
@@ -69,13 +75,15 @@ public class RecordsRestController {
     }
 
     @DeleteMapping(value="/api/records/manage/{year}/{month}/{day}")
-    public void deleteRecord(@PathVariable(value = "year", required = true) String year, 
+    public void deleteRecord(
+            HttpServletRequest request, 
+            @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day, 
             HttpEntity<String> httpEntity) {
 
         // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         Long behaviorRecordsId = Long.valueOf(httpEntity.getBody());
         int deletedNum = recordsService.deleteRecord(userId, behaviorRecordsId);

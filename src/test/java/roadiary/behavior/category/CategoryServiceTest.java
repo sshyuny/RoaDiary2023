@@ -1,5 +1,7 @@
 package roadiary.behavior.category;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +34,7 @@ public class CategoryServiceTest {
         int addedPriorityNum = categoryService.addPriority(categoryReqDto);
 
         //then
-        org.assertj.core.api.Assertions.assertThat(addedPriorityNum).isEqualTo(1);
+        assertThat(addedPriorityNum).isEqualTo(1);
     }
 
     @Test
@@ -50,8 +52,8 @@ public class CategoryServiceTest {
         int addedPriorityNum2 = categoryService.addPriority(categoryReqDto2);
 
         //then
-        org.assertj.core.api.Assertions.assertThat(addedPriorityNum1).isEqualTo(1);
-        org.assertj.core.api.Assertions.assertThat(addedPriorityNum2).isEqualTo(0);
+        assertThat(addedPriorityNum1).isEqualTo(1);
+        assertThat(addedPriorityNum2).isEqualTo(0);
     }
 
     @Test
@@ -71,8 +73,8 @@ public class CategoryServiceTest {
         long categoryId2After = categoryResDtos2.get(2).getId();
 
         //then
-        org.assertj.core.api.Assertions.assertThat(categoryId2After).isEqualTo(categoryId1Before);
-        org.assertj.core.api.Assertions.assertThat(categoryId2Before).isEqualTo(categoryId1After);
+        assertThat(categoryId2After).isEqualTo(categoryId1Before);
+        assertThat(categoryId2Before).isEqualTo(categoryId1After);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class CategoryServiceTest {
         int checkPossibleNum = categoryService.updateDirectionOfPriority(2, categoryIdBefore, "up");
 
         //then
-        org.assertj.core.api.Assertions.assertThat(checkPossibleNum).isEqualTo(0);
+        assertThat(checkPossibleNum).isEqualTo(0);
     }
 
 }

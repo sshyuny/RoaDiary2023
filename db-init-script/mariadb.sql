@@ -1,4 +1,3 @@
-----Do it in /Program Files/mariadb/bin folder
 --mysql -u root -p
 
 ----
@@ -15,7 +14,6 @@ GRANT ALL PRIVILEGES ON bhdb.* TO 'bhuser'@'localhost';
 
 USE bhdb;
 
-
 ---- ---- ---- ----
 -- TABLE
 ---- ---- ---- ----
@@ -25,10 +23,11 @@ CREATE TABLE behavior_category (
     UNIQUE KEY category_unique (content)
 );
 
---temp
 CREATE TABLE user (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(144) NOT NULL, 
+    kakao_id BIGINT,
+    kakao_connected_at DATETIME,
+    email VARCHAR(144), 
     nickname VARCHAR(64) NOT NULL,
     recently_visited DATETIME, 
     register_status VARCHAR(64)
@@ -52,16 +51,7 @@ CREATE TABLE behavior_priority_category (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (behavior_category_id) REFERENCES behavior_category(behavior_category_id)
 );
---UNIQUE KEY priority_category_unique (user_id, priority_idx)
 
---DESC behavior_category;
---ALTER TABLE behavior_category MODIFY content VARCHAR(144);
---DESC user;
---ALTER TABLE user MODIFY email VARCHAR(144);
---ALTER TABLE user MODIFY nickname VARCHAR(64);
---ALTER TABLE user MODIFY register_status VARCHAR(64);
---DESC behavior_records;
---ALTER TABLE behavior_records MODIFY detail VARCHAR(144);
 
 ---- ---- ---- ----
 -- DATA
@@ -95,4 +85,22 @@ VALUES
 (1, 3, 4), 
 (1, 4, 5);
 
---DELETE FROM behavior_priority_category WHERE user_id=1 AND priority_idx=12;
+
+---- ---- ---- ----
+-- ALTER TABLE
+---- ---- ---- ----
+--UNIQUE KEY priority_category_unique (user_id, priority_idx)
+
+--DESC behavior_category;
+--ALTER TABLE behavior_category MODIFY content VARCHAR(144);
+--DESC user;
+--ALTER TABLE user MODIFY email VARCHAR(144);
+--ALTER TABLE user MODIFY nickname VARCHAR(64);
+--ALTER TABLE user MODIFY register_status VARCHAR(64);
+--DESC behavior_records;
+--ALTER TABLE behavior_records MODIFY detail VARCHAR(144);
+
+--ALTER TABLE user ADD kakao_user_id BIGINT AFTER user_id;
+--ALTER TABLE user CHANGE kakao_user_id kakao_id BIGINT;
+--ALTER TABLE user MODIFY COLUMN email VARCHAR(144);
+--ALTER TABLE user ADD kakao_connected_at DATETIME AFTER kakao_id;

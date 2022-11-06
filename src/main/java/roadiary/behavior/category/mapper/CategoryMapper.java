@@ -17,7 +17,7 @@ public interface CategoryMapper {
 
     public int insertPriority(PriorityCategoryEntity priorityCategoryEntity);
 
-    public int selectTheMaxPriority(long userId);
+    public Integer selectTheMaxPriority(long userId);
 
     public Long selectNewCategoryId(String categoryContent);
 

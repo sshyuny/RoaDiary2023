@@ -66,7 +66,8 @@ public class CategoryService {
         if (alreadySaved != 0) return 0; // 동일한 카테고리가 이미 저장돼있는 경우
 
         // 사용자에게 기록된 최대 priority idx 확인 후, 그보다 큰 값으로, 요청 카테고리 insert
-        int theMaxPriority = categoryRepository.selectTheMaxPriority(categoryReqDto.getUserId());
+        Integer theMaxPriority = categoryRepository.selectTheMaxPriority(categoryReqDto.getUserId());
+        if (theMaxPriority == null) theMaxPriority = 0;
         PriorityCategoryEntity priorityCategoryEntity = new PriorityCategoryEntity(
             categoryReqDto.getUserId(), theMaxPriority + 1, categoryReqDto.getCategoryId());
 

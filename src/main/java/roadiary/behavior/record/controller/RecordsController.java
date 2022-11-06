@@ -1,5 +1,7 @@
 package roadiary.behavior.record.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.member.authority.SessionKeys;
 import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.service.RecordsService;
@@ -35,13 +38,13 @@ public class RecordsController {
         return "records.html";
     }
     @PostMapping("/records/main/{year}/{month}/{day}")
-    public String modifyRecord(@ModelAttribute RecordModifyReqDto recordModifyReqDto, 
+    public String modifyRecord(HttpServletRequest request, @ModelAttribute RecordModifyReqDto recordModifyReqDto, 
             @PathVariable(value = "year", required = true) String year, 
             @PathVariable(value = "month", required = true) String month, 
             @PathVariable(value = "day", required = true) String day) {
 
         // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         return "redirect:/records/main/" + year + "/" + month + "/" + day;
     }

@@ -40,7 +40,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int selectTheMaxPriority(long userId) {
+    public Integer selectTheMaxPriority(long userId) {
         return categoryMapper.selectTheMaxPriority(userId);
     }
 

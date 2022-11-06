@@ -3,6 +3,7 @@ package roadiary.behavior.member.service;
 import java.net.URI;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,29 +20,29 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
 import roadiary.behavior.member.authority.Authority;
 import roadiary.behavior.member.dto.KakaoTokenResDto;
 import roadiary.behavior.member.dto.KakaoUserInfoResDto;
 import roadiary.behavior.member.dto.MemberAuthorityDto;
+import roadiary.behavior.member.entity.UserEntity;
+import roadiary.behavior.member.repository.MemberRepository;
 
+@RequiredArgsConstructor
 @Service
 public class MemberService {
 
-    private Authority authority;
+    private final Authority authority;
+    private final MemberRepository memberRepository;
 
-    public MemberService(Authority authority) {
-        this.authority = authority;
+    public void makeLoginStatus(HttpSession session) {
+        MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(1, "guest");
+        authority.makeLoginStatus(session, memberAuthorityDto);
     }
-    
-    public boolean isItExistMember() {
-        // 이후 수정
-        return true;
-    }
-
-    public void makeLoginStatus(HttpServletRequest request) {
-        // 이후 수정
-        MemberAuthorityDto memberAuthorityDto = new MemberAuthorityDto("temp-user");
-        authority.makeLoginStatus(request, memberAuthorityDto);
+    public void makeLoginStatus(HttpSession session, long kakaoId) {
+        UserEntity userEntity = memberRepository.selectUserByUsingKakaoId(kakaoId);
+        MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(userEntity.getUserId(), userEntity.getNickname());
+        authority.makeLoginStatus(session, memberAuthorityDto);
     }
 
     public void destroyLoginStatus(HttpServletRequest request) {
@@ -70,12 +71,15 @@ public class MemberService {
     }
     public KakaoUserInfoResDto getUserInfoByToken(String accessToken) {
 
+        MultiValueMap<String, Object> kakaoUserInfoReqDto = new LinkedMultiValueMap<>();
+        kakaoUserInfoReqDto.add("property_keys", "[\"kakao_account.email\"]");
+
         // requestEntity 생성
         RequestEntity<Object> requestEntity = RequestEntity
             .post(UriComponentsBuilder.fromUriString("https://kapi.kakao.com/v2/user/me").build().toUri())
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .header("Authorization", "Bearer " + accessToken)
-            .body(null);
+            .body(kakaoUserInfoReqDto);
         
         // 카카오에 요청
         RestTemplate restTemplate = new RestTemplate();
@@ -84,5 +88,15 @@ public class MemberService {
         // reponse 사용
         KakaoUserInfoResDto kakaoUserInfoResDto = response.getBody();
         return kakaoUserInfoResDto;
+    }
+    public boolean isItRegisteredMember(Long kakaoId) {
+        int countNum = memberRepository.countKakaoIdUser(kakaoId);
+        if (countNum == 1) return true;
+        else return false;
+    }
+    public void addKakaoUser(KakaoUserInfoResDto kakaoUserInfoResDto) {
+        UserEntity userEntity = UserEntity.of(kakaoUserInfoResDto);
+        userEntity.setNickname("user");
+        memberRepository.insertKakaoUser(userEntity);
     }
 }

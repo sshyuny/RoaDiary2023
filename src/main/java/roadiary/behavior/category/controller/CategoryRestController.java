@@ -2,6 +2,8 @@ package roadiary.behavior.category.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.dto.PriorityAndDirectionDto;
 import roadiary.behavior.category.service.CategoryService;
+import roadiary.behavior.member.authority.SessionKeys;
 
 @RestController
 public class CategoryRestController {
@@ -26,10 +29,9 @@ public class CategoryRestController {
     }
 
     @GetMapping("/api/category/priority")
-    public List<CategoryResDto> getCategories() throws Exception {
+    public List<CategoryResDto> getCategories(HttpServletRequest request) throws Exception {
 
-        // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
 
@@ -42,10 +44,9 @@ public class CategoryRestController {
      * @return
      */
     @PostMapping("/api/category/priority")
-    public String saveCategories(HttpEntity<String> httpEntity) {
+    public String saveCategories(HttpServletRequest request, HttpEntity<String> httpEntity) {
         
-        // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         String categoryContent = httpEntity.getBody();
 
@@ -67,20 +68,19 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("/api/category/priority")
-    public void deleteCategories(HttpEntity<String> httpEntity) {
+    public void deleteCategories(HttpServletRequest request, HttpEntity<String> httpEntity) {
 
-        // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         Long categoryId = Long.valueOf(httpEntity.getBody());
         categoryService.deleteAndSortPriority(userId, categoryId);
     }
 
     @PutMapping("/api/category/priority")
-    public String updateCategories(@RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
+    public String updateCategories(HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
-        // userId 세션에서 가져오기
-        Long userId = 1L;
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+
         int checkPossibleNum = categoryService.updateDirectionOfPriority(
             userId, priorityAndDirectionDto.getCategoryId(), priorityAndDirectionDto.getDirection());
 

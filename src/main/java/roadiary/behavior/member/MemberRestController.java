@@ -23,13 +23,13 @@ public class MemberRestController {
         this.memberService = memberService;
     }
     
+    // 방문자용 로그인
     @GetMapping("/trylogin")
     public String directLoginResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
-        // 로그인 성공
-        memberService.makeLoginStatus(request);
-
         HttpSession session = request.getSession();
+        memberService.makeLoginStatus(session);
+
         if (session.getAttribute(SessionKeys.afterLoginPage) != null) {
             String sesstionAfterLoginPage = session.getAttribute(SessionKeys.afterLoginPage).toString();
             session.setAttribute(SessionKeys.afterLoginPage, null);
@@ -38,9 +38,6 @@ public class MemberRestController {
         }
 
         return "";
-
-        // 로그인 실패 추가하기
-        
     }
 
     @GetMapping("/destroylogin")
@@ -50,13 +47,25 @@ public class MemberRestController {
         memberService.destroyLoginStatus(request);
     }
 
-    @GetMapping("/oath/kakao")
-    public void kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+    @GetMapping("/oauth/kakao")
+    public void kakaoLogin(@RequestParam String code, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         String kakaoAccessToken = memberService.getKaKaoAccessToken(code);
         KakaoUserInfoResDto kakaoUserInfoResDto = memberService.getUserInfoByToken(kakaoAccessToken);
-        System.out.println("카카오 로그인 성공 " + kakaoUserInfoResDto.getId() + " " + kakaoUserInfoResDto.getConnected_at());
 
-        response.sendRedirect("/");
+        HttpSession session = request.getSession();
+
+        long kakaoId = kakaoUserInfoResDto.getId();
+        if (memberService.isItRegisteredMember(kakaoId)) {
+            memberService.makeLoginStatus(session, kakaoId);
+            response.sendRedirect("/");
+        } else {
+            memberService.addKakaoUser(kakaoUserInfoResDto);
+            memberService.makeLoginStatus(session, kakaoId);
+            // 닉네임 등록 후 메인으로
+            response.sendRedirect("/");
+        }
+
     }
     
 }
