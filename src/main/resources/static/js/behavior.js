@@ -115,8 +115,9 @@ function saveBehavior() {
     obj.endMin = endMin;
     obj.detail = document.getElementById("detail").value;
 
+    let nextUrl = "/records/main/" + startYear + "/" +  startMonth + "/" + startDate;
     let jsonObj = JSON.stringify(obj);
-    saveBehaviorAjax(jsonObj);
+    saveBehaviorAjax(jsonObj, nextUrl);
 }
 function isItNull(validatedVal) {
     if (validatedVal == "" || validatedVal == null) {
@@ -124,7 +125,7 @@ function isItNull(validatedVal) {
         return true;
     }
 }
-function saveBehaviorAjax(jsonObj) {
+function saveBehaviorAjax(jsonObj, nextUrl) {
     $.ajax({
 		type: "post",
         url: "/api/behavior", 
@@ -132,7 +133,10 @@ function saveBehaviorAjax(jsonObj) {
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
-            if (data == "success") alert('저장이 완료되었습니다.');
+            if (data == "success") {
+                alert('저장이 완료되었습니다. 기록된 날짜의 페이지로 연결됩니다.');
+                window.location.href = nextUrl;
+            }
             else if (data == "orderMiss") alert("끝 시간이 시작 시간보다 빠릅니다. 확인 후 다시 입력해주세요.");
             else alert("알 수 없는 오류가 발생했습니다. 다시 시도해주세요.");
         }, 

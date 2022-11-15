@@ -9,6 +9,15 @@ function getRecordsTable() {
     const url = window.location.pathname;
     let urls = url.split("/");
 
+    // url에 연월일 없을 경우
+    if (urls.length < 6) {
+        let today = new Date();
+        let month = today.getMonth() + 1;
+        let todayUrl = "/" + today.getFullYear() + "/" + month + "/" + today.getDate();
+        window.location.href = "/records/main" + todayUrl;
+        return;
+    }
+
     curUrlYear = urls[3];
     curUrlMonth = urls[4];
     curUrlDate = urls[5];

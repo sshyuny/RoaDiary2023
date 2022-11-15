@@ -29,6 +29,10 @@ public class RecordsController {
         return "behavior-quick.html";
     }
 
+    @GetMapping("/records/main")
+    public String directToBehaviorMainShort() {
+        return "records.html";
+    }
     @GetMapping("/records/main/{year}/{month}/{day}")
     public String directToBehaviorMain(
             @PathVariable(value = "year", required = true) String year, 
