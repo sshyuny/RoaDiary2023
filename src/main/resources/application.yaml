@@ -33,6 +33,11 @@ spring:
   devtools:
     livereload:
       enabled: true
+logging:
+  file:
+    path: C:/Behavior-logs/log.txt
+  level:
+    root: info
 
 ---
 
@@ -46,6 +51,11 @@ spring:
   devtools:
     livereload:
       enabled: false
+logging:
+  file:
+    path: /home/behavior/logs
+  level:
+    root: info
 
 ---
 

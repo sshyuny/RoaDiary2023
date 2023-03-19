@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.record.dto.RecordResDto;
 import roadiary.behavior.record.entity.RecordEntity;
@@ -21,6 +22,7 @@ public class RecordsRepositoryImpl implements RecordsRepository {
     }
 
     @Override
+    @Transactional
     public List<RecordResDto> selectRecords(LocalDate reqDate, long userId) {
         return recordsMapper.selectRecords(reqDate, userId);
     }

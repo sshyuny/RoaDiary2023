@@ -27,7 +27,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// mariadb
-	implementation 'org.mariadb.jdbc:mariadb-java-client:2.2.0'
+	// implementation 'org.mariadb.jdbc:mariadb-java-client:2.2.0'
 	// live reload
 	implementation 'org.springframework.boot:spring-boot-devtools'
 }
