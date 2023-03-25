@@ -19,7 +19,7 @@ public interface CategoryMapper {
 
     public Integer selectTheMaxPriority(long userId);
 
-    public Long selectNewCategoryId(String categoryContent);
+    public Long selectCategoryByContent(String categoryContent);
 
     public int deletePriority(@Param("userId") long userId, @Param("categoryId") long categoryId);
 

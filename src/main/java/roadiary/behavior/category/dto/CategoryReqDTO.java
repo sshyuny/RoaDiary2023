@@ -13,9 +13,10 @@ public class CategoryReqDto {
     private long categoryId;
     private String categoryContent;
 
-    public static CategoryReqDto of(long userId, String categoryContent) {
+    public static CategoryReqDto of(long userId, long categoryId, String categoryContent) {
         CategoryReqDto categoryReqDto = new CategoryReqDto();
         categoryReqDto.setUserId(userId);
+        categoryReqDto.setCategoryId(categoryId);
         categoryReqDto.setCategoryContent(categoryContent);
         return categoryReqDto;
     }

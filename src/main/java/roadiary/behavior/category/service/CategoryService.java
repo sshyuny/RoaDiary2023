@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.entity.CategoryEntity;
@@ -32,25 +33,35 @@ public class CategoryService {
     }
 
     /**
-     * 유저가 Category Priority에 등록한 카테고리를 처리함(Cateogry Priority와 무관).
-     * 이미 DB에 등록된 Category가 아닐 경우, DB에 category 등록.
-     * categoryId를 categoryReqDto에 넣어줌.
-     * @param categoryReqDto
+     * 이미 priorityofcategory에 개인별 최대 개수(MAX_PRIORITY) 이상의 카테고리가 저장되어있는지 확인합니다.
+     * @return 이미 최대 카테고리 개수가 저장된 경우 true
      */
-    public void addCategory(CategoryReqDto categoryReqDto) {
-        
-        CategoryEntity categoryEntity = CategoryEntity.of(categoryReqDto.getCategoryContent());
-
-        // 카테고리 id값 확인(이미 등록된 카테고리일 경우 0 반환)
-        long newCategoryId = categoryRepository.selectNewCategoryId(categoryReqDto.getCategoryContent());
-
-        // categoryReqDto에 categoryId 값 추가
-        if (newCategoryId == 0) {
-            categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
-            categoryReqDto.setCategoryId(categoryEntity.getBehaviorCategoryId());
-        } else {
-            categoryReqDto.setCategoryId(newCategoryId);
+    public Boolean hasMaxCategorySavedAlready(Long userId) {
+        List<CategoryResDto> categoryResDtos = getCategoryList(userId);
+        if (categoryResDtos.size() >= CategoryCommon.MAX_PRIORITY) {
+            return true;  
         }
+        return false;
+    }
+
+    /**
+     * 새로운 카테고리를 저장하고 id값을 반환합니다.
+     * 이미 DB에 등록된 Category일 경우 저장하지 않고 기존 id값을 반환합니다.
+     * @param categoryContent
+     * @return
+     */
+    public Long addCategory(String categoryContent) {
+        
+        CategoryEntity categoryEntity = CategoryEntity.of(categoryContent);
+
+        Long newCategoryId = categoryRepository.selectCategoryByContent(categoryContent);
+
+        if (newCategoryId == null) {
+            categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
+            return categoryEntity.getBehaviorCategoryId();
+        }
+
+        return newCategoryId;
     }
 
     /**
@@ -76,9 +87,9 @@ public class CategoryService {
 
     public void deleteAndSortPriority(Long userId, Long categoryId) {
 
-        // [요청된 Priority 삭제]
-        categoryRepository.deletePriority(userId, categoryId);
+        //없으면 예외처리
 
+        categoryRepository.deletePriority(userId, categoryId);
     }
 
     public int updateDirectionOfPriority(long userId, long categoryId, String direction) {

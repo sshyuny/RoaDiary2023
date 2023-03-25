@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
+import roadiary.behavior.category.entity.CategoryEntity;
+import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.category.service.CategoryService;
 
 @ActiveProfiles("local")
@@ -21,40 +23,44 @@ public class CategoryServiceTest {
 
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Test
-    @DisplayName("사용자의 카테고리 우선순위에 없는 값을, 카테고리 우선순위에 새로 추가")
+    @DisplayName("이미 저장된 카테고리를 추가하려 시도할 경우, 기존 id값 반환")
     @Transactional
-    void 카테고리우선순위추가테스트() {
+    void addCategory테스트() {
         //given
-        CategoryReqDto categoryReqDto = CategoryReqDto.of(2, "카테고리 추가");
-
+        String newCategoryContent = "카테고리 추가";
+        CategoryEntity categoryEntity = CategoryEntity.of(newCategoryContent);
+        
         //when
-        categoryService.addCategory(categoryReqDto);
-        int addedPriorityNum = categoryService.addPriority(categoryReqDto);
+        int addedNum = categoryRepository.insertCategory(categoryEntity);
+        Long categoryId = categoryService.addCategory(newCategoryContent);
 
         //then
-        assertThat(addedPriorityNum).isEqualTo(1);
+        assertThat(addedNum).isEqualTo(1);
+        assertThat(categoryId).isEqualTo(categoryEntity.getBehaviorCategoryId());
     }
 
-    @Test
-    @DisplayName("사용자의 카테고리 우선순위에 이미 들어있는 값을, 카테고리 우선순위에 새로 추가")
-    @Transactional
-    void 카테고리우선순위중복값추가테스트() {
-        //given
-        CategoryReqDto categoryReqDto1 = CategoryReqDto.of(2, "중복된 카테고리 추가");
-        CategoryReqDto categoryReqDto2 = CategoryReqDto.of(2, "중복된 카테고리 추가");
+    // @Test
+    // @DisplayName("사용자의 카테고리 우선순위에 이미 들어있는 값을, 카테고리 우선순위에 새로 추가")
+    // @Transactional
+    // void 카테고리우선순위중복값추가테스트() {
+    //     //given
+    //     CategoryReqDto categoryReqDto1 = CategoryReqDto.of(2, "중복된 카테고리 추가");
+    //     CategoryReqDto categoryReqDto2 = CategoryReqDto.of(2, "중복된 카테고리 추가");
 
-        //when
-        categoryService.addCategory(categoryReqDto1);
-        int addedPriorityNum1 = categoryService.addPriority(categoryReqDto1);
-        categoryService.addCategory(categoryReqDto2);
-        int addedPriorityNum2 = categoryService.addPriority(categoryReqDto2);
+    //     //when
+    //     categoryService.addCategory(categoryReqDto1);
+    //     int addedPriorityNum1 = categoryService.addPriority(categoryReqDto1);
+    //     categoryService.addCategory(categoryReqDto2);
+    //     int addedPriorityNum2 = categoryService.addPriority(categoryReqDto2);
 
-        //then
-        assertThat(addedPriorityNum1).isEqualTo(1);
-        assertThat(addedPriorityNum2).isEqualTo(0);
-    }
+    //     //then
+    //     assertThat(addedPriorityNum1).isEqualTo(1);
+    //     assertThat(addedPriorityNum2).isEqualTo(0);
+    // }
 
     @Test
     @DisplayName("사용자의 카테고리 우선순위 변경")

@@ -45,11 +45,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public long selectNewCategoryId(String categoryContent) {
-        Long newCategoryId = categoryMapper.selectNewCategoryId(categoryContent);
-
-        if (newCategoryId == null) return 0;  // 새 카테고리일 경우
-        else return newCategoryId;  // 이미 등록된 카테고리일 경우
+    public Long selectCategoryByContent(String categoryContent) {
+        return categoryMapper.selectCategoryByContent(categoryContent);
     }
 
     @Override
