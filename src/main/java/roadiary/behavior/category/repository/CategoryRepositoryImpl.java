@@ -65,7 +65,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public int selectPriorityIdx(long userId, long categoryId) {
+    public Integer selectPriorityIdx(long userId, long categoryId) {
         return categoryMapper.selectPriorityIdx(userId, categoryId);
     }
 

@@ -36,7 +36,8 @@ public class CategoryService {
      * 이미 priorityofcategory에 개인별 최대 개수(MAX_PRIORITY) 이상의 카테고리가 저장되어있는지 확인합니다.
      * @return 이미 최대 카테고리 개수가 저장된 경우 true
      */
-    public Boolean hasMaxCategorySavedAlready(Long userId) {
+    public boolean hasMaxCategorySavedAlready(Long userId) {
+
         List<CategoryResDto> categoryResDtos = getCategoryList(userId);
         if (categoryResDtos.size() >= CategoryCommon.MAX_PRIORITY) {
             return true;  
@@ -65,27 +66,55 @@ public class CategoryService {
     }
 
     /**
-     * 유저가 Category Priority에 저장하기 위해 요청한 카테고리를 Priority 테이블에 등록
+     * 요청된 카테고리가 이미 계정 Category Priority에 저장돼있는지 확인합니다.
+     * @param userId
+     * @param categoryId
+     * @return
+     */
+    public boolean isAlreadySavedInAccount(long userId, Long categoryId) {
+        int alreadySavedNum = categoryRepository.countPriority(userId, categoryId);
+        if (alreadySavedNum != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 유저가 Category Priority에 저장하기 위해 요청한 카테고리를 Priority 테이블에 등록합니다.
+     * 사용자에게 기록된 최대 priority idx 확인 후, 그보다 큰 값으로 요청받은 카테고리를 순위에 저장합니다.
      * @param categoryReqDto
      * @param categoryResDtos
      * @return
      */
-    public int addPriority(CategoryReqDto categoryReqDto) {
+    public int addPriority(long userId, Long categoryId) {
 
-        // 요청 카테고리, 저장 유무 확인
-        int alreadySaved = categoryRepository.countPriority(categoryReqDto.getUserId(), categoryReqDto.getCategoryId());
-        if (alreadySaved != 0) return 0; // 동일한 카테고리가 이미 저장돼있는 경우
+        Integer theMaxPriority = categoryRepository.selectTheMaxPriority(userId);
+        if (theMaxPriority == null) {
+            theMaxPriority = 0;
+        }
 
-        // 사용자에게 기록된 최대 priority idx 확인 후, 그보다 큰 값으로, 요청 카테고리 insert
-        Integer theMaxPriority = categoryRepository.selectTheMaxPriority(categoryReqDto.getUserId());
-        if (theMaxPriority == null) theMaxPriority = 0;
         PriorityCategoryEntity priorityCategoryEntity = new PriorityCategoryEntity(
-            categoryReqDto.getUserId(), theMaxPriority + 1, categoryReqDto.getCategoryId());
+            userId, theMaxPriority + 1, categoryId);
 
         return categoryRepository.insertPriority(priorityCategoryEntity);
     }
 
-    public void deleteAndSortPriority(Long userId, Long categoryId) {
+    /**
+     * 계정의 카테고리순위에 요청 카테고리가 저장되어있는지 확인합니다.
+     * @param userId
+     * @param categoryId
+     * @return
+     */
+    public boolean hasTheCategoryInAccountPriority(Long userId, long categoryId) {
+
+        Integer priorityIdx = categoryRepository.selectPriorityIdx(userId, categoryId);
+        if (priorityIdx == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void removePriority(Long userId, Long categoryId) {
 
         //없으면 예외처리
 
@@ -95,7 +124,7 @@ public class CategoryService {
     public int updateDirectionOfPriority(long userId, long categoryId, String direction) {
 
         
-        int priorityIdx = categoryRepository.selectPriorityIdx(userId, categoryId);
+        Integer priorityIdx = categoryRepository.selectPriorityIdx(userId, categoryId);
         List<PriorityCategoryEntity> priorityCategoryEntities = new ArrayList<>();
 
         // 선택된 카테고리보다 높은 priority 반환

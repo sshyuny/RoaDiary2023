@@ -27,7 +27,7 @@ public interface CategoryMapper {
 
     public int countPriority(@Param("userId") long userId, @Param("categoryId") long categoryId);
 
-    public int selectPriorityIdx(@Param("userId") long userId, @Param("categoryId") long categoryId);
+    public Integer selectPriorityIdx(@Param("userId") long userId, @Param("categoryId") long categoryId);
 
     public List<PriorityCategoryEntity> selectUpPriorityEntities(@Param("userId") long userId, @Param("priorityIdx") long priorityIdx);
     public List<PriorityCategoryEntity> selectDownPriorityEntities(@Param("userId") long userId, @Param("priorityIdx") long priorityIdx);

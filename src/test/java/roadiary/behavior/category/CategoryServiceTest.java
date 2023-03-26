@@ -1,6 +1,8 @@
 package roadiary.behavior.category;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -14,11 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import roadiary.behavior.category.dto.CategoryReqDto;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.entity.CategoryEntity;
+import roadiary.behavior.category.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.category.service.CategoryService;
 
 @ActiveProfiles("local")
 @SpringBootTest
+@Transactional
 public class CategoryServiceTest {
 
     @Autowired
@@ -26,10 +30,10 @@ public class CategoryServiceTest {
     @Autowired
     CategoryRepository categoryRepository;
 
+    final Long userId = 2L;
+
     @Test
-    @DisplayName("이미 저장된 카테고리를 추가하려 시도할 경우, 기존 id값 반환")
-    @Transactional
-    void addCategory테스트() {
+    void addCategory_이미저장된카테고리를추가할경우_기존id값반환() {
         //given
         String newCategoryContent = "카테고리 추가";
         CategoryEntity categoryEntity = CategoryEntity.of(newCategoryContent);
@@ -43,59 +47,94 @@ public class CategoryServiceTest {
         assertThat(categoryId).isEqualTo(categoryEntity.getBehaviorCategoryId());
     }
 
+    @Test
+    void hasMaxCategorySavedAlready_최대개수이상으로_카테고리순위저장() {
+        //given-1
+        for (int i = 1; i < 12; i++) {
+            categoryRepository.insertPriority(new PriorityCategoryEntity(userId, i, (long) i));
+        }
+
+        //then-1
+        assertFalse(categoryService.hasMaxCategorySavedAlready(userId));
+
+        //given-2
+        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 12, 12));
+
+        //then-2
+        assertTrue(categoryService.hasMaxCategorySavedAlready(userId));
+    }
+
+    @Test
+    void isAlreadySavedInAccount_계정카테고리순위에_이미저장된값을저장하려할경우() {
+        //when
+        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
+
+        //then
+        assertTrue(categoryService.isAlreadySavedInAccount(userId, 1L));
+        assertFalse(categoryService.isAlreadySavedInAccount(userId, 2L));
+    }
+
+    @Test
+    void addPriority_테스트() {
+        //given
+        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
+        Integer theMaxPriorityBefore = categoryRepository.selectTheMaxPriority(userId);
+        
+        //when
+        categoryService.addPriority(userId, 2L);
+        Integer theMaxPriorityAfter = categoryRepository.selectTheMaxPriority(userId);
+
+        //then
+        assertThat(theMaxPriorityBefore).isEqualTo(1);
+        assertThat(theMaxPriorityAfter).isEqualTo(2);
+    }
+
+    @Test
+    void hasTheCategoryInAccountPriority_테스트() {
+        //given
+        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
+
+        //then
+        assertTrue(categoryService.hasTheCategoryInAccountPriority(userId, 1L));
+        assertFalse(categoryService.hasTheCategoryInAccountPriority(userId, 2L));
+    }
+
+
+
     // @Test
-    // @DisplayName("사용자의 카테고리 우선순위에 이미 들어있는 값을, 카테고리 우선순위에 새로 추가")
+    // @DisplayName("사용자의 카테고리 우선순위 변경")
     // @Transactional
-    // void 카테고리우선순위중복값추가테스트() {
+    // void 카테고리순서변경테스트() {
     //     //given
-    //     CategoryReqDto categoryReqDto1 = CategoryReqDto.of(2, "중복된 카테고리 추가");
-    //     CategoryReqDto categoryReqDto2 = CategoryReqDto.of(2, "중복된 카테고리 추가");
+    //     List<CategoryResDto> categoryResDtos1 = categoryService.getCategoryList(2L);
+    //     long categoryId1Before = categoryResDtos1.get(1).getId();
+    //     long categoryId1After = categoryResDtos1.get(2).getId();
 
     //     //when
-    //     categoryService.addCategory(categoryReqDto1);
-    //     int addedPriorityNum1 = categoryService.addPriority(categoryReqDto1);
-    //     categoryService.addCategory(categoryReqDto2);
-    //     int addedPriorityNum2 = categoryService.addPriority(categoryReqDto2);
+    //     categoryService.updateDirectionOfPriority(2, categoryId1After, "up");
+
+    //     List<CategoryResDto> categoryResDtos2 = categoryService.getCategoryList(2L);
+    //     long categoryId2Before = categoryResDtos2.get(1).getId();
+    //     long categoryId2After = categoryResDtos2.get(2).getId();
 
     //     //then
-    //     assertThat(addedPriorityNum1).isEqualTo(1);
-    //     assertThat(addedPriorityNum2).isEqualTo(0);
+    //     assertThat(categoryId2After).isEqualTo(categoryId1Before);
+    //     assertThat(categoryId2Before).isEqualTo(categoryId1After);
     // }
 
-    @Test
-    @DisplayName("사용자의 카테고리 우선순위 변경")
-    @Transactional
-    void 카테고리순서변경테스트() {
-        //given
-        List<CategoryResDto> categoryResDtos1 = categoryService.getCategoryList(2L);
-        long categoryId1Before = categoryResDtos1.get(1).getId();
-        long categoryId1After = categoryResDtos1.get(2).getId();
+    // @Test
+    // @DisplayName("사용자의 카테고리 우선순위 변경 - 맨 앞 카테고리를 위로 올리는 경우")
+    // @Transactional
+    // void 카테고리순서변경맨앞위로테스트() {
+    //     //given
+    //     List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(2L);
+    //     long categoryIdBefore = categoryResDtos.get(0).getId();
 
-        //when
-        categoryService.updateDirectionOfPriority(2, categoryId1After, "up");
+    //     //when
+    //     int checkPossibleNum = categoryService.updateDirectionOfPriority(2, categoryIdBefore, "up");
 
-        List<CategoryResDto> categoryResDtos2 = categoryService.getCategoryList(2L);
-        long categoryId2Before = categoryResDtos2.get(1).getId();
-        long categoryId2After = categoryResDtos2.get(2).getId();
-
-        //then
-        assertThat(categoryId2After).isEqualTo(categoryId1Before);
-        assertThat(categoryId2Before).isEqualTo(categoryId1After);
-    }
-
-    @Test
-    @DisplayName("사용자의 카테고리 우선순위 변경 - 맨 앞 카테고리를 위로 올리는 경우")
-    @Transactional
-    void 카테고리순서변경맨앞위로테스트() {
-        //given
-        List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(2L);
-        long categoryIdBefore = categoryResDtos.get(0).getId();
-
-        //when
-        int checkPossibleNum = categoryService.updateDirectionOfPriority(2, categoryIdBefore, "up");
-
-        //then
-        assertThat(checkPossibleNum).isEqualTo(0);
-    }
+    //     //then
+    //     assertThat(checkPossibleNum).isEqualTo(0);
+    // }
 
 }

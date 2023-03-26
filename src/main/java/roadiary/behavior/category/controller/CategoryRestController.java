@@ -37,7 +37,7 @@ public class CategoryRestController {
     }
 
     /**
-     * 카테고리 추가
+     * 카테고리 추가 요청 처리
      * @param categoryContent 요청받은 카테고리 이름
      * @return
      */
@@ -51,14 +51,14 @@ public class CategoryRestController {
             return CategoryCommon.OVER;
         }
 
-        Long categoryId = categoryService.addCategory(categoryContent);
-
-        CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, categoryId, categoryContent);
-        int addedPriorityNum = categoryService.addPriority(categoryReqDto);
-
-        if (addedPriorityNum == 0) {
-            return CategoryCommon.DUPLI;  // 이미 저장된 카테고리일 경우
+        Long savedCategoryId = categoryService.addCategory(categoryContent);
+        
+        if (categoryService.isAlreadySavedInAccount(userId, savedCategoryId)) {
+            return CategoryCommon.DUPLI; 
         }
+
+        // CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, savedCategoryId, categoryContent);
+        categoryService.addPriority(userId, savedCategoryId);
 
         return CategoryCommon.SUCCESS;
     }
@@ -69,13 +69,23 @@ public class CategoryRestController {
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         Long categoryId = Long.valueOf(httpEntity.getBody());
-        categoryService.deleteAndSortPriority(userId, categoryId);
+
+        if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
+            // return CategoryCommon.HASNOT;
+        }
+
+        categoryService.removePriority(userId, categoryId);
+        // return CategoryCommon.SUCCESS;
     }
 
     @PutMapping("/api/category/priority")
     public String updateCategories(HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+
+        // if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
+        //     // return CategoryCommon.HASNOT;
+        // }
 
         int checkPossibleNum = categoryService.updateDirectionOfPriority(
             userId, priorityAndDirectionDto.getCategoryId(), priorityAndDirectionDto.getDirection());
