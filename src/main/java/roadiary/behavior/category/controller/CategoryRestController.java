@@ -5,26 +5,40 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import roadiary.behavior.category.CategoryCommon;
-import roadiary.behavior.category.dto.CategoryReqDto;
+import roadiary.behavior.category.ErrorResult;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.dto.PriorityAndDirectionDto;
 import roadiary.behavior.category.service.CategoryService;
 import roadiary.behavior.member.authority.SessionKeys;
 
 @RequiredArgsConstructor
+@Slf4j
 @RestController
 public class CategoryRestController {
 
     private final CategoryService categoryService;
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResult illegalStateException(IllegalArgumentException e, HttpServletRequest request) {
+        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+        log.error("user={}", userId, e);
+        return new ErrorResult("NOTEXIST");
+    } 
+
 
     @GetMapping("/api/category/priority")
     public List<CategoryResDto> getCategories(HttpServletRequest request) throws Exception {
@@ -37,7 +51,7 @@ public class CategoryRestController {
     }
 
     /**
-     * 카테고리 추가 요청 처리
+     * 계정의 카테고리순위에 카테고리 추가 요청 처리
      * @param categoryContent 요청받은 카테고리 이름
      * @return
      */
@@ -53,16 +67,20 @@ public class CategoryRestController {
 
         Long savedCategoryId = categoryService.addCategory(categoryContent);
         
-        if (categoryService.isAlreadySavedInAccount(userId, savedCategoryId)) {
-            return CategoryCommon.DUPLI; 
+        if (categoryService.hasTheCategoryInAccountPriority(userId, savedCategoryId)) {
+            return CategoryCommon.DUPLI;
         }
 
-        // CategoryReqDto categoryReqDto = CategoryReqDto.of(userId, savedCategoryId, categoryContent);
         categoryService.addPriority(userId, savedCategoryId);
 
         return CategoryCommon.SUCCESS;
     }
 
+    /**
+     * 계정의 카테고리순위에서 카테고리 삭제 요청
+     * @param request
+     * @param httpEntity
+     */
     @DeleteMapping("/api/category/priority")
     public void deleteCategories(HttpServletRequest request, HttpEntity<String> httpEntity) {
 
@@ -71,24 +89,32 @@ public class CategoryRestController {
         Long categoryId = Long.valueOf(httpEntity.getBody());
 
         if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
-            // return CategoryCommon.HASNOT;
+            throw new IllegalArgumentException("저장되지 않은 카테고리를 삭제하려 시도합니다.");
         }
 
         categoryService.removePriority(userId, categoryId);
         // return CategoryCommon.SUCCESS;
     }
 
+    /**
+     * 계정의 카테고리순위에서 카테고리 수정 요청
+     * @param request
+     * @param priorityAndDirectionDto
+     * @return
+     */
     @PutMapping("/api/category/priority")
     public String updateCategories(HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
-        // if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
-        //     // return CategoryCommon.HASNOT;
-        // }
+        long categoryId = priorityAndDirectionDto.getCategoryId();
+
+        if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
+            throw new IllegalArgumentException("저장되지 않은 카테고리를 수정하려 시도합니다.");
+        }
 
         int checkPossibleNum = categoryService.updateDirectionOfPriority(
-            userId, priorityAndDirectionDto.getCategoryId(), priorityAndDirectionDto.getDirection());
+            userId, categoryId, priorityAndDirectionDto.getDirection());
 
         if (checkPossibleNum == 0) return "0";
         else return "1";

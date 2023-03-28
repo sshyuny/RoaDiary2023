@@ -65,16 +65,6 @@ public class CategoryServiceTest {
     }
 
     @Test
-    void isAlreadySavedInAccount_계정카테고리순위에_이미저장된값을저장하려할경우() {
-        //when
-        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
-
-        //then
-        assertTrue(categoryService.isAlreadySavedInAccount(userId, 1L));
-        assertFalse(categoryService.isAlreadySavedInAccount(userId, 2L));
-    }
-
-    @Test
     void addPriority_테스트() {
         //given
         categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
