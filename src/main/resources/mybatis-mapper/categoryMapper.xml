@@ -4,7 +4,7 @@
 <mapper namespace="roadiary.behavior.category.mapper.CategoryMapper">
 
     <select id="selectCategoryEntities" resultType="roadiary.behavior.category.entity.CategoryEntity">
-        SELECT behavior_category.behavior_category_id, behavior_category.content
+        SELECT behavior_category.*
             FROM behavior_priority_category
             LEFT JOIN behavior_category
                 ON behavior_category.behavior_category_id = behavior_priority_category.behavior_category_id

@@ -99,32 +99,52 @@ public class CategoryService {
         return categoryRepository.insertPriority(priorityCategoryEntity);
     }
 
+    /**
+     * 전달받은 카테고리를 유저의 카테고리순위에서 삭제합니다.
+     * @param userId
+     * @param categoryId
+     */
     public void removePriority(Long userId, Long categoryId) {
         categoryRepository.deletePriority(userId, categoryId);
     }
 
-    public int updateDirectionOfPriority(long userId, long categoryId, String direction) {
+    /**
+     * 순위를 변경할 두 카테고리를 선택합니다.
+     * @param userId
+     * @param categoryId
+     * @param direction 카테고리 순위 변경 방향
+     * @return
+     */
+    public List<PriorityCategoryEntity> getTwoCategoryToSwitchPriority(long userId, long categoryId, String direction) {
 
         Integer priorityIdx = categoryRepository.selectPriorityIdx(userId, categoryId);
         List<PriorityCategoryEntity> priorityCategoryEntities = new ArrayList<>();
-
-        // 선택된 카테고리보다 높은 priority 반환
+    
         if (direction.equals("up")) {
             priorityCategoryEntities = categoryRepository.selectUpPriorityEntities(userId, priorityIdx);
-            if (priorityCategoryEntities.size() < 2) return 0;
         } else if (direction.equals("down")) {
             priorityCategoryEntities = categoryRepository.selectDownPriorityEntities(userId, priorityIdx);
-            if (priorityCategoryEntities.size() < 2) return 0;
-        } else {
-            // @@예외 처리
+        }
+    
+        if (priorityCategoryEntities.size() < 2) {
+            throw new IllegalArgumentException("카테고리순위를 더이상 위 또는 아래로 변경할 수 없습니다.");
         }
 
-        // priorityCategoryEntities에 저장된 priority 서로 뒤바꿔준 뒤, update 
-        CategoryUnit.switchPriority(priorityCategoryEntities);
-        for (PriorityCategoryEntity priorityCategoryEntity : priorityCategoryEntities)
-            categoryRepository.updatePriority(priorityCategoryEntity);
+        return priorityCategoryEntities;
+    }
 
-        return 1;
+    /**
+     * 전달받은 두 카테고리의 순위를 서로 뒤바꿔준 뒤 업데이트를 진행합니다.
+     * @param priorityCategoryEntities
+     */
+    public void updateDirectionOfPriority(List<PriorityCategoryEntity> priorityCategoryEntities) {
+
+        CategoryUnit.switchPriority(priorityCategoryEntities);
+
+        for (PriorityCategoryEntity priorityCategoryEntity : priorityCategoryEntities) {
+            categoryRepository.updatePriority(priorityCategoryEntity);
+        }
+
     }
 
 }

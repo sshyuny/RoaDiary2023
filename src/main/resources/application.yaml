@@ -2,9 +2,7 @@ spring:
   profiles:
     group:
       "local": "local_setting,common"
-      "dev": "dev_setting,common"
-      "prod": "prod_setting,common"
-      "local-mariadb": "local-mariadb_setting,common"
+      "test": "test_setting,common"
 
 server:
   port: 80
@@ -35,36 +33,31 @@ spring:
       enabled: true
 logging:
   file:
-    path: C:/Behavior-logs/log.txt
+    path: /home/behavior/logs-test
   level:
     root: info
 
 ---
 
 spring:
-  config.activate.on-profile: dev_setting
+  config.activate.on-profile: test_setting
   datasource:
-    url: "jdbc:mysql://localhost:3306/bhdb"
-    username: "bhuser"
-    password: "bhpw"
+    url: "jdbc:mysql://localhost:3306/bhdb_test"
+    username: "bhuser_test"
+    password: "bhpw_test"
     driver-class-name: com.mysql.cj.jdbc.Driver
-  devtools:
-    livereload:
-      enabled: false
+  sql:
+    init:
+      mode: always
 logging:
   file:
-    path: /home/behavior/logs
+    path: C:/Behavior-logs/logs
   level:
     root: info
-
----
-
-spring:
-  config.activate.on-profile: local-mariadb_setting
-  datasource:
-    url: "jdbc:mariadb://localhost:3306/bhdb"
-    username: "bhuser"
-    password: "bhpw"
-  devtools:
-    livereload:
-      enabled: false
+    '[roadiary.behavior.category]': trace
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

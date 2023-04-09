@@ -4,6 +4,8 @@ public class CategoryResDto {
     
     private long id;
     private String content;
+
+    public CategoryResDto() {}
     
     public CategoryResDto(long id, String content) {
         this.id = id;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.ErrorResult;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.dto.PriorityAndDirectionDto;
+import roadiary.behavior.category.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
 import roadiary.behavior.member.authority.SessionKeys;
 
@@ -36,14 +38,15 @@ public class CategoryRestController {
     public ErrorResult illegalStateException(IllegalArgumentException e, HttpServletRequest request) {
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
         log.error("user={}", userId, e);
-        return new ErrorResult("NOTEXIST");
+        return new ErrorResult("NOTVALID");
     } 
 
 
     @GetMapping("/api/category/priority")
-    public List<CategoryResDto> getCategories(HttpServletRequest request) throws Exception {
+    public List<CategoryResDto> getCategories(@SessionAttribute("loginUserId") String userIdStr, HttpServletRequest request) throws Exception {
 
-        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+        // long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+        long userId = Long.valueOf(userIdStr);
 
         List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
 
@@ -93,31 +96,33 @@ public class CategoryRestController {
         }
 
         categoryService.removePriority(userId, categoryId);
-        // return CategoryCommon.SUCCESS;
     }
 
     /**
-     * 계정의 카테고리순위에서 카테고리 수정 요청
+     * 계정의 카테고리순위에서 주어진 카테고리의 우선순위를 위, 아래로 수정 요청
      * @param request
      * @param priorityAndDirectionDto
      * @return
      */
     @PutMapping("/api/category/priority")
-    public String updateCategories(HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
+    public void updateCategories(HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         long categoryId = priorityAndDirectionDto.getCategoryId();
+        String direction = priorityAndDirectionDto.getDirection();
+
+        if (!(direction.equals("up") || direction.equals("down"))) {
+            throw new IllegalArgumentException("요청된 카테고리 수정 방향이 유효하지 않습니다.");
+        }
 
         if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
             throw new IllegalArgumentException("저장되지 않은 카테고리를 수정하려 시도합니다.");
         }
 
-        int checkPossibleNum = categoryService.updateDirectionOfPriority(
-            userId, categoryId, priorityAndDirectionDto.getDirection());
+        List<PriorityCategoryEntity> priorityCategoryEntities = categoryService.getTwoCategoryToSwitchPriority(userId, categoryId, direction);
 
-        if (checkPossibleNum == 0) return "0";
-        else return "1";
+        categoryService.updateDirectionOfPriority(priorityCategoryEntities);
     }
     
 }

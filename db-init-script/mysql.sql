@@ -14,6 +14,12 @@ GRANT ALL PRIVILEGES ON bhdb.* TO 'bhuser'@'localhost';
 
 USE bhdb;
 
+/*
+CREATE DATABASE bhdb_test;
+CREATE USER 'bhuser_test'@'localhost' IDENTIFIED BY 'bhpw_test';
+GRANT ALL PRIVILEGES ON bhdb_test.* TO 'bhuser_test'@'localhost';
+*/
+
 ---- ---- ---- ----
 -- TABLE
 ---- ---- ---- ----

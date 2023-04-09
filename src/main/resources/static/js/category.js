@@ -148,11 +148,15 @@ function upCategory(categoryId) {
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
-            if (data == "0") alert("더이상 위로 올릴 수 없습니다.");
             makeCategoryTable();
         }, 
-        error: function() {
-			alert("에러가 발생했습니다.");
+        error: function(xhr, status, error) {
+            let resJson = JSON.parse(xhr.responseText);
+            if (resJson.code == "NOTVALID") {
+                alert("카테고리 순위를 더이상 위로 올릴 수 없습니다.")
+            } else {
+                alert("에러가 발생했습니다.");
+            }
 		}
     })
 }
@@ -170,11 +174,15 @@ function downCategory(categoryId) {
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
-            if (data == "0") alert("더이상 아래로 내릴 수 없습니다.");
             makeCategoryTable();
         }, 
-        error: function() {
-			alert("에러가 발생했습니다.");
+        error: function(xhr, status, error) {
+			let resJson = JSON.parse(xhr.responseText);
+            if (resJson.code == "NOTVALID") {
+                alert("카테고리 순위를 더이상 아래로 내릴 수 없습니다.")
+            } else {
+                alert("에러가 발생했습니다.");
+            }
 		}
     })
 }
