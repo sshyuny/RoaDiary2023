@@ -46,7 +46,17 @@ VALUES
 ('test1'), 
 ('테스트2'), 
 ('test3'), 
-('테스트4');
+('test4'),
+('test5'),
+('test6'),
+('test7'),
+('test8'),
+('test9'),
+('test10'),
+('test11'),
+('test12'),
+('test13'),
+('test14');
 
 INSERT INTO user
 (email, nickname, recently_visited, register_status)

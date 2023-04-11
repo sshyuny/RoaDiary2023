@@ -22,6 +22,7 @@ import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.ErrorResult;
 import roadiary.behavior.category.dto.CategoryResDto;
 import roadiary.behavior.category.dto.PriorityAndDirectionDto;
+import roadiary.behavior.category.dto.SimpleReqDto;
 import roadiary.behavior.category.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
 import roadiary.behavior.member.authority.SessionKeys;
@@ -42,11 +43,15 @@ public class CategoryRestController {
     } 
 
 
+    /**
+     * 계정의 전체 카테고리순위 반환 요청
+     * @param userId
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/api/category/priority")
-    public List<CategoryResDto> getCategories(@SessionAttribute("loginUserId") String userIdStr, HttpServletRequest request) throws Exception {
-
-        // long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
-        long userId = Long.valueOf(userIdStr);
+    public List<CategoryResDto> getCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request) throws Exception {
 
         List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(userId);
 
@@ -59,10 +64,11 @@ public class CategoryRestController {
      * @return
      */
     @PostMapping("/api/category/priority")
-    public String saveCategories(HttpServletRequest request, HttpEntity<String> httpEntity) {
+    public String saveCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
+            @RequestBody SimpleReqDto simpleReqDto) {
         
-        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
-        String categoryContent = httpEntity.getBody();
+        // String categoryContent = httpEntity.getBody();
+        String categoryContent = simpleReqDto.getData();
 
         if (categoryService.hasMaxCategorySavedAlready(userId)) {
             return CategoryCommon.OVER;
@@ -85,9 +91,7 @@ public class CategoryRestController {
      * @param httpEntity
      */
     @DeleteMapping("/api/category/priority")
-    public void deleteCategories(HttpServletRequest request, HttpEntity<String> httpEntity) {
-
-        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+    public void deleteCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, HttpEntity<String> httpEntity) {
 
         Long categoryId = Long.valueOf(httpEntity.getBody());
 
@@ -105,10 +109,8 @@ public class CategoryRestController {
      * @return
      */
     @PutMapping("/api/category/priority")
-    public void updateCategories(HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
+    public void updateCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
         
-        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
-
         long categoryId = priorityAndDirectionDto.getCategoryId();
         String direction = priorityAndDirectionDto.getDirection();
 

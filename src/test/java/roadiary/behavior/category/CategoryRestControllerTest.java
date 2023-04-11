@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,6 +24,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import roadiary.behavior.category.dto.CategoryResDto;
+import roadiary.behavior.category.dto.SimpleReqDto;
+import roadiary.behavior.category.entity.CategoryEntity;
+import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.member.authority.SessionAuthority;
 import roadiary.behavior.member.dto.MemberAuthorityDto;
 
@@ -37,6 +42,8 @@ public class CategoryRestControllerTest {
     MockMvc mockMvc;
     @Autowired
     SessionAuthority sessionAuthority;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     ObjectMapper objectMapper;
     MockHttpSession session;
@@ -69,5 +76,68 @@ public class CategoryRestControllerTest {
         assertThat(categoryResDtos.get(0).getContent()).isEqualTo("테스트2");
         assertThat(categoryResDtos.get(2).getId()).isEqualTo(4L);
         assertThat(categoryResDtos.get(2).getContent()).isEqualTo("테스트4");
+    }
+
+    @Test
+    void saveCategories정상요청() throws Exception {
+        
+        //given
+        SimpleReqDto simpleReqDto = new SimpleReqDto();
+        simpleReqDto.setData("새로운카테고리");
+        String jsonToString = objectMapper.writeValueAsString(simpleReqDto);
+        
+        //then
+        mockMvc.perform(post("/api/category/priority").session(session)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(CategoryCommon.SUCCESS));
+
+        Long newCategoryId =  categoryRepository.selectCategoryByContent("새로운카테고리");
+        assertThat(newCategoryId).isEqualTo(5L);
+    }
+
+    @Test
+    void saveCategories이미최대개수의카테고리저장된경우() throws Exception {
+        
+        //given
+        SimpleReqDto simpleReqDto = new SimpleReqDto();
+        simpleReqDto.setData("카테고리");
+        String jsonToString = objectMapper.writeValueAsString(simpleReqDto);
+        
+        //when
+        makePriorityFull();
+        List<CategoryEntity> categoryEntities = categoryRepository.selectCategoryEntities(1L);
+
+        //then
+        mockMvc.perform(post("/api/category/priority").session(session)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(CategoryCommon.OVER));
+
+        assertThat(categoryEntities.size()).isEqualTo(12);
+    }
+
+    @Test
+    void saveCategories이미저장된카테고리를요청() throws Exception {
+
+        //given
+        SimpleReqDto simpleReqDto = new SimpleReqDto();
+        simpleReqDto.setData("테스트2");
+        String jsonToString = objectMapper.writeValueAsString(simpleReqDto);
+
+        //then
+        mockMvc.perform(post("/api/category/priority").session(session)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(CategoryCommon.DUPLI));
+    }
+
+    void makePriorityFull() {
+        for (int i = 0; i < 9; i++) {
+            categoryRepository.insertPriority(new PriorityCategoryEntity(1L, 4 + i, 5 + i));
+        }
     }
 }

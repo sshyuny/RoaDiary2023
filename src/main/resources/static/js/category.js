@@ -10,11 +10,16 @@ window.onload = function() {
 // 카테고리 추가
 function postCategory() {
     let categoryContent = document.getElementById("categoryContent").value;
+
+    let obj = new Object();
+    obj.data = categoryContent;
+    let jsonObj = JSON.stringify(obj);
+
     $.ajax({
 		type: "post",
         url: "/api/category/priority", 
-        data: categoryContent + "",
-		contentType: 'text/plain',
+        data: jsonObj,
+		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
             statusCheck(data);
