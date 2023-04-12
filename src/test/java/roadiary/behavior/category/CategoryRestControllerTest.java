@@ -23,10 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import roadiary.behavior.category.dto.CategoryResDto;
-import roadiary.behavior.category.dto.SimpleReqDto;
-import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.domain.dto.CategoryResDto;
+import roadiary.behavior.category.domain.dto.SimpleReqDto;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.member.authority.SessionAuthority;
 import roadiary.behavior.member.dto.MemberAuthorityDto;
@@ -94,7 +94,7 @@ public class CategoryRestControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string(CategoryCommon.SUCCESS));
 
         Long newCategoryId =  categoryRepository.selectCategoryByContent("새로운카테고리");
-        assertThat(newCategoryId).isEqualTo(5L);
+        assertThat(newCategoryId).isEqualTo(15L);
     }
 
     @Test

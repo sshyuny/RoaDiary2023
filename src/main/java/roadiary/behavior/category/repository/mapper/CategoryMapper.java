@@ -1,12 +1,12 @@
-package roadiary.behavior.category.mapper;
+package roadiary.behavior.category.repository.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 
 @Mapper
 public interface CategoryMapper {

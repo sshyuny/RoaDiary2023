@@ -12,10 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import roadiary.behavior.category.dto.CategoryReqDto;
-import roadiary.behavior.category.dto.CategoryResDto;
-import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.domain.dto.CategoryReqDto;
+import roadiary.behavior.category.domain.dto.CategoryResDto;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.category.service.CategoryService;
 

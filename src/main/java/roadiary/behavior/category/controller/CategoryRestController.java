@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import roadiary.behavior.category.CategoryCommon;
-import roadiary.behavior.category.ErrorResult;
-import roadiary.behavior.category.dto.CategoryResDto;
-import roadiary.behavior.category.dto.PriorityAndDirectionDto;
-import roadiary.behavior.category.dto.SimpleReqDto;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.domain.dto.CategoryResDto;
+import roadiary.behavior.category.domain.dto.PriorityAndDirectionDto;
+import roadiary.behavior.category.domain.dto.SimpleReqDto;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
+import roadiary.behavior.common.ErrorResult;
 import roadiary.behavior.member.authority.SessionKeys;
 
 @RequiredArgsConstructor
@@ -86,7 +86,7 @@ public class CategoryRestController {
     }
 
     /**
-     * 계정의 카테고리순위에서 카테고리 삭제 요청
+     * 계정의 카테고리순위에서 요청받은 카테고리 삭제 처리
      * @param request
      * @param httpEntity
      */
@@ -103,7 +103,7 @@ public class CategoryRestController {
     }
 
     /**
-     * 계정의 카테고리순위에서 주어진 카테고리의 우선순위를 위, 아래로 수정 요청
+     * 계정의 카테고리순위에서 요청받은 카테고리의 우선순위를 위, 아래로 수정
      * @param request
      * @param priorityAndDirectionDto
      * @return

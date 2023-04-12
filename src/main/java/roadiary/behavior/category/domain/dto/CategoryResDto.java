@@ -1,4 +1,4 @@
-package roadiary.behavior.category.dto;
+package roadiary.behavior.category.domain.dto;
 
 public class CategoryResDto {
     

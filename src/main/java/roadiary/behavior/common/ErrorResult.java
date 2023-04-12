@@ -1,4 +1,4 @@
-package roadiary.behavior.category;
+package roadiary.behavior.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,8 +2,8 @@ package roadiary.behavior.category.repository;
 
 import java.util.List;
 
-import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 
 public interface CategoryRepository {
     

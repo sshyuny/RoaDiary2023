@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 
-import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
-import roadiary.behavior.category.mapper.CategoryMapper;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.repository.mapper.CategoryMapper;
 
 @Component
 @Primary

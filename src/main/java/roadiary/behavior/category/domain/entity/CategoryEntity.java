@@ -1,4 +1,4 @@
-package roadiary.behavior.category.entity;
+package roadiary.behavior.category.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

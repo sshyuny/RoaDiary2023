@@ -3,9 +3,9 @@ package roadiary.behavior.category.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import roadiary.behavior.category.dto.CategoryResDto;
-import roadiary.behavior.category.entity.CategoryEntity;
-import roadiary.behavior.category.entity.PriorityCategoryEntity;
+import roadiary.behavior.category.domain.dto.CategoryResDto;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 
 public class CategoryUnit {
     
