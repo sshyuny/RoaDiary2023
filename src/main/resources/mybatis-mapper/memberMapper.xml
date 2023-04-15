@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="roadiary.behavior.member.mapper.MemberMapper">
+<mapper namespace="roadiary.behavior.member.repository.mapper.MemberMapper">
 
-    <select id="selectUserByUsingKakaoId" resultType="roadiary.behavior.member.entity.UserEntity">
+    <select id="selectUserByUsingKakaoId" resultType="roadiary.behavior.member.domain.entity.UserEntity">
         SELECT * FROM user
             WHERE kakao_id = #{kakaoId}
     </select>
 
-    <select id="selectUserByUsingUserId" resultType="roadiary.behavior.member.entity.UserEntity">
+    <select id="selectUserByUsingUserId" resultType="roadiary.behavior.member.domain.entity.UserEntity">
         SELECT * FROM user
             WHERE user_id = #{userId}
     </select>
@@ -18,7 +18,7 @@
             WHERE kakao_id = #{kakaoId}
     </select>
 
-    <insert id="insertKakaoUser" parameterType="roadiary.behavior.member.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insertKakaoUser" parameterType="roadiary.behavior.member.domain.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO user
             (kakao_id, kakao_connected_at, email, nickname, recently_visited, register_status)
             VALUES

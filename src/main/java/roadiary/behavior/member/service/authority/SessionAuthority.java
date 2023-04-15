@@ -1,11 +1,11 @@
-package roadiary.behavior.member.authority;
+package roadiary.behavior.member.service.authority;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
-import roadiary.behavior.member.dto.MemberAuthorityDto;
+import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
 
 @Component
 public class SessionAuthority implements Authority {

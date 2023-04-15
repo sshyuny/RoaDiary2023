@@ -3,8 +3,8 @@ package roadiary.behavior.member.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import roadiary.behavior.member.entity.UserEntity;
-import roadiary.behavior.member.mapper.MemberMapper;
+import roadiary.behavior.member.domain.entity.UserEntity;
+import roadiary.behavior.member.repository.mapper.MemberMapper;
 
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {

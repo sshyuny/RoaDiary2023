@@ -1,4 +1,5 @@
 window.onload = function() { 
+
     makeCategoryTable(); 
 
     // 이벤트 추가
@@ -124,11 +125,16 @@ function confirmDeleteCategory(categoryId) {
     }
 }
 function deleteCategory(categoryId) {
+
+    let obj = new Object();
+    obj.data = categoryId;
+    let jsonObj = JSON.stringify(obj);
+
     $.ajax({
 		type: "delete",
         url: "/api/category/priority", 
-        data: categoryId + "",
-		contentType: 'text/plain',
+        data: jsonObj,
+		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
             makeCategoryTable();

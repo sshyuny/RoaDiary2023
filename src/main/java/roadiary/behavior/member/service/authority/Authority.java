@@ -1,9 +1,9 @@
-package roadiary.behavior.member.authority;
+package roadiary.behavior.member.service.authority;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import roadiary.behavior.member.dto.MemberAuthorityDto;
+import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
 
 public interface Authority {
     

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import roadiary.behavior.member.authority.Authority;
+import roadiary.behavior.member.service.authority.Authority;
 
 @RequiredArgsConstructor
 @Controller

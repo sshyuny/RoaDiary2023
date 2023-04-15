@@ -1,4 +1,4 @@
-package roadiary.behavior.member.entity;
+package roadiary.behavior.member.domain.entity;
 
 import java.time.LocalDateTime;
 
@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import roadiary.behavior.member.dto.KakaoUserInfoResDto;
+import roadiary.behavior.member.domain.dto.KakaoUserInfoResDto;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter

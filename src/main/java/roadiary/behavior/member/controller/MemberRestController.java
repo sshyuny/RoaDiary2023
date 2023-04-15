@@ -1,4 +1,4 @@
-package roadiary.behavior.member;
+package roadiary.behavior.member.controller;
 
 import java.io.IOException;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import roadiary.behavior.member.authority.SessionKeys;
-import roadiary.behavior.member.dto.KakaoUserInfoResDto;
+import roadiary.behavior.member.domain.dto.KakaoUserInfoResDto;
 import roadiary.behavior.member.service.MemberService;
+import roadiary.behavior.member.service.authority.SessionKeys;
 
 @RestController
 public class MemberRestController {

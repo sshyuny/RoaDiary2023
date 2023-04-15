@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,7 +24,7 @@ import roadiary.behavior.category.domain.dto.SimpleReqDto;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
 import roadiary.behavior.common.ErrorResult;
-import roadiary.behavior.member.authority.SessionKeys;
+import roadiary.behavior.member.service.authority.SessionKeys;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -67,7 +66,6 @@ public class CategoryRestController {
     public String saveCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
             @RequestBody SimpleReqDto simpleReqDto) {
         
-        // String categoryContent = httpEntity.getBody();
         String categoryContent = simpleReqDto.getData();
 
         if (categoryService.hasMaxCategorySavedAlready(userId)) {
@@ -91,9 +89,10 @@ public class CategoryRestController {
      * @param httpEntity
      */
     @DeleteMapping("/api/category/priority")
-    public void deleteCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, HttpEntity<String> httpEntity) {
+    public void deleteCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
+            @RequestBody SimpleReqDto simpleReqDto) {
 
-        Long categoryId = Long.valueOf(httpEntity.getBody());
+        Long categoryId = Long.valueOf(simpleReqDto.getData());
 
         if (!categoryService.hasTheCategoryInAccountPriority(userId, categoryId)) {
             throw new IllegalArgumentException("저장되지 않은 카테고리를 삭제하려 시도합니다.");

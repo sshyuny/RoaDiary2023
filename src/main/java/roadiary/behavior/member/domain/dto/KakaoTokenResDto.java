@@ -1,4 +1,4 @@
-package roadiary.behavior.member.dto;
+package roadiary.behavior.member.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;

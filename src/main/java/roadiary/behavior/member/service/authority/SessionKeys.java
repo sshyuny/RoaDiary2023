@@ -1,4 +1,4 @@
-package roadiary.behavior.member.authority;
+package roadiary.behavior.member.service.authority;
 
 public interface SessionKeys {
 

@@ -28,8 +28,8 @@ import roadiary.behavior.category.domain.dto.SimpleReqDto;
 import roadiary.behavior.category.domain.entity.CategoryEntity;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
-import roadiary.behavior.member.authority.SessionAuthority;
-import roadiary.behavior.member.dto.MemberAuthorityDto;
+import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
+import roadiary.behavior.member.service.authority.SessionAuthority;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest

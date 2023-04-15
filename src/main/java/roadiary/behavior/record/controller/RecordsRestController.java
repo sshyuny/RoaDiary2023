@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import roadiary.behavior.member.authority.SessionKeys;
+import roadiary.behavior.member.service.authority.SessionKeys;
 import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.dto.RecordResDto;

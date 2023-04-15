@@ -1,6 +1,6 @@
 package roadiary.behavior.member.repository;
 
-import roadiary.behavior.member.entity.UserEntity;
+import roadiary.behavior.member.domain.entity.UserEntity;
 
 public interface MemberRepository {
     

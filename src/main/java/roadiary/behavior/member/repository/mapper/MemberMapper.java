@@ -1,8 +1,8 @@
-package roadiary.behavior.member.mapper;
+package roadiary.behavior.member.repository.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import roadiary.behavior.member.entity.UserEntity;
+import roadiary.behavior.member.domain.entity.UserEntity;
 
 @Mapper
 public interface MemberMapper {

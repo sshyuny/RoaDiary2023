@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import roadiary.behavior.member.authority.Authority;
-import roadiary.behavior.member.authority.SessionKeys;
+import roadiary.behavior.member.service.authority.Authority;
+import roadiary.behavior.member.service.authority.SessionKeys;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {

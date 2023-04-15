@@ -1,13 +1,8 @@
 package roadiary.behavior.member.service;
 
-import java.net.URI;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +12,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
-import roadiary.behavior.member.authority.Authority;
-import roadiary.behavior.member.dto.KakaoTokenResDto;
-import roadiary.behavior.member.dto.KakaoUserInfoResDto;
-import roadiary.behavior.member.dto.MemberAuthorityDto;
-import roadiary.behavior.member.entity.UserEntity;
+import roadiary.behavior.member.domain.dto.KakaoTokenResDto;
+import roadiary.behavior.member.domain.dto.KakaoUserInfoResDto;
+import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
+import roadiary.behavior.member.domain.entity.UserEntity;
 import roadiary.behavior.member.repository.MemberRepository;
+import roadiary.behavior.member.service.authority.Authority;
 
 @RequiredArgsConstructor
 @Service
