@@ -19,6 +19,7 @@ import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
 import roadiary.behavior.member.domain.entity.UserEntity;
 import roadiary.behavior.member.repository.MemberRepository;
 import roadiary.behavior.member.service.authority.Authority;
+import roadiary.behavior.member.service.token.KakaoToken;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +27,7 @@ public class MemberService {
 
     private final Authority authority;
     private final MemberRepository memberRepository;
+    private final KakaoToken kakaoToken;
 
     public void makeLoginStatus(HttpSession session) {
         MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(1, "guest");
@@ -49,13 +51,14 @@ public class MemberService {
     public String getKaKaoAccessToken(String code) {
 
         // body 생성(KakaoTokenReqMap는 git ignore됩니다.)
-        MultiValueMap<String, String> kakaoTokenReqMap = KakaoTokenReqMap.of(code);
+        // body 생성(kakaoToken는 git ignore됩니다.)
+        MultiValueMap<String, String> kakaoTokenMap = kakaoToken.newKakaoToken(code);
 
         // requestEntity 생성
         RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity
             .post(UriComponentsBuilder.fromUriString("https://kauth.kakao.com/oauth/token").build().toUri())
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .body(kakaoTokenReqMap);
+            .body(kakaoTokenMap);
 
         // 카카오에 요청
         RestTemplate restTemplate = new RestTemplate();

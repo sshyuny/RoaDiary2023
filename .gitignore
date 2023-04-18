@@ -9,7 +9,7 @@ build/
 src/main/resources/static/image/
 
 ### important ###
-src/main/java/roadiary/behavior/member/service/KakaoTokenReqMap.java
+src/main/java/roadiary/behavior/member/service/token/
 
 ### STS ###
 .apt_generated

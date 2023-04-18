@@ -1,6 +1,7 @@
 spring:
   profiles:
     group:
+      "prod": "local_setting,common"
       "local": "local_setting,common"
       "test": "test_setting,common"
 
