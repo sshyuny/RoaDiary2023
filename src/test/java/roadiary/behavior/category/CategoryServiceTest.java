@@ -5,21 +5,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import roadiary.behavior.category.domain.dto.CategoryReqDto;
 import roadiary.behavior.category.domain.dto.CategoryResDto;
 import roadiary.behavior.category.domain.entity.CategoryEntity;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.category.service.CategoryService;
 
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class CategoryServiceTest {
@@ -29,7 +27,7 @@ public class CategoryServiceTest {
     @Autowired
     CategoryRepository categoryRepository;
 
-    final Long userId = 2L;
+    final Long user2Id = 2L;
 
     @Test
     void addCategory_이미저장된카테고리를추가할경우_기존id값반환() {
@@ -48,52 +46,68 @@ public class CategoryServiceTest {
 
     @Test
     void hasMaxCategorySavedAlready_최대개수이상으로_카테고리순위저장() {
-        //given-1
-        for (int i = 1; i < 12; i++) {
-            categoryRepository.insertPriority(new PriorityCategoryEntity(userId, i, (long) i));
+
+        int maxPriority = categoryService.MAX_PRIORITY;
+        int someCategoryIdShouldntBeSaved = 12;
+        
+        // 최대개수 이전
+
+        //given
+        for (int i = 1; i < maxPriority; i++) {
+
+            categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, i * 2, (long) i));
         }
+        //then
+        assertFalse(categoryService.hasMaxCategorySavedAlready(user2Id));
 
-        //then-1
-        assertFalse(categoryService.hasMaxCategorySavedAlready(userId));
+        // 최대개수 이후
 
-        //given-2
-        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 12, 12));
-
-        //then-2
-        assertTrue(categoryService.hasMaxCategorySavedAlready(userId));
+        //given
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, maxPriority * 2 + 1, someCategoryIdShouldntBeSaved));
+        //then
+        assertTrue(categoryService.hasMaxCategorySavedAlready(user2Id));
     }
 
     @Test
     void addPriority_테스트() {
+
+        int lastSavedPriority = 20;
+
+        long someCategoryId1 = 1L;
+        long someCategoryId2 = 2L;
+
         //given
-        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
-        Integer theMaxPriorityBefore = categoryRepository.selectTheMaxPriority(userId);
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, lastSavedPriority, someCategoryId1));
+        Integer theMaxPriorityBefore = categoryRepository.selectTheMaxPriority(user2Id);
         
         //when
-        categoryService.addPriority(userId, 2L);
-        Integer theMaxPriorityAfter = categoryRepository.selectTheMaxPriority(userId);
+        categoryService.addPriority(user2Id, someCategoryId2);
+        Integer theMaxPriorityAfter = categoryRepository.selectTheMaxPriority(user2Id);
 
         //then
-        assertThat(theMaxPriorityBefore).isEqualTo(1);
-        assertThat(theMaxPriorityAfter).isEqualTo(2);
+        assertThat(theMaxPriorityBefore).isEqualTo(lastSavedPriority);
+        assertThat(theMaxPriorityAfter).isEqualTo(lastSavedPriority + 1);
     }
 
     @Test
     void hasTheCategoryInAccountPriority_테스트() {
+
+        long categoryIdWillBeSaved = 1L;
+        long categoryIdWontBeSaved = 2L;
+
         //given
-        categoryRepository.insertPriority(new PriorityCategoryEntity(userId, 1, 1L));
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, 1, categoryIdWillBeSaved));
 
         //then
-        assertTrue(categoryService.hasTheCategoryInAccountPriority(userId, 1L));
-        assertFalse(categoryService.hasTheCategoryInAccountPriority(userId, 2L));
+        assertTrue(categoryService.hasTheCategoryInAccountPriority(user2Id, categoryIdWillBeSaved));
+        assertFalse(categoryService.hasTheCategoryInAccountPriority(user2Id, categoryIdWontBeSaved));
     }
 
 
 
     // @Test
-    // @DisplayName("사용자의 카테고리 우선순위 변경")
     // @Transactional
-    // void 카테고리순서변경테스트() {
+    // void updateDirectionOfPriority_카테고리순서변경테스트() {
     //     //given
     //     List<CategoryResDto> categoryResDtos1 = categoryService.getCategoryList(2L);
     //     long categoryId1Before = categoryResDtos1.get(1).getId();

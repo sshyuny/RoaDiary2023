@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.domain.dto.CategoryResDto;
-import roadiary.behavior.category.domain.dto.PriorityAndDirectionDto;
+import roadiary.behavior.category.domain.dto.PriorityAndDirectionReqDto;
 import roadiary.behavior.category.domain.dto.SimpleReqDto;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
@@ -104,14 +104,14 @@ public class CategoryRestController {
     /**
      * 계정의 카테고리순위에서 요청받은 카테고리의 우선순위를 위, 아래로 수정
      * @param request
-     * @param priorityAndDirectionDto
+     * @param priorityAndDirectionReqDto
      * @return
      */
     @PutMapping("/api/category/priority")
-    public void updateCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, @RequestBody PriorityAndDirectionDto priorityAndDirectionDto) {
+    public void updateCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, @RequestBody PriorityAndDirectionReqDto priorityAndDirectionReqDto) {
         
-        long categoryId = priorityAndDirectionDto.getCategoryId();
-        String direction = priorityAndDirectionDto.getDirection();
+        long categoryId = priorityAndDirectionReqDto.getCategoryId();
+        String direction = priorityAndDirectionReqDto.getDirection();
 
         if (!(direction.equals("up") || direction.equals("down"))) {
             throw new IllegalArgumentException("요청된 카테고리 수정 방향이 유효하지 않습니다.");

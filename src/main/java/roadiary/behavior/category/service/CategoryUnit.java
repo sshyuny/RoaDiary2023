@@ -9,13 +9,12 @@ import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 
 public class CategoryUnit {
     
-
     static public List<CategoryResDto> fromEntityToResDto(List<CategoryEntity> categoryEntities) {
 
         List<CategoryResDto> newList = new ArrayList<>();
 
         for (CategoryEntity categoryEntity : categoryEntities) {
-            CategoryResDto categoryResDto = new CategoryResDto(categoryEntity.getBehaviorCategoryId(), categoryEntity.getContent());
+            CategoryResDto categoryResDto = CategoryResDto.of(categoryEntity.getBehaviorCategoryId(), categoryEntity.getContent());
             newList.add(categoryResDto);
         }
 

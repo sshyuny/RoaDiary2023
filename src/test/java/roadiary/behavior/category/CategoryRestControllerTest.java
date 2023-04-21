@@ -137,7 +137,7 @@ public class CategoryRestControllerTest {
 
     void makePriorityFull() {
         for (int i = 0; i < 9; i++) {
-            categoryRepository.insertPriority(new PriorityCategoryEntity(1L, 4 + i, 5 + i));
+            categoryRepository.insertPriority(PriorityCategoryEntity.of(1L, 4 + i, 5 + i));
         }
     }
 }

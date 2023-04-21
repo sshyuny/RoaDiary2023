@@ -19,6 +19,12 @@ public class BehaviorApplication {
 		app.run();
 	}
 
+	@Bean
+    @Profile("test")
+    KakaoToken kakaoTokenForTest() {
+		return new KakaoTokenForLocal();
+	}
+
     @Bean
     @Profile("local")
     KakaoToken kakaoTokenForLocal() {

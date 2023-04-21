@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.domain.dto.CategoryResDto;
 import roadiary.behavior.category.domain.entity.CategoryEntity;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
@@ -17,6 +16,8 @@ import roadiary.behavior.category.repository.CategoryRepository;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    public final int MAX_PRIORITY = 12; // Priority Category에 저장할 수 있는 최대 개수
+
     
     /**
      * 유저의 카테고리순위를 우선순위에 맞춰 반환합니다.
@@ -38,7 +39,7 @@ public class CategoryService {
     public boolean hasMaxCategorySavedAlready(Long userId) {
 
         List<CategoryResDto> categoryResDtos = getCategoryList(userId);
-        if (categoryResDtos.size() >= CategoryCommon.MAX_PRIORITY) {
+        if (categoryResDtos.size() >= MAX_PRIORITY) {
             return true;  
         }
         return false;
@@ -93,7 +94,7 @@ public class CategoryService {
             theMaxPriority = 0;
         }
 
-        PriorityCategoryEntity priorityCategoryEntity = new PriorityCategoryEntity(
+        PriorityCategoryEntity priorityCategoryEntity = PriorityCategoryEntity.of(
             userId, theMaxPriority + 1, categoryId);
 
         return categoryRepository.insertPriority(priorityCategoryEntity);

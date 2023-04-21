@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Setter @Getter
-public class PriorityAndDirectionDto {
+public class PriorityAndDirectionReqDto {
     
     private long categoryId;
     private String direction;

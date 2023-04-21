@@ -1,28 +1,22 @@
 package roadiary.behavior.category.domain.dto;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter @Getter
 public class CategoryResDto {
-    
+
     private long id;
     private String content;
+    
+    public static CategoryResDto of (long id, String content) {
+        CategoryResDto categoryResDto = new CategoryResDto();
+        categoryResDto.setId(id);
+        categoryResDto.setContent(content);
+        return categoryResDto;
+    }
 
-    public CategoryResDto() {}
-    
-    public CategoryResDto(long id, String content) {
-        this.id = id;
-        this.content = content;
-    }
-    
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public String getContent() {
-        return content;
-    }
-    public void setContent(String content) {
-        this.content = content;
-    }
-    
 }

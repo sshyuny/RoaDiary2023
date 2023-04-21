@@ -50,7 +50,6 @@ public class MemberService {
 
     public String getKaKaoAccessToken(String code) {
 
-        // body 생성(KakaoTokenReqMap는 git ignore됩니다.)
         // body 생성(kakaoToken는 git ignore됩니다.)
         MultiValueMap<String, String> kakaoTokenMap = kakaoToken.newKakaoToken(code);
 
