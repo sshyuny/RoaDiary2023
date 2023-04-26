@@ -55,7 +55,7 @@ public class CategoryService {
         
         CategoryEntity categoryEntity = CategoryEntity.of(categoryContent);
 
-        Long newCategoryId = categoryRepository.selectCategoryByContent(categoryContent);
+        Long newCategoryId = categoryRepository.selectCategoryIdByContent(categoryContent);
 
         if (newCategoryId == null) {
             categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감

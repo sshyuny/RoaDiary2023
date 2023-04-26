@@ -26,8 +26,13 @@
             (#{userId}, #{priorityIdx}, #{behaviorCategoryId})
     </insert>
     
-    <select id="selectCategoryByContent" resultType="Long">
+    <select id="selectCategoryIdByContent" resultType="Long">
         SELECT behavior_category_id FROM behavior_category WHERE content = #{categoryContent};
+    </select>
+
+    <select id="selectPriorityCategoryByUserIdAndCategoryId" resultType="roadiary.behavior.category.domain.entity.PriorityCategoryEntity">
+        SELECT * FROM behavior_priority_category 
+        WHERE user_id = #{userId} and behavior_category_id = #{categoryId};
     </select>
 
     <select id="selectTheMaxPriority" resultType="_int">

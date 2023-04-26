@@ -27,10 +27,12 @@ public class CategoryServiceTest {
     @Autowired
     CategoryRepository categoryRepository;
 
-    final Long user2Id = 2L;
+    final Long fullUserId = 1L;
+    final Long emptyUserId = 2L;
 
     @Test
     void addCategory_이미저장된카테고리를추가할경우_기존id값반환() {
+
         //given
         String newCategoryContent = "카테고리 추가";
         CategoryEntity categoryEntity = CategoryEntity.of(newCategoryContent);
@@ -47,42 +49,43 @@ public class CategoryServiceTest {
     @Test
     void hasMaxCategorySavedAlready_최대개수이상으로_카테고리순위저장() {
 
+        //given
         int maxPriority = categoryService.MAX_PRIORITY;
         int someCategoryIdShouldntBeSaved = 12;
         
-        // 최대개수 이전
+        // 1. 최대개수 이전
 
-        //given
+        //when
         for (int i = 1; i < maxPriority; i++) {
 
-            categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, i * 2, (long) i));
+            categoryRepository.insertPriority(PriorityCategoryEntity.of(emptyUserId, i * 2, (long) i));
         }
         //then
-        assertFalse(categoryService.hasMaxCategorySavedAlready(user2Id));
+        assertFalse(categoryService.hasMaxCategorySavedAlready(emptyUserId));
 
-        // 최대개수 이후
+        // 2. 최대개수 이후
 
-        //given
-        categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, maxPriority * 2 + 1, someCategoryIdShouldntBeSaved));
+        //when
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(emptyUserId, maxPriority * 2 + 1, someCategoryIdShouldntBeSaved));
         //then
-        assertTrue(categoryService.hasMaxCategorySavedAlready(user2Id));
+        assertTrue(categoryService.hasMaxCategorySavedAlready(emptyUserId));
     }
 
     @Test
     void addPriority_테스트() {
 
+        //given
         int lastSavedPriority = 20;
 
         long someCategoryId1 = 1L;
         long someCategoryId2 = 2L;
 
-        //given
-        categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, lastSavedPriority, someCategoryId1));
-        Integer theMaxPriorityBefore = categoryRepository.selectTheMaxPriority(user2Id);
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(emptyUserId, lastSavedPriority, someCategoryId1));
+        Integer theMaxPriorityBefore = categoryRepository.selectTheMaxPriority(emptyUserId);
         
         //when
-        categoryService.addPriority(user2Id, someCategoryId2);
-        Integer theMaxPriorityAfter = categoryRepository.selectTheMaxPriority(user2Id);
+        categoryService.addPriority(emptyUserId, someCategoryId2);
+        Integer theMaxPriorityAfter = categoryRepository.selectTheMaxPriority(emptyUserId);
 
         //then
         assertThat(theMaxPriorityBefore).isEqualTo(lastSavedPriority);
@@ -90,54 +93,108 @@ public class CategoryServiceTest {
     }
 
     @Test
+    void removePriority_테스트() {
+
+        //given
+        int lastSavedPriority = 2;
+        long categoryIdWillBeRemoved = 1L;
+        long categoryIdWontBeRemoved = 2L;
+
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(emptyUserId, lastSavedPriority, categoryIdWillBeRemoved));
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(emptyUserId, lastSavedPriority, categoryIdWontBeRemoved));
+
+        //when
+        categoryService.removePriority(emptyUserId, categoryIdWillBeRemoved);
+
+        //then
+        PriorityCategoryEntity priorityCategoryEntity1 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(emptyUserId, categoryIdWillBeRemoved);
+        PriorityCategoryEntity priorityCategoryEntity2 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(emptyUserId, categoryIdWontBeRemoved);
+        assertThat(priorityCategoryEntity1).isNull();
+        assertThat(priorityCategoryEntity2).isNotNull();
+
+    }
+
+    @Test
     void hasTheCategoryInAccountPriority_테스트() {
 
+        //given
         long categoryIdWillBeSaved = 1L;
         long categoryIdWontBeSaved = 2L;
 
-        //given
-        categoryRepository.insertPriority(PriorityCategoryEntity.of(user2Id, 1, categoryIdWillBeSaved));
+        //when
+        categoryRepository.insertPriority(PriorityCategoryEntity.of(emptyUserId, 1, categoryIdWillBeSaved));
 
         //then
-        assertTrue(categoryService.hasTheCategoryInAccountPriority(user2Id, categoryIdWillBeSaved));
-        assertFalse(categoryService.hasTheCategoryInAccountPriority(user2Id, categoryIdWontBeSaved));
+        assertTrue(categoryService.hasTheCategoryInAccountPriority(emptyUserId, categoryIdWillBeSaved));
+        assertFalse(categoryService.hasTheCategoryInAccountPriority(emptyUserId, categoryIdWontBeSaved));
     }
 
+    @Test
+    void getTwoCategoryToSwitchPriority_정상적인상황() {
 
+        //given
+        long secondPriorityCategoryId = 3L;
+        
+        //when
+        List<PriorityCategoryEntity> entitiesDown = 
+                categoryService.getTwoCategoryToSwitchPriority(fullUserId, secondPriorityCategoryId, "down");
+        List<PriorityCategoryEntity> entitiesUp = 
+                categoryService.getTwoCategoryToSwitchPriority(fullUserId, secondPriorityCategoryId, "up");
 
-    // @Test
-    // @Transactional
-    // void updateDirectionOfPriority_카테고리순서변경테스트() {
-    //     //given
-    //     List<CategoryResDto> categoryResDtos1 = categoryService.getCategoryList(2L);
-    //     long categoryId1Before = categoryResDtos1.get(1).getId();
-    //     long categoryId1After = categoryResDtos1.get(2).getId();
+        //then
+        assertThat(entitiesDown.size()).isEqualTo(2);
+        assertThat(entitiesUp.size()).isEqualTo(2);
+        assertThat(entitiesDown.get(0).getBehaviorCategoryId()).isEqualTo(secondPriorityCategoryId);
+        assertThat(entitiesDown.get(0).getPriorityIdx()).isEqualTo(2);
+        assertThat(entitiesDown.get(1).getBehaviorCategoryId()).isEqualTo(4L);
+        assertThat(entitiesDown.get(1).getPriorityIdx()).isEqualTo(3);
+        assertThat(entitiesUp.get(0).getBehaviorCategoryId()).isEqualTo(secondPriorityCategoryId);
+        assertThat(entitiesUp.get(0).getPriorityIdx()).isEqualTo(2);
+        assertThat(entitiesUp.get(1).getBehaviorCategoryId()).isEqualTo(2L);
+        assertThat(entitiesUp.get(1).getPriorityIdx()).isEqualTo(1);
+    }
 
-    //     //when
-    //     categoryService.updateDirectionOfPriority(2, categoryId1After, "up");
+    @Test
+    void getTwoCategoryToSwitchPriority_예외상황() {
 
-    //     List<CategoryResDto> categoryResDtos2 = categoryService.getCategoryList(2L);
-    //     long categoryId2Before = categoryResDtos2.get(1).getId();
-    //     long categoryId2After = categoryResDtos2.get(2).getId();
+        //given
+        long firstPriorityCategoryId = 2L;
+        long lastPriorityCategoryId = 4L;
 
-    //     //then
-    //     assertThat(categoryId2After).isEqualTo(categoryId1Before);
-    //     assertThat(categoryId2Before).isEqualTo(categoryId1After);
-    // }
+        //then
+        assertThatThrownBy(() -> categoryService.getTwoCategoryToSwitchPriority(fullUserId, firstPriorityCategoryId, "up"))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> categoryService.getTwoCategoryToSwitchPriority(fullUserId, lastPriorityCategoryId, "down"))
+                .isInstanceOf(IllegalArgumentException.class);
 
-    // @Test
-    // @DisplayName("사용자의 카테고리 우선순위 변경 - 맨 앞 카테고리를 위로 올리는 경우")
-    // @Transactional
-    // void 카테고리순서변경맨앞위로테스트() {
-    //     //given
-    //     List<CategoryResDto> categoryResDtos = categoryService.getCategoryList(2L);
-    //     long categoryIdBefore = categoryResDtos.get(0).getId();
+    }
 
-    //     //when
-    //     int checkPossibleNum = categoryService.updateDirectionOfPriority(2, categoryIdBefore, "up");
+    @Test
+    void updateDirectionOfPriority_위로올리기() {
+        
+        //given
+        long secondPriorityCategoryId = 3L;
+        int secondPriorityIdx = 2;
+        long firstPriorityCategoryId = 2L;
+        int firstPriorityIdx = 1;
 
-    //     //then
-    //     assertThat(checkPossibleNum).isEqualTo(0);
-    // }
+        //before then
+        PriorityCategoryEntity entityAfterUping1Before = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, secondPriorityCategoryId);
+        assertThat(entityAfterUping1Before.getPriorityIdx()).isEqualTo(secondPriorityIdx);
+        PriorityCategoryEntity entityAfterUping2Before = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, firstPriorityCategoryId);
+        assertThat(entityAfterUping2Before.getPriorityIdx()).isEqualTo(firstPriorityIdx);
+
+        //when
+        List<PriorityCategoryEntity> entitiesUp = 
+                categoryService.getTwoCategoryToSwitchPriority(fullUserId, secondPriorityCategoryId, "up");
+        categoryService.updateDirectionOfPriority(entitiesUp);
+        
+        //then
+        PriorityCategoryEntity entityAfterUping1 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, secondPriorityCategoryId);
+        assertThat(entityAfterUping1.getPriorityIdx()).isEqualTo(firstPriorityIdx);
+        PriorityCategoryEntity entityAfterUping2 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, firstPriorityCategoryId);
+        assertThat(entityAfterUping2.getPriorityIdx()).isEqualTo(secondPriorityIdx);
+        
+    }
 
 }

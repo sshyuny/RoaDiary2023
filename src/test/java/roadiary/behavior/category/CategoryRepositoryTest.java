@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.category.domain.entity.CategoryEntity;
+import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 
 @ActiveProfiles("test")
@@ -20,6 +21,8 @@ public class CategoryRepositoryTest {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    final long userId = 1L;
 
     @Test
     void selectCategoryEntities테스트() {
@@ -39,5 +42,16 @@ public class CategoryRepositoryTest {
         assertThat(categoryEntity3.getContent()).isEqualTo("테스트4");
     }
 
+    @Test
+    void selectPriorityCategoryByUserIdAndCategoryId테스트() {
+
+        PriorityCategoryEntity priorityCategoryEntity1 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(userId, 2L);
+        PriorityCategoryEntity priorityCategoryEntity2 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(userId, 3L);
+        PriorityCategoryEntity priorityCategoryEntity3 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(userId, 8L);
+
+        assertThat(priorityCategoryEntity1.getPriorityIdx()).isEqualTo(1L);
+        assertThat(priorityCategoryEntity2.getPriorityIdx()).isEqualTo(2L);
+        assertThat(priorityCategoryEntity3).isNull();
+    }
     
 }

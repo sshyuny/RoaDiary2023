@@ -45,9 +45,15 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Long selectCategoryByContent(String categoryContent) {
-        return categoryMapper.selectCategoryByContent(categoryContent);
+    public Long selectCategoryIdByContent(String categoryContent) {
+        return categoryMapper.selectCategoryIdByContent(categoryContent);
     }
+
+    @Override
+    public PriorityCategoryEntity selectPriorityCategoryByUserIdAndCategoryId(long userId, long categoryId) {
+        return categoryMapper.selectPriorityCategoryByUserIdAndCategoryId(userId, categoryId);
+    }
+
 
     @Override
     public int deletePriority(long userId, long categoryId) {

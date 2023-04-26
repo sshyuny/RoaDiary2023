@@ -15,7 +15,9 @@ public interface CategoryRepository {
 
     public Integer selectTheMaxPriority(long userId);
 
-    public Long selectCategoryByContent(String categoryContent);
+    public Long selectCategoryIdByContent(String categoryContent);
+
+    public PriorityCategoryEntity selectPriorityCategoryByUserIdAndCategoryId(long userId, long categoryId);
 
     public int deletePriority(long userId, long categoryId);
 

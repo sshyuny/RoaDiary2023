@@ -19,7 +19,9 @@ public interface CategoryMapper {
 
     public Integer selectTheMaxPriority(long userId);
 
-    public Long selectCategoryByContent(String categoryContent);
+    public Long selectCategoryIdByContent(String categoryContent);
+
+    public PriorityCategoryEntity selectPriorityCategoryByUserIdAndCategoryId(@Param("userId") long userId, @Param("categoryId") long categoryId);
 
     public int deletePriority(@Param("userId") long userId, @Param("categoryId") long categoryId);
 

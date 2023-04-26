@@ -93,7 +93,7 @@ public class CategoryRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(CategoryCommon.SUCCESS));
 
-        Long newCategoryId =  categoryRepository.selectCategoryByContent("새로운카테고리");
+        Long newCategoryId =  categoryRepository.selectCategoryIdByContent("새로운카테고리");
         assertThat(newCategoryId).isEqualTo(15L);
     }
 
