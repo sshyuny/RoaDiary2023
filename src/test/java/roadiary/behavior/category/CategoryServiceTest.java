@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import roadiary.behavior.category.domain.dto.CategoryResDto;
 import roadiary.behavior.category.domain.entity.CategoryEntity;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
@@ -166,7 +165,6 @@ public class CategoryServiceTest {
                 .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> categoryService.getTwoCategoryToSwitchPriority(fullUserId, lastPriorityCategoryId, "down"))
                 .isInstanceOf(IllegalArgumentException.class);
-
     }
 
     @Test
@@ -179,10 +177,10 @@ public class CategoryServiceTest {
         int firstPriorityIdx = 1;
 
         //before then
-        PriorityCategoryEntity entityAfterUping1Before = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, secondPriorityCategoryId);
-        assertThat(entityAfterUping1Before.getPriorityIdx()).isEqualTo(secondPriorityIdx);
-        PriorityCategoryEntity entityAfterUping2Before = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, firstPriorityCategoryId);
-        assertThat(entityAfterUping2Before.getPriorityIdx()).isEqualTo(firstPriorityIdx);
+        PriorityCategoryEntity entityUpingBefore1 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, secondPriorityCategoryId);
+        assertThat(entityUpingBefore1.getPriorityIdx()).isEqualTo(secondPriorityIdx);
+        PriorityCategoryEntity entityUpingBefore2 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, firstPriorityCategoryId);
+        assertThat(entityUpingBefore2.getPriorityIdx()).isEqualTo(firstPriorityIdx);
 
         //when
         List<PriorityCategoryEntity> entitiesUp = 
@@ -190,11 +188,10 @@ public class CategoryServiceTest {
         categoryService.updateDirectionOfPriority(entitiesUp);
         
         //then
-        PriorityCategoryEntity entityAfterUping1 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, secondPriorityCategoryId);
-        assertThat(entityAfterUping1.getPriorityIdx()).isEqualTo(firstPriorityIdx);
-        PriorityCategoryEntity entityAfterUping2 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, firstPriorityCategoryId);
-        assertThat(entityAfterUping2.getPriorityIdx()).isEqualTo(secondPriorityIdx);
-        
+        PriorityCategoryEntity entityUpingAfter1 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, secondPriorityCategoryId);
+        assertThat(entityUpingAfter1.getPriorityIdx()).isEqualTo(firstPriorityIdx);
+        PriorityCategoryEntity entityUpingAfter2 = categoryRepository.selectPriorityCategoryByUserIdAndCategoryId(fullUserId, firstPriorityCategoryId);
+        assertThat(entityUpingAfter2.getPriorityIdx()).isEqualTo(secondPriorityIdx);
     }
 
 }

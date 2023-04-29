@@ -48,9 +48,13 @@ public class MemberService {
         authority.destroyLoginStatus(request);
     }
 
+    public String getKakaoLoginReqUrl() {
+        return kakaoToken.getKakaoLoginReqUrl();
+    }
+
     public String getKaKaoAccessToken(String code) {
 
-        // body 생성(kakaoToken는 git ignore됩니다.)
+        // body 생성
         MultiValueMap<String, String> kakaoTokenMap = kakaoToken.newKakaoToken(code);
 
         // requestEntity 생성
