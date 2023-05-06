@@ -1,18 +1,17 @@
 package roadiary.behavior.member.service.authority;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
 
 public interface Authority {
     
-    public boolean isItLoginStatus(HttpServletRequest request);
+    public boolean isItLoginStatus(HttpSession session);
 
-    public void makeLoginStatus(HttpSession session, MemberAuthorityDto memberAuthorityDto);
+    public void makeLoginSession(HttpSession session, MemberAuthorityDto memberAuthorityDto);
 
-    public void destroyLoginStatus(HttpServletRequest request);
+    public void destroyLoginSession(HttpSession session);
 
-    public String getLoginUserName(HttpServletRequest request);
+    public String getLoginUserName(HttpSession session);
 
 }

@@ -29,23 +29,22 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final KakaoToken kakaoToken;
 
-    public void makeLoginStatus(HttpSession session) {
+    public void makeLoginSession(HttpSession session) {
         MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(1, "guest");
-        authority.makeLoginStatus(session, memberAuthorityDto);
+        authority.makeLoginSession(session, memberAuthorityDto);
     }
-    public String makeLoginStatus(HttpSession session, long kakaoId) {
+    public String makeLoginSession(HttpSession session, long kakaoId) {
         UserEntity userEntity = memberRepository.selectUserByUsingKakaoId(kakaoId);
         if(userEntity.getRegisterStatus().equals("withdrawal")) return "withdrawal";
         else {
             MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(userEntity.getUserId(), userEntity.getNickname());
-            authority.makeLoginStatus(session, memberAuthorityDto);
+            authority.makeLoginSession(session, memberAuthorityDto);
             return "success";
         }
     }
 
-    public void destroyLoginStatus(HttpServletRequest request) {
-        // 이후 수정
-        authority.destroyLoginStatus(request);
+    public void destroyLoginSession(HttpSession session) {
+        authority.destroyLoginSession(session);
     }
 
     public String getKakaoLoginReqUrl() {

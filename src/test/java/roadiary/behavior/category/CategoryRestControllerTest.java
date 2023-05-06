@@ -57,7 +57,7 @@ public class CategoryRestControllerTest {
         
         //로그인 세션 생성
         MemberAuthorityDto memberAuthorityDto = MemberAuthorityDto.of(1L, "test");
-        sessionAuthority.makeLoginStatus(session, memberAuthorityDto);
+        sessionAuthority.makeLoginSession(session, memberAuthorityDto);
 
     }
     

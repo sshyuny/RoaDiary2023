@@ -1,6 +1,7 @@
 package roadiary.behavior;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,9 @@ public class MainController {
     @GetMapping("/")
     public String directToMain(HttpServletRequest request) {
 
-        if (authority.isItLoginStatus(request)) return "main.html";
+        HttpSession session = request.getSession();
+
+        if (authority.isItLoginStatus(session)) return "main.html";
         else return "main-logout.html";
         
     }
@@ -32,8 +35,13 @@ public class MainController {
     @GetMapping("/login/name")
     public String getUserName(HttpServletRequest request) {
 
-        if (authority.isItLoginStatus(request)) return authority.getLoginUserName(request);
-        else return "";
+        HttpSession session = request.getSession();
+
+        if (authority.isItLoginStatus(session)) {
+            return authority.getLoginUserName(session);
+        } else {
+            return "";
+        }
     }
 
 }

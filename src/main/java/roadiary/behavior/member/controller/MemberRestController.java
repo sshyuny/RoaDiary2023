@@ -22,12 +22,15 @@ public class MemberRestController {
 
     private final MemberService memberService;
     
-    // 방문자용 로그인
+    /**
+     * 방문자용 로그인을 진행합니다.
+     * @throws Exception
+     */
     @GetMapping("/trylogin")
     public String directLoginResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         HttpSession session = request.getSession();
-        memberService.makeLoginStatus(session);
+        memberService.makeLoginSession(session);
 
         if (session.getAttribute(SessionKeys.afterLoginPage) != null) {
             String sesstionAfterLoginPage = session.getAttribute(SessionKeys.afterLoginPage).toString();
@@ -42,8 +45,9 @@ public class MemberRestController {
     @GetMapping("/destroylogin")
     public void destroylogin(HttpServletRequest request) {
 
-        // 로그아웃
-        memberService.destroyLoginStatus(request);
+        HttpSession session = request.getSession();
+        
+        memberService.destroyLoginSession(session);
     }
 
     @GetMapping("/oauth/kakao")
@@ -56,12 +60,12 @@ public class MemberRestController {
 
         long kakaoId = kakaoUserInfoResDto.getId();
         if (memberService.isItRegisteredMember(kakaoId)) {
-            String status = memberService.makeLoginStatus(session, kakaoId);
+            String status = memberService.makeLoginSession(session, kakaoId);
             if (status.equals("withdrawal")) response.sendRedirect("/?alert=withdrawal");
             else response.sendRedirect("/");
         } else {
             memberService.addKakaoUser(kakaoUserInfoResDto);
-            memberService.makeLoginStatus(session, kakaoId);
+            memberService.makeLoginSession(session, kakaoId);
             // 닉네임 등록 후 메인으로
             response.sendRedirect("/");
         }
@@ -70,12 +74,13 @@ public class MemberRestController {
     @DeleteMapping("/api/member/withdrawal")
     public String withdrawal(HttpServletRequest request) {
 
-        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
+        HttpSession session = request.getSession();
+        long userId = Long.valueOf(session.getAttribute(SessionKeys.loginUserId).toString());
 
         if (userId == 1L) return "guestAccount";
         else {
             int withdrawedNum = memberService.withdrawalUser(userId);
-            memberService.destroyLoginStatus(request);
+            memberService.destroyLoginSession(session);
             if(withdrawedNum == 1) return "success";
             else return "fail";
         }

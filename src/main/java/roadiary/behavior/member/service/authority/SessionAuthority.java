@@ -1,6 +1,5 @@
 package roadiary.behavior.member.service.authority;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
@@ -11,17 +10,16 @@ import roadiary.behavior.member.domain.dto.MemberAuthorityDto;
 public class SessionAuthority implements Authority {
     
     @Override
-    public boolean isItLoginStatus(HttpServletRequest request) {
+    public boolean isItLoginStatus(HttpSession session) {
 
-        HttpSession session = request.getSession();
-
-        if (session.getAttribute(SessionKeys.login) != null) return true;
-
+        if (session.getAttribute(SessionKeys.login) != null) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public void makeLoginStatus(HttpSession session, MemberAuthorityDto memberAuthorityDto) {
+    public void makeLoginSession(HttpSession session, MemberAuthorityDto memberAuthorityDto) {
 
         session.setAttribute(SessionKeys.login, memberAuthorityDto);
         session.setAttribute(SessionKeys.loginUserName, memberAuthorityDto.getNickname());
@@ -29,17 +27,15 @@ public class SessionAuthority implements Authority {
     }
 
     @Override
-    public void destroyLoginStatus(HttpServletRequest request) {
+    public void destroyLoginSession(HttpSession session) {
         
-        HttpSession session = request.getSession();
         session.removeAttribute(SessionKeys.login);
         session.removeAttribute(SessionKeys.loginUserName);
         session.removeAttribute(SessionKeys.loginUserId);
     }
 
     @Override
-    public String getLoginUserName(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String getLoginUserName(HttpSession session) {
         return String.valueOf(session.getAttribute(SessionKeys.loginUserName));
     }
 }
