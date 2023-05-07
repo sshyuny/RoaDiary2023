@@ -51,11 +51,11 @@ public class CategoryService {
      * @param categoryContent
      * @return
      */
-    public Long addCategory(String categoryContent) {
+    public Long addCategory(CategoryEntity categoryEntity) {
         
-        CategoryEntity categoryEntity = CategoryEntity.of(categoryContent);
-
-        Long newCategoryId = categoryRepository.selectCategoryIdByContent(categoryContent);
+        // CategoryEntity categoryEntity = CategoryEntity.of(categoryContent);
+        
+        Long newCategoryId = categoryRepository.selectCategoryIdByContent(categoryEntity.getContent());
 
         if (newCategoryId == null) {
             categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
@@ -64,6 +64,11 @@ public class CategoryService {
 
         return newCategoryId;
     }
+    
+    // public CategoryEntity saveNewCategory(CategoryEntity categoryEntity) {
+    //     categoryRepository.insertCategory(categoryEntity);  // 여기서 categoryEntity에 categoryId 값이 들어감
+    //     return categoryEntity;
+    // }
 
     /**
      * 유저의 카테고리순위에 요청 카테고리가 저장되어있는지 확인합니다.

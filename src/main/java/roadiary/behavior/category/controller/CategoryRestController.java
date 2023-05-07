@@ -21,6 +21,7 @@ import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.domain.dto.CategoryResDto;
 import roadiary.behavior.category.domain.dto.PriorityAndDirectionReqDto;
 import roadiary.behavior.category.domain.dto.SimpleReqDto;
+import roadiary.behavior.category.domain.entity.CategoryEntity;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
 import roadiary.behavior.common.ErrorResult;
@@ -72,7 +73,8 @@ public class CategoryRestController {
             return CategoryCommon.OVER;
         }
 
-        Long savedCategoryId = categoryService.addCategory(categoryContent);
+        CategoryEntity categoryEntity = CategoryEntity.of(categoryContent);
+        Long savedCategoryId = categoryService.addCategory(categoryEntity);
         
         if (categoryService.hasTheCategoryInAccountPriority(userId, savedCategoryId)) {
             return CategoryCommon.DUPLI;
