@@ -2,17 +2,10 @@ package roadiary.behavior.category;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,15 +16,14 @@ import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.repository.CategoryRepository;
 import roadiary.behavior.category.service.CategoryService;
 
-// @ActiveProfiles("test")
-// @SpringBootTest
-// @Transactional
-@ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+@SpringBootTest
+@Transactional
 public class CategoryServiceTest {
 
-    @InjectMocks
+    @Autowired
     CategoryService categoryService;
-    @Mock
+    @Autowired
     CategoryRepository categoryRepository;
 
     final Long fullUserId = 1L;
@@ -39,46 +31,18 @@ public class CategoryServiceTest {
 
     @Test
     void addCategory_이미저장된카테고리를추가할경우_기존id값반환() {
-    
-        //given
-        String savedCategoryContent = "이미저장된카테고리";
-        Long savedCategoryId = 123L;
-        
-        //repository
-        when(categoryRepository.selectCategoryIdByContent(savedCategoryContent)).thenReturn(savedCategoryId);
-
-        //when
-        Long categoryId = categoryService.addCategory(CategoryEntity.of(savedCategoryContent));
-
-        //then
-        assertThat(categoryId).isEqualTo(savedCategoryId);
-    }
-
-    @Test
-    void addCategory_새로운카테고리를추가하는경우_새id값반환() {
 
         //given
-        String newCategoryContent = "새카테고리";
-        Long newCategoryId = 123L;
+        String newCategoryContent = "카테고리 추가";
         CategoryEntity categoryEntity = CategoryEntity.of(newCategoryContent);
         
-        //repository
-        when(categoryRepository.selectCategoryIdByContent(newCategoryContent)).thenReturn(null);
-        when(categoryRepository.insertCategory(categoryEntity)).thenAnswer(
-            new Answer<Object>() {
-                public Object answer(InvocationOnMock invocation) {
-                    CategoryEntity categoryEntity = (CategoryEntity) invocation.getArgument(0);
-                    categoryEntity.setBehaviorCategoryId(newCategoryId);
-                    return 1;
-                }
-            }
-        );
-
         //when
+        int addedNum = categoryRepository.insertCategory(categoryEntity);
         Long categoryId = categoryService.addCategory(categoryEntity);
 
         //then
-        assertThat(categoryId).isEqualTo(newCategoryId);
+        assertThat(addedNum).isEqualTo(1);
+        assertThat(categoryId).isEqualTo(categoryEntity.getBehaviorCategoryId());
     }
 
     @Test
