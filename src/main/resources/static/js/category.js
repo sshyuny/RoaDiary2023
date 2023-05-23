@@ -23,26 +23,20 @@ function postCategory() {
 		contentType: 'application/json',
         dataType: '',
 		success: function(data) {
-            statusCheck(data);
+            if (data != true) {
+                alert("예기치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+            }
+            alert("카테고리가 추가되었습니다.");
             makeCategoryTable();
         }, 
-        error: function() {
-			alert("에러가 발생했습니다.");
-		}
+        error: function(xhr, status, error) {
+            let resJson = JSON.parse(xhr.responseText);
+            alert(resJson.message);
+            location.replace("/category");
+        }
     })
 }
-function statusCheck(resData) {
-    if (resData == "over") {
-        alert("카테고리 12개가 이미 다 차있기 때문에 새로 카테고리를 추가할 수 없습니다. \n"
-           + "먼저 삭제를 한 뒤 추가를 해주세요.");
-        location.replace("/category");
-    } else if(resData == "dupli") {
-        alert("이미 존재하는 카테고리입니다. 새로운 항목을 입력해주세요.");
-        location.replace("/category");
-    } else if(resData == "success") {
-        location.replace("/category");
-    } 
-}
+
 // 카테고리 추가 - 엔터 누른 경우
 function pressEnterToPostCategory(event) {
     if (event.key === 'Enter') postCategory();
@@ -153,22 +147,18 @@ function upCategory(categoryId) {
     let jsonObj = JSON.stringify(obj);
 
     $.ajax({
-		type: "put",
+        type: "put",
         url: "/api/category/priority", 
         data: jsonObj,
-		contentType: 'application/json',
+        contentType: 'application/json',
         dataType: '',
-		success: function(data) {
+        success: function(data) {
             makeCategoryTable();
         }, 
         error: function(xhr, status, error) {
             let resJson = JSON.parse(xhr.responseText);
-            if (resJson.code == "NOTVALID") {
-                alert("카테고리 순위를 더이상 위로 올릴 수 없습니다.")
-            } else {
-                alert("에러가 발생했습니다.");
-            }
-		}
+            alert(resJson.message);
+        }
     })
 }
 
@@ -179,21 +169,17 @@ function downCategory(categoryId) {
     let jsonObj = JSON.stringify(obj);
 
     $.ajax({
-		type: "put",
+        type: "put",
         url: "/api/category/priority", 
         data: jsonObj,
-		contentType: 'application/json',
+        contentType: 'application/json',
         dataType: '',
-		success: function(data) {
+        success: function(data) {
             makeCategoryTable();
         }, 
         error: function(xhr, status, error) {
-			let resJson = JSON.parse(xhr.responseText);
-            if (resJson.code == "NOTVALID") {
-                alert("카테고리 순위를 더이상 아래로 내릴 수 없습니다.")
-            } else {
-                alert("에러가 발생했습니다.");
-            }
-		}
+            let resJson = JSON.parse(xhr.responseText);
+            alert(resJson.message);
+        }
     })
 }

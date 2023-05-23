@@ -1,8 +1,9 @@
 package roadiary.behavior.category;
 
-public interface CategoryCommon {
+public class CategoryCommon {
     
-    String OVER = "over";
-    String DUPLI = "dupli";
-    String SUCCESS = "success";
+    public static final String OVER = "over";
+    public static final String DUPLI = "dupli";
+    public static final String SUCCESS = "success";
+
 }

@@ -18,11 +18,8 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     public final int MAX_PRIORITY = 12; // Priority Category에 저장할 수 있는 최대 개수
 
-    
     /**
      * 유저의 카테고리순위를 우선순위에 맞춰 반환합니다.
-     * @param userId
-     * @return
      */
     public List<CategoryResDto> getCategoryList(Long userId) {
 
@@ -34,7 +31,6 @@ public class CategoryService {
 
     /**
      * 개인별 카테고리순위 저장 최대 개수(MAX_PRIORITY) 이상의 카테고리가 이미 저장되어있는지 확인합니다.
-     * @return 
      */
     public boolean hasMaxCategorySavedAlready(Long userId) {
 
@@ -48,8 +44,6 @@ public class CategoryService {
     /**
      * 새로운 카테고리를 저장하고 id값을 반환합니다.
      * 또는 이미 DB에 등록된 카테고리일 경우에는 저장하지 않고 기존 id값을 반환합니다.
-     * @param categoryContent
-     * @return
      */
     public Long addCategory(CategoryEntity categoryEntity) {
         
@@ -67,9 +61,6 @@ public class CategoryService {
 
     /**
      * 유저의 카테고리순위에 요청 카테고리가 저장되어있는지 확인합니다.
-     * @param userId
-     * @param categoryId
-     * @return
      */
     public boolean hasTheCategoryInAccountPriority(Long userId, long categoryId) {
 
@@ -83,9 +74,6 @@ public class CategoryService {
     /**
      * 유저가 카테고리순위에 새로 저장하기 위해 요청한 카테고리를 카테고리순위 마지막에 넣어줍니다.
      * 유저의 카테고리순위에 저장된 마지막 순위를 확인한 다음 그보다 큰 값으로 순위에 저장합니다.
-     * @param categoryReqDto
-     * @param categoryResDtos
-     * @return
      */
     public int addPriority(long userId, Long categoryId) {
 
@@ -102,8 +90,6 @@ public class CategoryService {
 
     /**
      * 전달받은 카테고리를 유저의 카테고리순위에서 삭제합니다.
-     * @param userId
-     * @param categoryId
      */
     public void removePriority(Long userId, Long categoryId) {
         categoryRepository.deletePriority(userId, categoryId);
@@ -111,10 +97,6 @@ public class CategoryService {
 
     /**
      * 순위를 변경할 두 카테고리를 선택합니다.
-     * @param userId
-     * @param categoryId
-     * @param direction 카테고리 순위 변경 방향
-     * @return
      */
     public List<PriorityCategoryEntity> getTwoCategoryToSwitchPriority(long userId, long categoryId, String direction) {
 
@@ -136,7 +118,6 @@ public class CategoryService {
 
     /**
      * 전달받은 두 카테고리의 순위를 서로 뒤바꿔준 뒤 업데이트를 진행합니다.
-     * @param priorityCategoryEntities
      */
     public void updateDirectionOfPriority(List<PriorityCategoryEntity> priorityCategoryEntities) {
 

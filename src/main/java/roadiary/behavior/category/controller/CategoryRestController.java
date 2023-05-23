@@ -4,19 +4,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import roadiary.behavior.category.CategoryCommon;
 import roadiary.behavior.category.domain.dto.CategoryResDto;
 import roadiary.behavior.category.domain.dto.PriorityAndDirectionReqDto;
@@ -24,31 +20,16 @@ import roadiary.behavior.category.domain.dto.SimpleReqDto;
 import roadiary.behavior.category.domain.entity.CategoryEntity;
 import roadiary.behavior.category.domain.entity.PriorityCategoryEntity;
 import roadiary.behavior.category.service.CategoryService;
-import roadiary.behavior.common.ErrorResult;
 import roadiary.behavior.member.service.authority.SessionKeys;
 
 @RequiredArgsConstructor
-@Slf4j
 @RestController
 public class CategoryRestController {
 
     private final CategoryService categoryService;
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResult illegalStateException(IllegalArgumentException e, HttpServletRequest request) {
-        long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
-        log.error("user={}", userId, e);
-        return new ErrorResult("NOTVALID");
-    } 
-
-
     /**
      * 계정의 전체 카테고리순위 반환 요청
-     * @param userId
-     * @param request
-     * @return
-     * @throws Exception
      */
     @GetMapping("/api/category/priority")
     public List<CategoryResDto> getCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request) throws Exception {
@@ -64,31 +45,29 @@ public class CategoryRestController {
      * @return
      */
     @PostMapping("/api/category/priority")
-    public String saveCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
+    public boolean saveCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
             @RequestBody SimpleReqDto simpleReqDto) {
         
         String categoryContent = simpleReqDto.getData();
 
         if (categoryService.hasMaxCategorySavedAlready(userId)) {
-            return CategoryCommon.OVER;
+            throw new IllegalArgumentException("카테고리 12개가 이미 다 차있기 때문에 새로 카테고리를 추가할 수 없습니다. 먼저 삭제를 한 뒤 추가를 해주세요.");
         }
 
         CategoryEntity categoryEntity = CategoryEntity.of(categoryContent);
         Long savedCategoryId = categoryService.addCategory(categoryEntity);
         
         if (categoryService.hasTheCategoryInAccountPriority(userId, savedCategoryId)) {
-            return CategoryCommon.DUPLI;
+            throw new IllegalArgumentException("이미 존재하는 카테고리입니다. 새로운 항목을 입력해주세요.");
         }
 
-        categoryService.addPriority(userId, savedCategoryId);
+        int addNum = categoryService.addPriority(userId, savedCategoryId);
 
-        return CategoryCommon.SUCCESS;
+        return addNum == 1;
     }
 
     /**
      * 계정의 카테고리순위에서 요청받은 카테고리 삭제 처리
-     * @param request
-     * @param httpEntity
      */
     @DeleteMapping("/api/category/priority")
     public void deleteCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
@@ -105,9 +84,6 @@ public class CategoryRestController {
 
     /**
      * 계정의 카테고리순위에서 요청받은 카테고리의 우선순위를 위, 아래로 수정
-     * @param request
-     * @param priorityAndDirectionReqDto
-     * @return
      */
     @PutMapping("/api/category/priority")
     public void updateCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, @RequestBody PriorityAndDirectionReqDto priorityAndDirectionReqDto) {
