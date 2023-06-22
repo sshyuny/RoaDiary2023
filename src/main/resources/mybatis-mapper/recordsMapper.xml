@@ -11,27 +11,47 @@
     </insert>
     
     <select id="selectRecords" resultType="roadiary.behavior.record.dto.RecordResDto">
-        SELECT r.behavior_records_id, r.behavior_category_id, r.start_time, r.end_time, r.detail, c.content
-        FROM behavior_records as r
-            LEFT JOIN behavior_category as c
-            ON r.behavior_category_id = c.behavior_category_id
-            WHERE r.user_id = #{userId} AND DATE(r.start_time) = #{reqDate}
+        SELECT 
+            r.behavior_records_id, 
+            r.behavior_category_id, 
+            r.start_time, r.end_time, 
+            r.detail, 
+            c.content
+        FROM 
+            behavior_records as r 
+        LEFT JOIN 
+            behavior_category as c ON r.behavior_category_id = c.behavior_category_id
+        WHERE 
+            r.user_id = #{userId} AND 
+            DATE(r.start_time) = #{reqDate}
         ORDER BY r.start_time
     </select>
 
     <update id="updateRecord" parameterType="roadiary.behavior.record.entity.RecordEntity">
         UPDATE behavior_records
-            SET 
-                behavior_category_id = #{behaviorCategoryId},
-                start_time = #{startTime},
-                end_time = #{endTime},
-                detail = #{detail}
-            WHERE user_id = #{userId} AND behavior_records_id = #{behaviorRecordsId}
+        SET 
+            behavior_category_id = #{behaviorCategoryId},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            detail = #{detail}
+        WHERE
+            user_id = #{userId} AND 
+            behavior_records_id = #{behaviorRecordsId}
     </update>
 
     <delete id="deleteRecord">
         DELETE FROM behavior_records 
             WHERE user_id = #{userId} AND behavior_records_id = #{behaviorRecordsId}
     </delete>
+
+    <select id="countRecordIfTimeOverlapped" parameterType="roadiary.behavior.record.dto.RecordTimeDto" resultType="int">
+        SELECT count(*)
+        FROM behavior_records
+            WHERE user_id = #{userId} AND 
+            (start_time &lt;= #{start} AND
+            end_time &gt;= #{start}) OR
+            (start_time &lt;= #{end} AND
+            end_time &gt;= #{end})
+    </select>
 
 </mapper>

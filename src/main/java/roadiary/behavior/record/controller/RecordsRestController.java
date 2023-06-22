@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import roadiary.behavior.member.service.authority.SessionKeys;
+import roadiary.behavior.record.common.BizExEnum;
 import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.dto.RecordResDto;
@@ -35,7 +36,10 @@ public class RecordsRestController {
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         // @@요청 데이터에서 데이터 타입 맞지 않을 경우 처리
-        // @@겹치는 시간일 경우 처리
+
+        if (recordsService.hasSameTimeAlready(userId, recordReqDto) == BizExEnum.SameTimeEX) {
+            throw new RuntimeException("겹치는 시간이 존재합니다.");
+        }
         
         String addedStatus = recordsService.addRecord(recordReqDto, userId);
 
@@ -86,9 +90,11 @@ public class RecordsRestController {
         long userId = Long.valueOf(request.getSession().getAttribute(SessionKeys.loginUserId).toString());
 
         Long behaviorRecordsId = Long.valueOf(httpEntity.getBody());
-        int deletedNum = recordsService.deleteRecord(userId, behaviorRecordsId);
 
+        // if (recordsService.hasTheRecordInThisAccount(behaviorRecordsId) == Enum)
         //if (deletedNum == 0) @@적절하지 않은 값 요청됨. 예외처리 필요. (클라이언트가 behaviorRecordId를 임의로 변경 등)
+
+        int deletedNum = recordsService.deleteRecord(userId, behaviorRecordsId);
 
     }
     

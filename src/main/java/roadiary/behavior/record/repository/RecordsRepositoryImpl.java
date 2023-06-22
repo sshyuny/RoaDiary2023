@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import roadiary.behavior.record.dto.RecordResDto;
+import roadiary.behavior.record.dto.RecordTimeDto;
 import roadiary.behavior.record.entity.RecordEntity;
 
 @Repository
@@ -35,6 +36,11 @@ public class RecordsRepositoryImpl implements RecordsRepository {
     @Override
     public int deleteRecord(long userId, long behaviorRecordsId) {
         return recordsMapper.deleteRecord(userId, behaviorRecordsId);
+    }
+
+    @Override
+    public int countRecordIfTimeOverlapped(RecordTimeDto recordTimeDto) {
+        return recordsMapper.countRecordIfTimeOverlapped(recordTimeDto);
     }
 
 }

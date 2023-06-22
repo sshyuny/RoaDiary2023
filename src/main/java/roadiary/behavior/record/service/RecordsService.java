@@ -8,9 +8,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import roadiary.behavior.record.common.BizExEnum;
 import roadiary.behavior.record.dto.RecordModifyReqDto;
 import roadiary.behavior.record.dto.RecordReqDto;
 import roadiary.behavior.record.dto.RecordResDto;
+import roadiary.behavior.record.dto.RecordTimeDto;
 import roadiary.behavior.record.entity.RecordEntity;
 import roadiary.behavior.record.repository.RecordsRepository;
 
@@ -61,5 +63,26 @@ public class RecordsService {
 
     public int deleteRecord(long userId, long behaviorRecordsId) {
         return recordsRepository.deleteRecord(userId, behaviorRecordsId);
+    }
+
+    /**
+     * 요청된 기록의 시간과 겹친 기록이 이미 저장되어있는지 확인합니다.
+     */
+    public BizExEnum hasSameTimeAlready(long userId, RecordReqDto recordReqDto) {
+
+        RecordTimeDto recordTimeDto = RecordTimeDto.create(userId, 
+                LocalDateTime.of(
+                    recordReqDto.getStartYear(), recordReqDto.getStartMonth(), recordReqDto.getStartDate(), 
+                    recordReqDto.getStartHour(), recordReqDto.getStartMin()), 
+                LocalDateTime.of(
+                    recordReqDto.getEndYear(), recordReqDto.getEndMonth(), recordReqDto.getEndDate(), 
+                    recordReqDto.getEndHour(), recordReqDto.getEndMin())
+        );
+
+        if (recordsRepository.countRecordIfTimeOverlapped(recordTimeDto) >= 1) {
+            return BizExEnum.SameTimeEX;
+        }
+        
+        return BizExEnum.Normal;
     }
 }   

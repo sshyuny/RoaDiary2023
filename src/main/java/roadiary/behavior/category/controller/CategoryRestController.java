@@ -41,8 +41,6 @@ public class CategoryRestController {
 
     /**
      * 계정의 카테고리순위에 카테고리 추가 요청 처리
-     * @param categoryContent 요청받은 카테고리 이름
-     * @return
      */
     @PostMapping("/api/category/priority")
     public boolean saveCategories(@SessionAttribute(SessionKeys.loginUserId) long userId, HttpServletRequest request, 
